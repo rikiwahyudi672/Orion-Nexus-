@@ -1,0 +1,10 @@
+{
+  "waktu": "2026-09-27T21:34:09.992392",
+  "audio": {
+    "sounddevice": true,
+    "pyttsx3": true,
+    "speech_recognition": true,
+    "vosk": true,
+    "whisper": true
+  }
+}

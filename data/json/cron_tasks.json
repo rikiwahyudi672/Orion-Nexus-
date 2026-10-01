@@ -1,0 +1,45 @@
+{
+  "tasks": [
+    {
+      "jam": "08:00",
+      "aksi": "llm",
+      "prompt": "Sapa Riki pagi ini. Cek dulu hari apa, cuaca gimana, dan aktivitas laptop. Kasih sapaan personal 1-2 kalimat. Kalau dia belum bangun (laptop baru nyala), sapaan lembut."
+    },
+    {
+      "jam": "09:30",
+      "pesan": "Bos, jangan lupa minum air. Serius."
+    },
+    {
+      "jam": "12:00",
+      "aksi": "llm",
+      "prompt": "Cek apakah Riki masih kerja aktif. Kalau iya, ingetin makan siang dengan nada perhatian. Kalau dia lagi santai, cukup info ringan."
+    },
+    {
+      "jam": "15:00",
+      "aksi": "llm",
+      "prompt": "Cek postur kerja Riki (dari window aktif). Kalau dia lama di depan laptop, ingetin benerin postur atau istirahat mata. Kalau nggak, ketik [DIAM]."
+    },
+    {
+      "jam": "17:30",
+      "pesan": "Riki, hari udah sore. Cek target hari ini udah kelar?"
+    },
+    {
+      "jam": "20:00",
+      "aksi": "llm",
+      "prompt": "Cek apakah Riki masih kerja (CPU tinggi / window kerja). Kalau iya, ingetin santai. Kalau dia udah santai, ketik [DIAM]."
+    },
+    {
+      "jam": "22:00",
+      "aksi": "llm",
+      "prompt": "Ingetin Riki istirahat dengan nada perhatian. Kalau dia masih aktif kerja, lebih tegas. Kalau udah nggak aktif, cuma lembut."
+    },
+    {
+      "jam": "23:30",
+      "pesan": "Bos, tidur. Besok masih ada kerjaan."
+    },
+    {
+      "jam": "03:00",
+      "aksi": "maintenance"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "nama": "coding_terminal",
+  "deskripsi": "Coding + jalankan terminal",
+  "langkah": [
+    {
+      "tool": "coding",
+      "params": {"goal": "Buat script Python print 'hello from workflow'", "nama_file": "output_workflow.py", "max_iterasi": 2},
+      "deskripsi": "Coding script hello"
+    },
+    {
+      "tool": "jalankan_terminal",
+      "params": {"perintah": "python output_workflow.py"},
+      "deskripsi": "Jalankan script"
+    }
+  ]
+}

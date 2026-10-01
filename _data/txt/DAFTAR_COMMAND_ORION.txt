@@ -1,0 +1,241 @@
+﻿================================================================
+  ORION — DAFTAR SEMUA COMMAND
+  Tanggal: 2026-09-27
+  Untuk: Riki Wahyudi
+================================================================
+
+================================================================
+  1. LAUNCHER & STARTUP
+================================================================
+
+[Windows Terminal Profile]
+  ⭐ ORION       → python orion.py (dashboard)
+  Orion          → python run_discord.py (Discord bot)
+
+[Shortcut Desktop]
+  ORION              → Dashboard Orion
+  Orion Discord      → Discord bot
+
+[Terminal Command]
+  python orion.py                    → Dashboard Orion (CLI)
+  python run_discord.py              → Discord bot
+  .\orion.ps1                        → Launcher menu interaktif
+
+================================================================
+  2. DISCORD BOT — COMMAND DI CHAT
+================================================================
+
+(Ketik pesan biasa, tanpa prefix ! atau @)
+
+[Voice]
+  join                  → Bot masuk voice channel
+  leave                 → Bot keluar voice
+  halo                  → Sapaan + balas suara
+  ping                  → Cek bot hidup
+  help                  → Bantuan
+
+[Coding]
+  coding buat Flask app            → Generate kode
+  coding script print hello         → Generate script
+  buatkan kode REST API /users      → Generate kode
+
+[Scan Folder]
+  scan folder E:\Project           → Scan folder
+  scan folder gue                   → Scan folder Orion
+  scanning folder E:\PT MODIAN      → Scan folder
+
+[Terminal]
+  jalankan dir                      → List file
+  jalankan tree /F                  → Tree folder
+  jalankan python script.py         → Jalankan Python
+  jalankan pip list                 → List package
+
+[Workflow]
+  daftar workflow                   → List workflow
+  jalankan workflow scan_saja       → Jalankan workflow
+
+[Chat]
+  halo Orion                        → Chat dengan Orion
+  apa kabar?                        → Chat
+  gue capek hari ini                → Chat + emosi
+
+[Auto-Chain (multi-tool)]
+  bikin folder X, coding Flask, scan folder X
+  buat folder test, coding script hello, jalankan
+  (pakai koma sebagai pemisah)
+
+================================================================
+  3. DASHBOARD ORION — MENU CLI
+================================================================
+
+Jalankan: python orion.py
+
+Menu utama (pilih nomor):
+  [1] Chat AI               → Chat dengan Orion
+  [2] Voice                 → Voice command
+  [3] Aktivitas             → Monitor laptop
+  [4] Skill                 → Skill management
+  [5] Coding                → Coding assistant
+  [6] Sistem                → Info sistem
+  [7] Memory                → Memory management
+  [8] Face Recognition      → Daftar wajah
+  [9] Pengaturan            → Setting
+  [0] Keluar                → Exit
+
+(Catatan: menu bisa beda sesuai versi dashboard)
+
+================================================================
+  4. CODING SKILL — DARI CHAT
+================================================================
+
+python jalankan_skill_coding.py     → Panggil coding_loop
+python orion_auto.py                → Auto runner (generate + test)
+
+Goal coding di dashboard/Discord:
+  coding buat Flask app /hello
+  coding buat script print hello
+  coding buat aplikasi kalkulator GUI
+  coding buat REST API /users CRUD
+  coding buat web scraper
+
+================================================================
+  5. SCAN FOLDER — DARI CHAT
+================================================================
+
+Di Discord/dashboard:
+  scan folder <path>
+  scan folder gue
+
+Output: file .txt di folder target
+Default output: E:\Project Software\test orion 2\
+
+================================================================
+  6. TERMINAL — COMMAND WHITELIST
+================================================================
+
+Yang diizinkan:
+  python <file>           → Jalankan Python
+  pip install <pkg>       → Install package
+  pip list, pip show      → Info package
+  dir, ls, tree           → List file
+  cd, pwd                 → Navigate
+  type, cat               → Baca file
+  echo                    → Print
+  mkdir, copy, move       → File operation
+  git status, log, diff   → Git read
+  git add, commit         → Git write
+  code <file>             → Buka VSCode
+
+Yang DIBLOK:
+  rm -rf, del /f, format   → Hapus permanent
+  shutdown, restart        → Matikan PC
+  pip uninstall            → Hapus package
+  git push --force         → Force push
+
+================================================================
+  7. WORKFLOW
+================================================================
+
+Workflow yang tersedia:
+  buat_web_app        → Coding Flask + scan
+  coding_terminal     → Coding + jalankan
+  scan_saja           → Scan folder
+
+Command:
+  daftar workflow
+  jalankan workflow <nama>
+
+Bikin workflow baru:
+  Edit file di folder workflows/*.json
+
+================================================================
+  8. VOICE ORION
+================================================================
+
+Test voice:
+  python -c "from voice_orion import tts_supertonic_bytes; r = tts_supertonic_bytes('Halo Rik'); print(len(r) if r else 0)"
+
+Fungsi voice:
+  tts_bicara(teks)              → Putar di speaker lokal
+  tts_supertonic_bytes(teks)    → Return bytes WAV
+  tts_bytes(teks)               → Return bytes MP3 (Edge TTS)
+
+Suara default: id-ID-ArdiNeural (Edge) atau F1 (Supertonic)
+
+================================================================
+  9. FILE PENTING
+================================================================
+
+[Core Orion]
+  orion.py                 → Entry point dashboard
+  dashboard_orion.py       → Dashboard CLI
+  otak_orion.py            → Logika chat + deteksi intent
+  core.py                  → Otak inti (kontrol sistem)
+  model_router.py          → Router LLM (Groq)
+
+[Coding]
+  coding_assistant.py      → coding_loop()
+  workflow_engine.py       → Workflow engine
+  jalankan_skill_coding.py → Panggil coding_loop
+  orion_auto.py            → Auto runner
+
+[Tool]
+  tool_eksekusi.py         → Tool: tulis, baca, terminal, scan
+  scan_folder.py           → Tool scan folder
+
+[Discord]
+  discord_voice_orion_v2.py → Bot Discord
+  run_discord.py            → Launcher Discord
+
+[Config]
+  .env                     → Token Discord, API key Groq
+  Discord.ico              → Icon Discord
+  orion_logo.ico           → Icon Orion
+
+================================================================
+  10. TROUBLESHOOTING
+================================================================
+
+[Discord bot tidak jalan]
+  - Cek token: echo $env:DISCORD_TOKEN (harus 72 karakter)
+  - Cek .env: Get-Content .env | Select-String DISCORD_TOKEN
+  - Cek MESSAGE CONTENT INTENT di Developer Portal
+
+[Voice Discord error]
+  - Cek FFmpeg: ffmpeg -version
+  - Cek PyNaCl: python -c "import nacl"
+  - Cek TTS: python -c "from voice_orion import tts_supertonic_bytes"
+
+[Coding loop error]
+  - Cek GROQ_API_KEY: echo $env:GROQ_API_KEY
+  - Cek .env
+  - Test: python model_router.py
+
+[Scan folder error]
+  - Cek path folder ada
+  - Cek permission
+
+================================================================
+  11. CARA PAKAI CEPAT
+================================================================
+
+[1] Buka Dashboard:
+    Klik ⭐ ORION di Windows Terminal
+    Atau: python orion.py
+
+[2] Buka Discord Bot:
+    Klik Orion di Windows Terminal
+    Atau: python run_discord.py
+
+[3] Coding dari Discord:
+    Di Discord: coding buat Flask app
+
+[4] Scan folder:
+    Di Discord: scan folder E:\Project
+
+[5] Terminal:
+    Di Discord: jalankan dir
+
+================================================================
+  SELESAI — Simpan file ini untuk referensi
+================================================================

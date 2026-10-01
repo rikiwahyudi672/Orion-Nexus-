@@ -1,0 +1,197 @@
+{
+  "waktu": "2026-09-29 14:04:35",
+  "versi": "v3",
+  "total_modul": 56,
+  "error_awal": 31,
+  "auto_fix": 0,
+  "manual": 1,
+  "backup": "evolve_20260929_140433",
+  "details": [
+    {
+      "type": "syntax",
+      "mod": "bandingkan_final",
+      "file": "E:\\Project Software\\Orion\\bandingkan_final.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "bersihkan_test",
+      "file": "E:\\Project Software\\Orion\\bersihkan_test.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "cek1",
+      "file": "E:\\Project Software\\Orion\\cek1.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "cek_intim",
+      "file": "E:\\Project Software\\Orion\\cek_intim.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "cek_prompt",
+      "file": "E:\\Project Software\\Orion\\cek_prompt.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "cek_semua_tool",
+      "file": "E:\\Project Software\\Orion\\cek_semua_tool.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "cek_soul",
+      "file": "E:\\Project Software\\Orion\\cek_soul.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "cek_soul_lengkap",
+      "file": "E:\\Project Software\\Orion\\cek_soul_lengkap.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "cek_tool_baca",
+      "file": "E:\\Project Software\\Orion\\cek_tool_baca.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "fix_soul_encoding",
+      "file": "E:\\Project Software\\Orion\\fix_soul_encoding.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "fix_soul_loop",
+      "file": "E:\\Project Software\\Orion\\fix_soul_loop.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "fix_soul_mojibake",
+      "file": "E:\\Project Software\\Orion\\fix_soul_mojibake.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "hitung_folder",
+      "file": "E:\\Project Software\\Orion\\hitung_folder.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "orion_baca_md",
+      "file": "E:\\Project Software\\Orion\\orion_baca_md.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "orion_bersih_mojibake",
+      "file": "E:\\Project Software\\Orion\\orion_bersih_mojibake.py",
+      "msg": "Syntax baris 64: invalid character '¢' (U+00A2)"
+    },
+    {
+      "type": "syntax",
+      "mod": "patch_mortera_primary_final",
+      "file": "E:\\Project Software\\Orion\\patch_mortera_primary_final.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "scan_final",
+      "file": "E:\\Project Software\\Orion\\scan_final.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_baca_file",
+      "file": "E:\\Project Software\\Orion\\test_baca_file.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_bikin",
+      "file": "E:\\Project Software\\Orion\\test_bikin.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_groq_now",
+      "file": "E:\\Project Software\\Orion\\test_groq_now.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_intim",
+      "file": "E:\\Project Software\\Orion\\test_intim.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_mortera",
+      "file": "E:\\Project Software\\Orion\\test_mortera.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_natural",
+      "file": "E:\\Project Software\\Orion\\test_natural.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_ngobrol",
+      "file": "E:\\Project Software\\Orion\\test_ngobrol.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_orion_baca",
+      "file": "E:\\Project Software\\Orion\\test_orion_baca.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_orion_goals",
+      "file": "E:\\Project Software\\Orion\\test_orion_goals.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_orion_projects",
+      "file": "E:\\Project Software\\Orion\\test_orion_projects.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_orion_routine",
+      "file": "E:\\Project Software\\Orion\\test_orion_routine.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_orion_soul",
+      "file": "E:\\Project Software\\Orion\\test_orion_soul.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_orion_user",
+      "file": "E:\\Project Software\\Orion\\test_orion_user.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    },
+    {
+      "type": "syntax",
+      "mod": "test_orion_values",
+      "file": "E:\\Project Software\\Orion\\test_orion_values.py",
+      "msg": "Syntax baris 1: invalid non-printable character U+FEFF"
+    }
+  ]
+}

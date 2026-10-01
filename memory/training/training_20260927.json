@@ -1,0 +1,30 @@
+[
+  {
+    "waktu": "2026-09-27T21:01:38.999210",
+    "aksi": "coding",
+    "hasil": "sukses",
+    "durasi": 5,
+    "error": ""
+  },
+  {
+    "waktu": "2026-09-27T21:01:39.012946",
+    "aksi": "fix_bom",
+    "hasil": "sukses",
+    "durasi": 2,
+    "error": ""
+  },
+  {
+    "waktu": "2026-09-27T21:01:39.031261",
+    "aksi": "audit",
+    "hasil": "gagal",
+    "durasi": 1,
+    "error": "Syntax error"
+  },
+  {
+    "waktu": "2026-09-27T21:01:39.050532",
+    "aksi": "terminal",
+    "hasil": "sukses",
+    "durasi": 1,
+    "error": ""
+  }
+]

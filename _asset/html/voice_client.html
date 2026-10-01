@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orion Voice</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d1117; color: #e6edf3;
+    font-family: -apple-system, sans-serif;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 20px;
+  }
+  h1 { color: #58a6ff; margin-bottom: 20px; font-size: 22px; }
+  .status { color: #8b949e; margin-bottom: 20px; font-size: 14px; }
+  .status.online { color: #3fb950; }
+  .status.offline { color: #f85149; }
+  #chat {
+    width: 100%; max-width: 500px; height: 300px;
+    background: #161b22; border-radius: 12px;
+    padding: 16px; overflow-y: auto;
+    margin-bottom: 20px; font-size: 15px; line-height: 1.5;
+  }
+  .msg { margin-bottom: 12px; }
+  .msg.user { color: #79c0ff; }
+  .msg.orion { color: #e6edf3; }
+  .msg.error { color: #f85149; font-size: 13px; }
+  .label { color: #8b949e; font-size: 12px; display: block; margin-bottom: 4px; }
+  #micBtn {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: #238636; border: none; color: white;
+    font-size: 32px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  #micBtn:hover { background: #2ea043; transform: scale(1.05); }
+  #micBtn.recording {
+    background: #da3633;
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  .hint { color: #8b949e; font-size: 12px; margin-top: 12px; text-align: center; }
+</style>
+</head>
+<body>
+  <h1>🤖 Orion Voice</h1>
+  <div class="status" id="status">Menyambung...</div>
+  <div id="chat"></div>
+  <button id="micBtn">🎤</button>
+  <div class="hint">Tekan tombol → ngomong → tekan lagi buat stop</div>
+
+<script>
+const WS_URL = `ws://${location.hostname}:8765`;
+const status = document.getElementById('status');
+const chat = document.getElementById('chat');
+const micBtn = document.getElementById('micBtn');
+
+let ws = null;
+let mediaRecorder = null;
+let chunks = [];
+let recording = false;
+let audioQueue = [];
+
+function connect() {
+  ws = new WebSocket(WS_URL);
+  ws.onopen = () => {
+    status.textContent = '✅ Online';
+    status.className = 'status online';
+    ws.send(JSON.stringify({tipe: 'ping'}));
+  };
+  ws.onclose = () => {
+    status.textContent = '❌ Terputus, nyambung ulang...';
+    status.className = 'status offline';
+    setTimeout(connect, 2000);
+  };
+  ws.onerror = () => {
+    status.textContent = '❌ Error koneksi';
+    status.className = 'status offline';
+  };
+  ws.onmessage = (e) => {
+    const data = JSON.parse(e.data);
+    if (data.tipe === 'transkrip') {
+      addMsg('user', data.teks);
+    } else if (data.tipe === 'jawaban') {
+      addMsg('orion', data.teks);
+    } else if (data.tipe === 'audio') {
+      playAudio(data.audio);
+    } else if (data.tipe === 'error') {
+      addMsg('error', data.pesan);
+    }
+  };
+}
+
+function addMsg(tipe, teks) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + tipe;
+  const label = tipe === 'user' ? 'Riki' : (tipe === 'orion' ? 'Orion' : 'Error');
+  div.innerHTML = `<span class="label">${label}</span>${teks}`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function playAudio(b64) {
+  audioQueue.push(b64);
+  if (audioQueue.length === 1) playNext();
+}
+
+function playNext() {
+  if (audioQueue.length === 0) return;
+  const b64 = audioQueue[0];
+  const audio = new Audio('data:audio/mp3;base64,' + b64);
+  audio.onended = () => {
+    audioQueue.shift();
+    playNext();
+  };
+  audio.onerror = () => {
+    audioQueue.shift();
+    playNext();
+  };
+  audio.play().catch(e => {
+    console.error(e);
+    audioQueue.shift();
+    playNext();
+  });
+}
+
+micBtn.onclick = async () => {
+  if (!recording) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+      mediaRecorder = new MediaRecorder(stream);
+      chunks = [];
+      mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+      mediaRecorder.onstop = async () => {
+        const blob = new Blob(chunks, {type: 'audio/webm'});
+        const arrayBuffer = await blob.arrayBuffer();
+        const b64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+        ws.send(JSON.stringify({tipe: 'audio', audio: b64}));
+        stream.getTracks().forEach(t => t.stop());
+      };
+      mediaRecorder.start();
+      recording = true;
+      micBtn.classList.add('recording');
+      micBtn.textContent = '⏹';
+    } catch (e) {
+      addMsg('error', 'Mic error: ' + e.message);
+    }
+  } else {
+    mediaRecorder.stop();
+    recording = false;
+    micBtn.classList.remove('recording');
+    micBtn.textContent = '🎤';
+  }
+};
+
+connect();
+</script>
+</body>
+</html>

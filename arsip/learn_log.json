@@ -1,0 +1,26 @@
+{
+  "total_log": 17,
+  "total_error": 124,
+  "total_fix": 0,
+  "total_manual": 4,
+  "error_types": {
+    "syntax": 124
+  },
+  "error_modules": {
+    "bandingkan_final": 4,
+    "bersihkan_test": 4,
+    "cek1": 4,
+    "cek_intim": 4,
+    "cek_prompt": 4,
+    "cek_semua_tool": 4,
+    "cek_soul": 4,
+    "cek_soul_lengkap": 4,
+    "cek_tool_baca": 4,
+    "fix_soul_encoding": 4
+  },
+  "error_messages": {
+    "BOM": 120,
+    "Syntax error": 4
+  },
+  "waktu": "2026-09-30 06:05:17"
+}

@@ -1,0 +1,43 @@
+{
+  "waktu": "2026-09-27T21:29:00.077019",
+  "gui": {
+    "pilihan": "PyQt6",
+    "tersedia": [
+      "tkinter",
+      "PyQt6",
+      "customtkinter",
+      "flet"
+    ]
+  },
+  "voice": {
+    "tts": {
+      "pilihan": "edge_tts",
+      "tersedia": [
+        "speech_recognition",
+        "pyttsx3",
+        "edge_tts",
+        "sounddevice",
+        "whisper"
+      ]
+    },
+    "stt": {
+      "pilihan": "speech_recognition"
+    }
+  },
+  "web": {
+    "pilihan": "FastAPI",
+    "tersedia": [
+      "flask",
+      "fastapi",
+      "streamlit",
+      "nicegui"
+    ]
+  },
+  "file": {
+    "tersedia": [
+      "PIL",
+      "pyperclip",
+      "watchdog"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "627a822c1f5cf34b6e000df0fe67b9a3": {
+    "sukses": true,
+    "pesan": "halo cache test",
+    "mode": "auto",
+    "neural": null,
+    "intent": "chat",
+    "jawaban": "Halo, bang. Cache test masuk. Aku standby, jalan normal.\n\nLagi ngetes cache ya? Kalau responsnya kerasa lebih cepat dari biasanya, berarti jalan."
+  },
+  "b7c63082762798f7371365b53a0ef695": {
+    "sukses": true,
+    "pesan": "test cache",
+    "mode": "auto",
+    "neural": null,
+    "intent": "chat",
+    "jawaban": "Halo, bang. Test cache masuk — pesannya utuh nyampe.\n\nKalau mau beneran ngecek cache jalan, kirim pesan yang sama dua kali terus bandingin latency-nya. Yang pertama harusnya lebih lambat dari yang kedua."
+  }
+}

@@ -1,0 +1,69 @@
+"""memory_graph.py - Memory Graph untuk Orion."""
+import sqlite3
+from pathlib import Path
+
+BASE = Path(__file__).parent
+DB = BASE / "orion.db"
+
+
+def init_graph():
+    """Bikin tabel memory_graph."""
+    conn = sqlite3.connect(str(DB))
+    cur = conn.cursor()
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS memory_graph (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            subject TEXT NOT NULL,
+            relation TEXT NOT NULL,
+            object TEXT NOT NULL,
+            confidence REAL DEFAULT 0.8,
+            sumber TEXT DEFAULT 'chat',
+            waktu TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    conn.commit()
+    conn.close()
+    return True
+
+
+def tambah_relasi(subject, relation, object, confidence=0.8):
+    """Tambah relasi."""
+    conn = sqlite3.connect(str(DB))
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO memory_graph (subject, relation, object, confidence) VALUES (?, ?, ?, ?)",
+        (subject, relation, object, confidence)
+    )
+    conn.commit()
+    new_id = cur.lastrowid
+    conn.close()
+    return new_id
+
+
+def cari_relasi(subject):
+    """Cari relasi by subject."""
+    conn = sqlite3.connect(str(DB))
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM memory_graph WHERE subject=?", (subject,))
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+def cari_semua():
+    """Cari semua relasi."""
+    conn = sqlite3.connect(str(DB))
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM memory_graph ORDER BY subject, relation")
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+
+if __name__ == "__main__":
+    init_graph()
+    print("Memory graph initialized")
+    tambah_relasi("Riki", "suka", "Kopi")
+    tambah_relasi("Riki", "kerja", "Freelancer")
+    print("Test relasi ditambah")
+    print("Semua relasi:", cari_semua())

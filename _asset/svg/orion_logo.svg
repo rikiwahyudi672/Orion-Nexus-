@@ -1,0 +1,41 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e27;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1f3a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7b2ff7;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow-filter">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="80" fill="url(#bg)"/>
+
+  <circle cx="80" cy="80" r="2" fill="#ffffff" opacity="0.6"/>
+  <circle cx="430" cy="120" r="1.5" fill="#ffffff" opacity="0.4"/>
+  <circle cx="60" cy="400" r="2" fill="#ffffff" opacity="0.5"/>
+  <circle cx="450" cy="420" r="1.5" fill="#ffffff" opacity="0.3"/>
+  <circle cx="380" cy="60" r="1" fill="#ffffff" opacity="0.7"/>
+  <circle cx="120" cy="450" r="1" fill="#ffffff" opacity="0.5"/>
+
+  <circle cx="256" cy="256" r="160" fill="none" stroke="url(#glow)" stroke-width="3" opacity="0.3" filter="url(#glow-filter)"/>
+
+  <circle cx="256" cy="230" r="110" fill="none" stroke="url(#glow)" stroke-width="12" filter="url(#glow-filter)"/>
+
+  <polygon points="256,160 268,205 315,205 277,232 292,278 256,250 220,278 235,232 197,205 244,205"
+           fill="url(#glow)" filter="url(#glow-filter)"/>
+
+  <text x="256" y="440" font-family="Arial, sans-serif" font-size="52" font-weight="bold"
+        fill="url(#glow)" text-anchor="middle" letter-spacing="8" filter="url(#glow-filter)">ORION</text>
+
+  <text x="256" y="470" font-family="Arial, sans-serif" font-size="16"
+        fill="#00d4ff" text-anchor="middle" letter-spacing="4" opacity="0.8">TERMINAL AI</text>
+</svg>

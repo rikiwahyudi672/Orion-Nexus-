@@ -1,0 +1,142 @@
+{
+  "waktu": "2026-09-28T05:30:58.283370",
+  "base": "E:\\Project Software\\Orion",
+  "nodes": [
+    {
+      "id": "hub",
+      "label": "🔗 Orion Hub",
+      "x": 400,
+      "y": 50,
+      "level": 0,
+      "status": "ok"
+    },
+    {
+      "id": "core",
+      "label": "🧠 Core",
+      "x": 400,
+      "y": 150,
+      "level": 1,
+      "status": "ok",
+      "files": 4
+    },
+    {
+      "id": "memory",
+      "label": "💾 Memory",
+      "x": 200,
+      "y": 250,
+      "level": 2,
+      "status": "ok",
+      "files": 22
+    },
+    {
+      "id": "skill",
+      "label": "🎯 Skill",
+      "x": 400,
+      "y": 250,
+      "level": 2,
+      "status": "ok",
+      "files": 7
+    },
+    {
+      "id": "voice",
+      "label": "🎤 Voice",
+      "x": 600,
+      "y": 250,
+      "level": 2,
+      "status": "ok",
+      "files": 15
+    },
+    {
+      "id": "coding",
+      "label": "💻 Coding",
+      "x": 100,
+      "y": 350,
+      "level": 3,
+      "status": "ok",
+      "files": 7
+    },
+    {
+      "id": "emotion",
+      "label": "😊 Emotion",
+      "x": 250,
+      "y": 350,
+      "level": 3,
+      "status": "ok",
+      "files": 7
+    },
+    {
+      "id": "support",
+      "label": "⚙️ Support",
+      "x": 400,
+      "y": 350,
+      "level": 3,
+      "status": "ok",
+      "files": 11
+    },
+    {
+      "id": "dashboard",
+      "label": "📊 Dashboard",
+      "x": 550,
+      "y": 350,
+      "level": 3,
+      "status": "ok",
+      "files": 4
+    },
+    {
+      "id": "config",
+      "label": "⚙️ Config",
+      "x": 700,
+      "y": 350,
+      "level": 3,
+      "status": "ok",
+      "files": 7
+    }
+  ],
+  "edges": [
+    {
+      "from": "hub",
+      "to": "core",
+      "status": "ok"
+    },
+    {
+      "from": "core",
+      "to": "memory",
+      "status": "ok"
+    },
+    {
+      "from": "core",
+      "to": "skill",
+      "status": "ok"
+    },
+    {
+      "from": "core",
+      "to": "voice",
+      "status": "ok"
+    },
+    {
+      "from": "core",
+      "to": "coding",
+      "status": "ok"
+    },
+    {
+      "from": "core",
+      "to": "emotion",
+      "status": "ok"
+    },
+    {
+      "from": "core",
+      "to": "support",
+      "status": "ok"
+    },
+    {
+      "from": "core",
+      "to": "dashboard",
+      "status": "ok"
+    },
+    {
+      "from": "core",
+      "to": "config",
+      "status": "ok"
+    }
+  ]
+}

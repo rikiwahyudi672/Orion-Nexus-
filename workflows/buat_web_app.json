@@ -1,0 +1,21 @@
+{
+  "nama": "buat_web_app",
+  "deskripsi": "Buat web app Flask + scan hasilnya",
+  "langkah": [
+    {
+      "tool": "buat_folder",
+      "params": {"path": "web_app_test"},
+      "deskripsi": "Buat folder web_app_test"
+    },
+    {
+      "tool": "coding",
+      "params": {"goal": "Buat REST API Flask sederhana dengan endpoint /hello", "nama_file": "web_app_test/app.py", "max_iterasi": 2},
+      "deskripsi": "Coding Flask app"
+    },
+    {
+      "tool": "scan_folder",
+      "params": {"folder": "web_app_test", "output": "E:\\Project Software\\test orion 2\\scan_web_app.txt"},
+      "deskripsi": "Scan folder web_app_test"
+    }
+  ]
+}

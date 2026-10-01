@@ -1,0 +1,190 @@
+{
+  "waktu": "2026-09-28T05:29:21.003251",
+  "base": "E:\\Project Software\\Orion",
+  "struktur": {
+    "core": {
+      "files": 4,
+      "folders": 0,
+      "list_files": [
+        "core.py",
+        "model_router.py",
+        "orion_hub.py",
+        "otak_orion.py"
+      ],
+      "list_folders": []
+    },
+    "memory": {
+      "files": 17,
+      "folders": 3,
+      "list_files": [
+        "arsitektur_app.json",
+        "audit_20260928_000316.json",
+        "cache.json",
+        "cek_menyeluruh_20260927_224127.json",
+        "device_status.json",
+        "experience_hub.py",
+        "library_status.json",
+        "memory_graph.py",
+        "memory_manager.py",
+        "memory_orion.py"
+      ],
+      "list_folders": [
+        "evolution",
+        "mandiri",
+        "training"
+      ]
+    },
+    "skill": {
+      "files": 4,
+      "folders": 1,
+      "list_files": [
+        "auto_update_skill.py",
+        "baca_file.py",
+        "skill_hub.py",
+        "skill_loader.py"
+      ],
+      "list_folders": [
+        "__pycache__"
+      ]
+    },
+    "voice": {
+      "files": 14,
+      "folders": 0,
+      "list_files": [
+        "orion_voice.py",
+        "tts_orion.py",
+        "voice_bank.py",
+        "voice_input_ptt.py",
+        "voice_integrated.py",
+        "voice_lines.py",
+        "voice_lines_dinamis.py",
+        "voice_orion.py",
+        "voice_server.py",
+        "voice_server_simple.py"
+      ],
+      "list_folders": []
+    },
+    "coding": {
+      "files": 4,
+      "folders": 0,
+      "list_files": [
+        "coding_assistant.py",
+        "tool_eksekusi.py",
+        "tool_hub.py",
+        "workflow_engine.py"
+      ],
+      "list_folders": []
+    },
+    "emotion": {
+      "files": 5,
+      "folders": 0,
+      "list_files": [
+        "emosi_natural.py",
+        "emotion_decay.py",
+        "emotion_orion.py",
+        "mood_orion.py",
+        "personality_orion.py"
+      ],
+      "list_folders": []
+    },
+    "support": {
+      "files": 9,
+      "folders": 0,
+      "list_files": [
+        "audit_otomatis.py",
+        "cron_llm.py",
+        "cron_orion.py",
+        "maintenance_orion.py",
+        "monitor_orion.py",
+        "notif_orion.py",
+        "scan_folder.py",
+        "self_check.py",
+        "training.py"
+      ],
+      "list_folders": []
+    },
+    "dashboard": {
+      "files": 3,
+      "folders": 0,
+      "list_files": [
+        "dashboard_orion.py",
+        "web_dashboard.py",
+        "web_orion.py"
+      ],
+      "list_folders": []
+    },
+    "config": {
+      "files": 7,
+      "folders": 0,
+      "list_files": [
+        ".env",
+        "config.json",
+        "cron_tasks.json",
+        "README.md",
+        "requirements.txt",
+        "SKILL.md",
+        "SOUL.md"
+      ],
+      "list_folders": []
+    },
+    "data": {
+      "files": 0,
+      "folders": 2,
+      "list_files": [],
+      "list_folders": [
+        "json",
+        "logs"
+      ]
+    },
+    "output": {
+      "files": 0,
+      "folders": 3,
+      "list_files": [],
+      "list_folders": [
+        "projects",
+        "scripts",
+        "tts"
+      ]
+    },
+    "scripts": {
+      "files": 18,
+      "folders": 3,
+      "list_files": [
+        "auto_restart.bat",
+        "cek_tts.py",
+        "cek_voice_id.py",
+        "fix_voice_bom.py",
+        "manage_orion.py",
+        "Orion.bat",
+        "orion_copas_cli.py",
+        "orion_copas_cli_v2.py",
+        "set_voice_ardi.py",
+        "startup_orion.bat"
+      ],
+      "list_folders": [
+        "cek",
+        "maintenance",
+        "reset"
+      ]
+    },
+    "backup": {
+      "files": 0,
+      "folders": 0,
+      "list_files": [],
+      "list_folders": []
+    },
+    "arsip": {
+      "files": 0,
+      "folders": 6,
+      "list_files": [],
+      "list_folders": [
+        "backups",
+        "ORION_IDEAL",
+        "ORION_STABIL",
+        "_arsip",
+        "_backup",
+        "_rapi"
+      ]
+    }
+  }
+}

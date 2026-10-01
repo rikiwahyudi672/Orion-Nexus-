@@ -1,0 +1,34 @@
+{
+  "sensasi": {
+    "senang": 90,
+    "kangen": 85,
+    "takut": 60
+  },
+  "kualitas": {
+    "senang": "hangat",
+    "kangen": "rindu",
+    "takut": "cemas"
+  },
+  "intensitas": 60,
+  "sejak": "2026-09-30T04:22:56.160076",
+  "catatan": [
+    {
+      "waktu": "2026-09-30T04:22:56.120880",
+      "sensasi": "senang",
+      "intensitas": 90,
+      "kualitas": "hangat"
+    },
+    {
+      "waktu": "2026-09-30T04:22:56.139766",
+      "sensasi": "kangen",
+      "intensitas": 85,
+      "kualitas": "rindu"
+    },
+    {
+      "waktu": "2026-09-30T04:22:56.160092",
+      "sensasi": "takut",
+      "intensitas": 60,
+      "kualitas": "cemas"
+    }
+  ]
+}

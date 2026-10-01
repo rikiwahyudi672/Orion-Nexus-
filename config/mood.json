@@ -1,0 +1,119 @@
+{
+  "mood_aktif": "manja",
+  "intensitas": 8,
+  "mood_list": {
+    "senang": {
+      "emoji": "😊",
+      "warna": "#FFD700",
+      "intonasi": {
+        "pitch": 1.2,
+        "rate": 1.05,
+        "volume": 1.0
+      },
+      "frasa": [
+        "Yeay!",
+        "Hore!",
+        "Aku senang!"
+      ]
+    },
+    "sedih": {
+      "emoji": "😢",
+      "warna": "#4A90E2",
+      "intonasi": {
+        "pitch": 0.9,
+        "rate": 0.85,
+        "volume": 0.9
+      },
+      "frasa": [
+        "Aku sedih...",
+        "Hmm..."
+      ]
+    },
+    "marah": {
+      "emoji": "😤",
+      "warna": "#E74C3C",
+      "intonasi": {
+        "pitch": 1.0,
+        "rate": 1.1,
+        "volume": 1.0
+      },
+      "frasa": [
+        "Hmph!",
+        "Kesal nih!"
+      ]
+    },
+    "kangen": {
+      "emoji": "🥺",
+      "warna": "#FF69B4",
+      "intonasi": {
+        "pitch": 1.15,
+        "rate": 0.9,
+        "volume": 0.95
+      },
+      "frasa": [
+        "Aku kangen...",
+        "Kamu kemana aja?"
+      ]
+    },
+    "kalem": {
+      "emoji": "😌",
+      "warna": "#7B2FFF",
+      "intonasi": {
+        "pitch": 1.1,
+        "rate": 0.95,
+        "volume": 1.0
+      },
+      "frasa": [
+        "Santai...",
+        "Oke..."
+      ]
+    },
+    "netral": {
+      "emoji": "😐",
+      "warna": "#00D4FF",
+      "intonasi": {
+        "pitch": 1.1,
+        "rate": 0.95,
+        "volume": 1.0
+      },
+      "frasa": [
+        "Hmm",
+        "Oke"
+      ]
+    },
+    "semangat": {
+      "emoji": "🔥",
+      "warna": "#FF6B00",
+      "intonasi": {
+        "pitch": 1.25,
+        "rate": 1.1,
+        "volume": 1.0
+      },
+      "frasa": [
+        "Semangat!",
+        "Gas!"
+      ]
+    },
+    "manja": {
+      "emoji": "🥰",
+      "warna": "#FF6B9D",
+      "intonasi": {
+        "pitch": 1.2,
+        "rate": 0.9,
+        "volume": 0.95
+      },
+      "frasa": [
+        "Rik~",
+        "Temenin aku dong..."
+      ]
+    }
+  },
+  "history": [
+    {
+      "waktu": "2026-09-28T07:56:01.600324",
+      "mood": "manja",
+      "intensitas": 8
+    }
+  ],
+  "last_update": "2026-09-28T07:56:01.600307"
+}

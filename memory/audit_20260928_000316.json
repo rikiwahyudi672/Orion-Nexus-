@@ -1,0 +1,19 @@
+{
+  "bug": [],
+  "fix": [],
+  "ok": [
+    "coding_loop()",
+    "tts_speak()",
+    "memory_graph"
+  ],
+  "error": [
+    {
+      "nama": "PROVIDERS_CONFIG",
+      "detail": "KOSONG"
+    },
+    {
+      "nama": "diskusi()",
+      "detail": "cannot import name 'diskusi' from 'otak_orion' (E:\\Project S"
+    }
+  ]
+}

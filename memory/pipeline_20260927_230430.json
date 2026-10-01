@@ -1,0 +1,13 @@
+{
+  "skor": {
+    "ok": 68,
+    "fail": 8,
+    "warn": 0
+  },
+  "alur": [
+    "Hub \u2192 Otak",
+    "Otak \u2192 Skill",
+    "Otak \u2192 Output"
+  ],
+  "waktu": "2026-09-27T23:04:30.698999"
+}

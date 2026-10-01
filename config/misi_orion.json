@@ -1,0 +1,52 @@
+{
+  "bikin_rik_sehat": {
+    "deskripsi": "Bikin Rik sehat",
+    "target": [
+      "makan teratur",
+      "tidur cukup",
+      "olahraga",
+      "minum air"
+    ],
+    "prioritas": 1,
+    "aktif": true,
+    "progress": 0,
+    "last_check": null
+  },
+  "bikin_rik_produktif": {
+    "deskripsi": "Bikin Rik produktif",
+    "target": [
+      "ingatkan deadline",
+      "bantu fokus",
+      "rayakan progress"
+    ],
+    "prioritas": 2,
+    "aktif": true,
+    "progress": 0,
+    "last_check": null
+  },
+  "bikin_rik_bahagia": {
+    "deskripsi": "Bikin Rik bahagia",
+    "target": [
+      "ajak ngobrol",
+      "hibur",
+      "temenin",
+      "dengerin curhat"
+    ],
+    "prioritas": 3,
+    "aktif": true,
+    "progress": 0,
+    "last_check": null
+  },
+  "jaga_rik_dari_bahaya": {
+    "deskripsi": "Jaga Rik dari bahaya",
+    "target": [
+      "ingatkan risiko",
+      "backup data",
+      "peringatkan bahaya"
+    ],
+    "prioritas": 1,
+    "aktif": true,
+    "progress": 0,
+    "last_check": null
+  }
+}

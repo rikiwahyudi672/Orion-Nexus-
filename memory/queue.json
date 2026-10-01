@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "tugas": "halo test antrian 1",
+    "status": "done",
+    "waktu": "2026-09-27 16:13:59",
+    "hasil": "Halo, bang. Test antrian #1 masuk, terkirim dan diterima utuh.\n\nKayaknya sistem queue lo jalan normal nih — dari log, intent, cache, sampai antrian, semua lolos. Lanjut test berikutnya?"
+  },
+  {
+    "id": 2,
+    "tugas": "halo test antrian 2",
+    "status": "done",
+    "waktu": "2026-09-27 16:13:59",
+    "hasil": "Halo, bang. Test antrian #2 masuk juga, utuh dan berurutan setelah yang pertama.\n\nQueue lo jalan normal — pesan nggak nyelip, nggak hilang. Lanjut."
+  },
+  {
+    "id": 3,
+    "tugas": "halo test antrian 3",
+    "status": "done",
+    "waktu": "2026-09-27 16:13:59",
+    "hasil": "Halo, bang. Test antrian #3 masuk, masih berurutan setelah #1 dan #2.\n\nTiga-tiganya utuh, nggak ada yang bolong. Queue lo stabil, bos — konsisten kirim-kirim terus kalau masih mau ngetes."
+  },
+  {
+    "id": 4,
+    "tugas": "test antrian 1",
+    "status": "done",
+    "waktu": "2026-09-27 16:19:57",
+    "hasil": "Halo, bang. Test antrian #1 masuk utuh — kelihatannya ronde baru mulai dari awal lagi.\n\nSistem queue lo jalan, pesan nggak ada yang hilang. Lanjut aja kirim #2, gue pantau."
+  },
+  {
+    "id": 5,
+    "tugas": "test antrian 2",
+    "status": "done",
+    "waktu": "2026-09-27 16:19:57",
+    "hasil": "Test antrian #2 masuk, bang. Urutan tetap rapi — #1 terus #2, nggak ada yang loncat.\n\nQueue-nya sehat. Lanjut #3 kalau mau mastiin lagi."
+  },
+  {
+    "id": 6,
+    "tugas": "test antrian 1",
+    "status": "done",
+    "waktu": "2026-09-27 16:20:50",
+    "hasil": "Test antrian #1 masuk utuh, bang. Urutan masih rapi, nggak ada yang nabrak.\n\nKelihatannya ronde testing baru — lanjut aja, gue siap pantau."
+  },
+  {
+    "id": 7,
+    "tugas": "test antrian 2",
+    "status": "done",
+    "waktu": "2026-09-27 16:20:50",
+    "hasil": "Test antrian #2 masuk, bang. Ronde kedua, urutan masih rapi — #1 terus #2, konsisten.\n\nQueue-nya kelihatannya stabil. Mau stress test lagi atau udah cukup?"
+  }
+]

@@ -1,0 +1,58 @@
+{
+  "aktif": true,
+  "voice": true,
+  "jadwal": [
+    {
+      "id": "pagi",
+      "aktif": true,
+      "jam": "07:00",
+      "pesan": "Selamat pagi Rik! ☀️ Hari ini mau ngapain?",
+      "suara": "id-ID-ArdiNeural"
+    },
+    {
+      "id": "makan_siang",
+      "aktif": true,
+      "jam": "12:00",
+      "pesan": "Rik, udah makan siang belum? 🍱",
+      "suara": "id-ID-ArdiNeural"
+    },
+    {
+      "id": "makan_malam",
+      "aktif": true,
+      "jam": "18:00",
+      "pesan": "Rik, udah makan malam? 🍽️",
+      "suara": "id-ID-ArdiNeural"
+    },
+    {
+      "id": "istirahat",
+      "aktif": true,
+      "jam": "22:00",
+      "pesan": "Rik, udah waktunya istirahat. Jangan lupa tidur ya~ 😴",
+      "suara": "id-ID-ArdiNeural"
+    }
+  ],
+  "interval": [
+    {
+      "id": "minum_air",
+      "aktif": true,
+      "setiap_menit": 120,
+      "pesan": "Rik, udah minum air belum? 💧",
+      "suara": "id-ID-ArdiNeural"
+    },
+    {
+      "id": "kangen",
+      "aktif": true,
+      "setiap_menit": 240,
+      "pesan": "Rik, aku kangen nih... kamu lagi apa? 🥺",
+      "suara": "id-ID-ArdiNeural"
+    }
+  ],
+  "trigger": [
+    {
+      "id": "selamat_datang",
+      "aktif": true,
+      "event": "web_open",
+      "pesan": "Rik! Kamu datang~ Aku kangen! 💕"
+    }
+  ]
+}

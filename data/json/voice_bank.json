@@ -1,0 +1,4507 @@
+{
+  "total": 500,
+  "voice": "id-ID-ArdiNeural",
+  "created_at": "2026-09-26T04:31:23.175836",
+  "bank": [
+    {
+      "id": 0,
+      "nama": "marah_ardi",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 1,
+      "nama": "kesal_ardi",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "+3Hz"
+    },
+    {
+      "id": 2,
+      "nama": "ketus_ardi",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "+3Hz"
+    },
+    {
+      "id": 3,
+      "nama": "sedih_ardi",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 4,
+      "nama": "takut_ardi",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 5,
+      "nama": "kaget_ardi",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+20%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 6,
+      "nama": "lelah_ardi",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 7,
+      "nama": "cuek_ardi",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "-3Hz"
+    },
+    {
+      "id": 8,
+      "nama": "semangat_ardi",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+3Hz"
+    },
+    {
+      "id": 9,
+      "nama": "kalem_ardi",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 10,
+      "nama": "perhatian_ardi",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-8%",
+      "volume": "-5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 11,
+      "nama": "bosen_ardi",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "-3Hz"
+    },
+    {
+      "id": 12,
+      "nama": "kesepian_ardi",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-8%",
+      "pitch": "-3Hz"
+    },
+    {
+      "id": 13,
+      "nama": "frustasi_ardi",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+12%",
+      "volume": "+10%",
+      "pitch": "+3Hz"
+    },
+    {
+      "id": 14,
+      "nama": "perhatian_ardi_14",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 15,
+      "nama": "takut_ardi_15",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 16,
+      "nama": "bosen_ardi_16",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 17,
+      "nama": "semangat_ardi_17",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 18,
+      "nama": "marah_ardi_18",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 19,
+      "nama": "sedih_ardi_19",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 20,
+      "nama": "semangat_ardi_20",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 21,
+      "nama": "bosen_ardi_21",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 22,
+      "nama": "cuek_ardi_22",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 23,
+      "nama": "frustasi_ardi_23",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 24,
+      "nama": "ketus_ardi_24",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 25,
+      "nama": "takut_ardi_25",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 26,
+      "nama": "kaget_ardi_26",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 27,
+      "nama": "kesal_ardi_27",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 28,
+      "nama": "kalem_ardi_28",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 29,
+      "nama": "bosen_ardi_29",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 30,
+      "nama": "lelah_ardi_30",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 31,
+      "nama": "frustasi_ardi_31",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 32,
+      "nama": "kaget_ardi_32",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 33,
+      "nama": "kesal_ardi_33",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 34,
+      "nama": "kesepian_ardi_34",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 35,
+      "nama": "sedih_ardi_35",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 36,
+      "nama": "takut_ardi_36",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 37,
+      "nama": "kaget_ardi_37",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 38,
+      "nama": "sedih_ardi_38",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 39,
+      "nama": "perhatian_ardi_39",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 40,
+      "nama": "perhatian_ardi_40",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 41,
+      "nama": "sedih_ardi_41",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+0%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 42,
+      "nama": "takut_ardi_42",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 43,
+      "nama": "sedih_ardi_43",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 44,
+      "nama": "kesepian_ardi_44",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 45,
+      "nama": "frustasi_ardi_45",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 46,
+      "nama": "lelah_ardi_46",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 47,
+      "nama": "kalem_ardi_47",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 48,
+      "nama": "perhatian_ardi_48",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 49,
+      "nama": "cuek_ardi_49",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 50,
+      "nama": "sedih_ardi_50",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 51,
+      "nama": "takut_ardi_51",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 52,
+      "nama": "kalem_ardi_52",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 53,
+      "nama": "ketus_ardi_53",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 54,
+      "nama": "kesepian_ardi_54",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 55,
+      "nama": "ketus_ardi_55",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 56,
+      "nama": "perhatian_ardi_56",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 57,
+      "nama": "lelah_ardi_57",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 58,
+      "nama": "semangat_ardi_58",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 59,
+      "nama": "marah_ardi_59",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 60,
+      "nama": "perhatian_ardi_60",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 61,
+      "nama": "kesepian_ardi_61",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 62,
+      "nama": "takut_ardi_62",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 63,
+      "nama": "marah_ardi_63",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 64,
+      "nama": "semangat_ardi_64",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 65,
+      "nama": "kesal_ardi_65",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 66,
+      "nama": "frustasi_ardi_66",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 67,
+      "nama": "sedih_ardi_67",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 68,
+      "nama": "ketus_ardi_68",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 69,
+      "nama": "marah_ardi_69",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 70,
+      "nama": "marah_ardi_70",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 71,
+      "nama": "kesepian_ardi_71",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 72,
+      "nama": "sedih_ardi_72",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 73,
+      "nama": "bosen_ardi_73",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 74,
+      "nama": "kesepian_ardi_74",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 75,
+      "nama": "ketus_ardi_75",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 76,
+      "nama": "ketus_ardi_76",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 77,
+      "nama": "kalem_ardi_77",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 78,
+      "nama": "kesepian_ardi_78",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 79,
+      "nama": "bosen_ardi_79",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 80,
+      "nama": "perhatian_ardi_80",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 81,
+      "nama": "cuek_ardi_81",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 82,
+      "nama": "kesal_ardi_82",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 83,
+      "nama": "semangat_ardi_83",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 84,
+      "nama": "marah_ardi_84",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 85,
+      "nama": "marah_ardi_85",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 86,
+      "nama": "frustasi_ardi_86",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 87,
+      "nama": "sedih_ardi_87",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 88,
+      "nama": "sedih_ardi_88",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 89,
+      "nama": "kalem_ardi_89",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 90,
+      "nama": "kesepian_ardi_90",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 91,
+      "nama": "sedih_ardi_91",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 92,
+      "nama": "lelah_ardi_92",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 93,
+      "nama": "cuek_ardi_93",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 94,
+      "nama": "perhatian_ardi_94",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 95,
+      "nama": "marah_ardi_95",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 96,
+      "nama": "sedih_ardi_96",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 97,
+      "nama": "ketus_ardi_97",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 98,
+      "nama": "cuek_ardi_98",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 99,
+      "nama": "cuek_ardi_99",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 100,
+      "nama": "semangat_ardi_100",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 101,
+      "nama": "semangat_ardi_101",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 102,
+      "nama": "kesepian_ardi_102",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 103,
+      "nama": "lelah_ardi_103",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 104,
+      "nama": "frustasi_ardi_104",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 105,
+      "nama": "lelah_ardi_105",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 106,
+      "nama": "kesepian_ardi_106",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 107,
+      "nama": "lelah_ardi_107",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 108,
+      "nama": "semangat_ardi_108",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 109,
+      "nama": "ketus_ardi_109",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 110,
+      "nama": "marah_ardi_110",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 111,
+      "nama": "marah_ardi_111",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 112,
+      "nama": "marah_ardi_112",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 113,
+      "nama": "frustasi_ardi_113",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 114,
+      "nama": "semangat_ardi_114",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 115,
+      "nama": "kesal_ardi_115",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 116,
+      "nama": "frustasi_ardi_116",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 117,
+      "nama": "kalem_ardi_117",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 118,
+      "nama": "marah_ardi_118",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 119,
+      "nama": "perhatian_ardi_119",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 120,
+      "nama": "kaget_ardi_120",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 121,
+      "nama": "bosen_ardi_121",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 122,
+      "nama": "lelah_ardi_122",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 123,
+      "nama": "takut_ardi_123",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 124,
+      "nama": "kesal_ardi_124",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 125,
+      "nama": "kalem_ardi_125",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 126,
+      "nama": "sedih_ardi_126",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 127,
+      "nama": "kaget_ardi_127",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 128,
+      "nama": "takut_ardi_128",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 129,
+      "nama": "semangat_ardi_129",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 130,
+      "nama": "kesepian_ardi_130",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 131,
+      "nama": "perhatian_ardi_131",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 132,
+      "nama": "perhatian_ardi_132",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 133,
+      "nama": "kesal_ardi_133",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 134,
+      "nama": "ketus_ardi_134",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 135,
+      "nama": "sedih_ardi_135",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 136,
+      "nama": "perhatian_ardi_136",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 137,
+      "nama": "semangat_ardi_137",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 138,
+      "nama": "marah_ardi_138",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 139,
+      "nama": "frustasi_ardi_139",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 140,
+      "nama": "kaget_ardi_140",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 141,
+      "nama": "takut_ardi_141",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 142,
+      "nama": "semangat_ardi_142",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 143,
+      "nama": "marah_ardi_143",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 144,
+      "nama": "ketus_ardi_144",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 145,
+      "nama": "kaget_ardi_145",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 146,
+      "nama": "lelah_ardi_146",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 147,
+      "nama": "kaget_ardi_147",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 148,
+      "nama": "kaget_ardi_148",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 149,
+      "nama": "perhatian_ardi_149",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 150,
+      "nama": "semangat_ardi_150",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 151,
+      "nama": "bosen_ardi_151",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 152,
+      "nama": "ketus_ardi_152",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 153,
+      "nama": "lelah_ardi_153",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 154,
+      "nama": "kaget_ardi_154",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 155,
+      "nama": "perhatian_ardi_155",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 156,
+      "nama": "sedih_ardi_156",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 157,
+      "nama": "bosen_ardi_157",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 158,
+      "nama": "marah_ardi_158",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 159,
+      "nama": "sedih_ardi_159",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 160,
+      "nama": "takut_ardi_160",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 161,
+      "nama": "sedih_ardi_161",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 162,
+      "nama": "sedih_ardi_162",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 163,
+      "nama": "kaget_ardi_163",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 164,
+      "nama": "marah_ardi_164",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 165,
+      "nama": "kalem_ardi_165",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 166,
+      "nama": "kalem_ardi_166",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 167,
+      "nama": "kesepian_ardi_167",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 168,
+      "nama": "semangat_ardi_168",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 169,
+      "nama": "sedih_ardi_169",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 170,
+      "nama": "lelah_ardi_170",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 171,
+      "nama": "semangat_ardi_171",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 172,
+      "nama": "bosen_ardi_172",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 173,
+      "nama": "lelah_ardi_173",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 174,
+      "nama": "kalem_ardi_174",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 175,
+      "nama": "kesal_ardi_175",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 176,
+      "nama": "takut_ardi_176",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 177,
+      "nama": "lelah_ardi_177",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 178,
+      "nama": "ketus_ardi_178",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+0%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 179,
+      "nama": "lelah_ardi_179",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 180,
+      "nama": "kalem_ardi_180",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 181,
+      "nama": "semangat_ardi_181",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 182,
+      "nama": "kalem_ardi_182",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 183,
+      "nama": "cuek_ardi_183",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 184,
+      "nama": "sedih_ardi_184",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 185,
+      "nama": "kesepian_ardi_185",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 186,
+      "nama": "kesal_ardi_186",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 187,
+      "nama": "perhatian_ardi_187",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 188,
+      "nama": "frustasi_ardi_188",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 189,
+      "nama": "takut_ardi_189",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 190,
+      "nama": "ketus_ardi_190",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 191,
+      "nama": "cuek_ardi_191",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 192,
+      "nama": "kesal_ardi_192",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 193,
+      "nama": "kalem_ardi_193",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 194,
+      "nama": "ketus_ardi_194",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 195,
+      "nama": "kesepian_ardi_195",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 196,
+      "nama": "kesepian_ardi_196",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 197,
+      "nama": "kesepian_ardi_197",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 198,
+      "nama": "marah_ardi_198",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 199,
+      "nama": "kesal_ardi_199",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 200,
+      "nama": "cuek_ardi_200",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 201,
+      "nama": "kalem_ardi_201",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 202,
+      "nama": "kalem_ardi_202",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 203,
+      "nama": "lelah_ardi_203",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 204,
+      "nama": "ketus_ardi_204",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 205,
+      "nama": "cuek_ardi_205",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 206,
+      "nama": "frustasi_ardi_206",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 207,
+      "nama": "kesepian_ardi_207",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 208,
+      "nama": "sedih_ardi_208",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 209,
+      "nama": "kaget_ardi_209",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 210,
+      "nama": "ketus_ardi_210",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 211,
+      "nama": "bosen_ardi_211",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 212,
+      "nama": "kesal_ardi_212",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 213,
+      "nama": "semangat_ardi_213",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 214,
+      "nama": "sedih_ardi_214",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 215,
+      "nama": "kesepian_ardi_215",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 216,
+      "nama": "frustasi_ardi_216",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 217,
+      "nama": "cuek_ardi_217",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 218,
+      "nama": "kesepian_ardi_218",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 219,
+      "nama": "lelah_ardi_219",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 220,
+      "nama": "semangat_ardi_220",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 221,
+      "nama": "cuek_ardi_221",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 222,
+      "nama": "cuek_ardi_222",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 223,
+      "nama": "perhatian_ardi_223",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 224,
+      "nama": "bosen_ardi_224",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 225,
+      "nama": "ketus_ardi_225",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 226,
+      "nama": "lelah_ardi_226",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 227,
+      "nama": "ketus_ardi_227",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 228,
+      "nama": "marah_ardi_228",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 229,
+      "nama": "kesepian_ardi_229",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 230,
+      "nama": "frustasi_ardi_230",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 231,
+      "nama": "kesal_ardi_231",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 232,
+      "nama": "semangat_ardi_232",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 233,
+      "nama": "perhatian_ardi_233",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 234,
+      "nama": "marah_ardi_234",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 235,
+      "nama": "sedih_ardi_235",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 236,
+      "nama": "perhatian_ardi_236",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 237,
+      "nama": "cuek_ardi_237",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 238,
+      "nama": "kaget_ardi_238",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 239,
+      "nama": "bosen_ardi_239",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 240,
+      "nama": "frustasi_ardi_240",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 241,
+      "nama": "kalem_ardi_241",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 242,
+      "nama": "sedih_ardi_242",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 243,
+      "nama": "frustasi_ardi_243",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 244,
+      "nama": "bosen_ardi_244",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 245,
+      "nama": "perhatian_ardi_245",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 246,
+      "nama": "kesepian_ardi_246",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 247,
+      "nama": "kaget_ardi_247",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 248,
+      "nama": "kaget_ardi_248",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 249,
+      "nama": "kaget_ardi_249",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 250,
+      "nama": "frustasi_ardi_250",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 251,
+      "nama": "kaget_ardi_251",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 252,
+      "nama": "bosen_ardi_252",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+0%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 253,
+      "nama": "bosen_ardi_253",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 254,
+      "nama": "kalem_ardi_254",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 255,
+      "nama": "cuek_ardi_255",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 256,
+      "nama": "bosen_ardi_256",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 257,
+      "nama": "frustasi_ardi_257",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 258,
+      "nama": "takut_ardi_258",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 259,
+      "nama": "cuek_ardi_259",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 260,
+      "nama": "lelah_ardi_260",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 261,
+      "nama": "frustasi_ardi_261",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 262,
+      "nama": "sedih_ardi_262",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 263,
+      "nama": "kaget_ardi_263",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 264,
+      "nama": "takut_ardi_264",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 265,
+      "nama": "sedih_ardi_265",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 266,
+      "nama": "lelah_ardi_266",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 267,
+      "nama": "sedih_ardi_267",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+0%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 268,
+      "nama": "bosen_ardi_268",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 269,
+      "nama": "lelah_ardi_269",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 270,
+      "nama": "perhatian_ardi_270",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 271,
+      "nama": "semangat_ardi_271",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 272,
+      "nama": "bosen_ardi_272",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 273,
+      "nama": "takut_ardi_273",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 274,
+      "nama": "semangat_ardi_274",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 275,
+      "nama": "sedih_ardi_275",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 276,
+      "nama": "takut_ardi_276",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 277,
+      "nama": "semangat_ardi_277",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 278,
+      "nama": "frustasi_ardi_278",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 279,
+      "nama": "kaget_ardi_279",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 280,
+      "nama": "bosen_ardi_280",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 281,
+      "nama": "marah_ardi_281",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 282,
+      "nama": "bosen_ardi_282",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 283,
+      "nama": "kesepian_ardi_283",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 284,
+      "nama": "cuek_ardi_284",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 285,
+      "nama": "marah_ardi_285",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 286,
+      "nama": "kesal_ardi_286",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 287,
+      "nama": "cuek_ardi_287",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 288,
+      "nama": "perhatian_ardi_288",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 289,
+      "nama": "kesepian_ardi_289",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 290,
+      "nama": "sedih_ardi_290",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 291,
+      "nama": "lelah_ardi_291",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 292,
+      "nama": "kalem_ardi_292",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 293,
+      "nama": "lelah_ardi_293",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 294,
+      "nama": "frustasi_ardi_294",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 295,
+      "nama": "kalem_ardi_295",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 296,
+      "nama": "bosen_ardi_296",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 297,
+      "nama": "perhatian_ardi_297",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 298,
+      "nama": "kesal_ardi_298",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 299,
+      "nama": "semangat_ardi_299",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 300,
+      "nama": "lelah_ardi_300",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 301,
+      "nama": "cuek_ardi_301",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 302,
+      "nama": "takut_ardi_302",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 303,
+      "nama": "frustasi_ardi_303",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 304,
+      "nama": "sedih_ardi_304",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 305,
+      "nama": "perhatian_ardi_305",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 306,
+      "nama": "sedih_ardi_306",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 307,
+      "nama": "sedih_ardi_307",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 308,
+      "nama": "frustasi_ardi_308",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 309,
+      "nama": "ketus_ardi_309",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 310,
+      "nama": "bosen_ardi_310",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 311,
+      "nama": "cuek_ardi_311",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+0%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 312,
+      "nama": "semangat_ardi_312",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 313,
+      "nama": "kesal_ardi_313",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 314,
+      "nama": "bosen_ardi_314",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 315,
+      "nama": "marah_ardi_315",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 316,
+      "nama": "frustasi_ardi_316",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 317,
+      "nama": "marah_ardi_317",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 318,
+      "nama": "takut_ardi_318",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 319,
+      "nama": "kesepian_ardi_319",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 320,
+      "nama": "perhatian_ardi_320",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 321,
+      "nama": "kalem_ardi_321",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 322,
+      "nama": "lelah_ardi_322",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 323,
+      "nama": "kesal_ardi_323",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 324,
+      "nama": "lelah_ardi_324",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 325,
+      "nama": "perhatian_ardi_325",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 326,
+      "nama": "semangat_ardi_326",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 327,
+      "nama": "kaget_ardi_327",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 328,
+      "nama": "kesepian_ardi_328",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 329,
+      "nama": "frustasi_ardi_329",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 330,
+      "nama": "sedih_ardi_330",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 331,
+      "nama": "kesepian_ardi_331",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 332,
+      "nama": "kesepian_ardi_332",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 333,
+      "nama": "semangat_ardi_333",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 334,
+      "nama": "bosen_ardi_334",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 335,
+      "nama": "perhatian_ardi_335",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 336,
+      "nama": "bosen_ardi_336",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 337,
+      "nama": "marah_ardi_337",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 338,
+      "nama": "kesal_ardi_338",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 339,
+      "nama": "cuek_ardi_339",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 340,
+      "nama": "bosen_ardi_340",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 341,
+      "nama": "cuek_ardi_341",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 342,
+      "nama": "semangat_ardi_342",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+0%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 343,
+      "nama": "kalem_ardi_343",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 344,
+      "nama": "frustasi_ardi_344",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 345,
+      "nama": "kesepian_ardi_345",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 346,
+      "nama": "marah_ardi_346",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 347,
+      "nama": "frustasi_ardi_347",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 348,
+      "nama": "cuek_ardi_348",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 349,
+      "nama": "semangat_ardi_349",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 350,
+      "nama": "semangat_ardi_350",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 351,
+      "nama": "bosen_ardi_351",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 352,
+      "nama": "sedih_ardi_352",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 353,
+      "nama": "marah_ardi_353",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 354,
+      "nama": "bosen_ardi_354",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 355,
+      "nama": "perhatian_ardi_355",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 356,
+      "nama": "ketus_ardi_356",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 357,
+      "nama": "semangat_ardi_357",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 358,
+      "nama": "kesal_ardi_358",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 359,
+      "nama": "kesal_ardi_359",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 360,
+      "nama": "bosen_ardi_360",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 361,
+      "nama": "perhatian_ardi_361",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 362,
+      "nama": "kesepian_ardi_362",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 363,
+      "nama": "bosen_ardi_363",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 364,
+      "nama": "frustasi_ardi_364",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 365,
+      "nama": "frustasi_ardi_365",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 366,
+      "nama": "kesal_ardi_366",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 367,
+      "nama": "takut_ardi_367",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 368,
+      "nama": "lelah_ardi_368",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 369,
+      "nama": "bosen_ardi_369",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 370,
+      "nama": "ketus_ardi_370",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 371,
+      "nama": "marah_ardi_371",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 372,
+      "nama": "takut_ardi_372",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 373,
+      "nama": "ketus_ardi_373",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 374,
+      "nama": "kalem_ardi_374",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 375,
+      "nama": "ketus_ardi_375",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 376,
+      "nama": "frustasi_ardi_376",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 377,
+      "nama": "sedih_ardi_377",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 378,
+      "nama": "sedih_ardi_378",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 379,
+      "nama": "cuek_ardi_379",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 380,
+      "nama": "kesepian_ardi_380",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 381,
+      "nama": "semangat_ardi_381",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 382,
+      "nama": "kaget_ardi_382",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 383,
+      "nama": "lelah_ardi_383",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 384,
+      "nama": "lelah_ardi_384",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 385,
+      "nama": "takut_ardi_385",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 386,
+      "nama": "frustasi_ardi_386",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 387,
+      "nama": "marah_ardi_387",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 388,
+      "nama": "kesepian_ardi_388",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 389,
+      "nama": "bosen_ardi_389",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 390,
+      "nama": "kesepian_ardi_390",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 391,
+      "nama": "kesepian_ardi_391",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 392,
+      "nama": "sedih_ardi_392",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 393,
+      "nama": "kesepian_ardi_393",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 394,
+      "nama": "perhatian_ardi_394",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 395,
+      "nama": "kesal_ardi_395",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 396,
+      "nama": "takut_ardi_396",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 397,
+      "nama": "kalem_ardi_397",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 398,
+      "nama": "kesal_ardi_398",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 399,
+      "nama": "lelah_ardi_399",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 400,
+      "nama": "kesepian_ardi_400",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 401,
+      "nama": "semangat_ardi_401",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 402,
+      "nama": "takut_ardi_402",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 403,
+      "nama": "takut_ardi_403",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 404,
+      "nama": "kesepian_ardi_404",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 405,
+      "nama": "ketus_ardi_405",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 406,
+      "nama": "perhatian_ardi_406",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 407,
+      "nama": "frustasi_ardi_407",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 408,
+      "nama": "kesal_ardi_408",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 409,
+      "nama": "takut_ardi_409",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 410,
+      "nama": "kaget_ardi_410",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 411,
+      "nama": "takut_ardi_411",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 412,
+      "nama": "perhatian_ardi_412",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 413,
+      "nama": "semangat_ardi_413",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 414,
+      "nama": "perhatian_ardi_414",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 415,
+      "nama": "cuek_ardi_415",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 416,
+      "nama": "lelah_ardi_416",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 417,
+      "nama": "marah_ardi_417",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 418,
+      "nama": "kesal_ardi_418",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 419,
+      "nama": "lelah_ardi_419",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 420,
+      "nama": "bosen_ardi_420",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 421,
+      "nama": "kalem_ardi_421",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 422,
+      "nama": "lelah_ardi_422",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 423,
+      "nama": "cuek_ardi_423",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 424,
+      "nama": "marah_ardi_424",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 425,
+      "nama": "cuek_ardi_425",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 426,
+      "nama": "kaget_ardi_426",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 427,
+      "nama": "semangat_ardi_427",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 428,
+      "nama": "lelah_ardi_428",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 429,
+      "nama": "frustasi_ardi_429",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 430,
+      "nama": "perhatian_ardi_430",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 431,
+      "nama": "kalem_ardi_431",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 432,
+      "nama": "kaget_ardi_432",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 433,
+      "nama": "kalem_ardi_433",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 434,
+      "nama": "kesepian_ardi_434",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 435,
+      "nama": "sedih_ardi_435",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 436,
+      "nama": "kaget_ardi_436",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 437,
+      "nama": "kalem_ardi_437",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 438,
+      "nama": "ketus_ardi_438",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 439,
+      "nama": "kesepian_ardi_439",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 440,
+      "nama": "frustasi_ardi_440",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 441,
+      "nama": "kaget_ardi_441",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 442,
+      "nama": "kalem_ardi_442",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 443,
+      "nama": "takut_ardi_443",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 444,
+      "nama": "lelah_ardi_444",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 445,
+      "nama": "kesal_ardi_445",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 446,
+      "nama": "kaget_ardi_446",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 447,
+      "nama": "cuek_ardi_447",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 448,
+      "nama": "marah_ardi_448",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 449,
+      "nama": "perhatian_ardi_449",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 450,
+      "nama": "frustasi_ardi_450",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+0%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 451,
+      "nama": "kesal_ardi_451",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 452,
+      "nama": "kesal_ardi_452",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 453,
+      "nama": "ketus_ardi_453",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 454,
+      "nama": "kalem_ardi_454",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+5%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 455,
+      "nama": "bosen_ardi_455",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 456,
+      "nama": "semangat_ardi_456",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 457,
+      "nama": "kalem_ardi_457",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 458,
+      "nama": "bosen_ardi_458",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+15%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 459,
+      "nama": "perhatian_ardi_459",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 460,
+      "nama": "frustasi_ardi_460",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+0%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 461,
+      "nama": "sedih_ardi_461",
+      "kategori": "sedih",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 462,
+      "nama": "kesal_ardi_462",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 463,
+      "nama": "perhatian_ardi_463",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 464,
+      "nama": "perhatian_ardi_464",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 465,
+      "nama": "frustasi_ardi_465",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 466,
+      "nama": "kesal_ardi_466",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 467,
+      "nama": "kesepian_ardi_467",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 468,
+      "nama": "kalem_ardi_468",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 469,
+      "nama": "perhatian_ardi_469",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+0%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 470,
+      "nama": "frustasi_ardi_470",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 471,
+      "nama": "frustasi_ardi_471",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 472,
+      "nama": "kalem_ardi_472",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 473,
+      "nama": "kalem_ardi_473",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-10%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 474,
+      "nama": "perhatian_ardi_474",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 475,
+      "nama": "kesal_ardi_475",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 476,
+      "nama": "kaget_ardi_476",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+15%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 477,
+      "nama": "kalem_ardi_477",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+15%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 478,
+      "nama": "frustasi_ardi_478",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+15%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 479,
+      "nama": "kalem_ardi_479",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+10%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 480,
+      "nama": "semangat_ardi_480",
+      "kategori": "semangat",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+5%",
+      "pitch": "+5Hz"
+    },
+    {
+      "id": 481,
+      "nama": "frustasi_ardi_481",
+      "kategori": "frustasi",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 482,
+      "nama": "ketus_ardi_482",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 483,
+      "nama": "takut_ardi_483",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "-5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 484,
+      "nama": "ketus_ardi_484",
+      "kategori": "ketus",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+15%",
+      "volume": "-10%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 485,
+      "nama": "perhatian_ardi_485",
+      "kategori": "perhatian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-15%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 486,
+      "nama": "bosen_ardi_486",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+10%",
+      "volume": "-15%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 487,
+      "nama": "bosen_ardi_487",
+      "kategori": "bosen",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "-10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 488,
+      "nama": "lelah_ardi_488",
+      "kategori": "lelah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "-5%",
+      "pitch": "-5Hz"
+    },
+    {
+      "id": 489,
+      "nama": "kaget_ardi_489",
+      "kategori": "kaget",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 490,
+      "nama": "kesepian_ardi_490",
+      "kategori": "kesepian",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+5%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 491,
+      "nama": "marah_ardi_491",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "-10%",
+      "pitch": "+8Hz"
+    },
+    {
+      "id": 492,
+      "nama": "kalem_ardi_492",
+      "kategori": "kalem",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "+10%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 493,
+      "nama": "takut_ardi_493",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+0%",
+      "volume": "+10%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 494,
+      "nama": "cuek_ardi_494",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+0%",
+      "pitch": "+0Hz"
+    },
+    {
+      "id": 495,
+      "nama": "takut_ardi_495",
+      "kategori": "takut",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+15%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 496,
+      "nama": "kesal_ardi_496",
+      "kategori": "kesal",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-5%",
+      "volume": "+0%",
+      "pitch": "-8Hz"
+    },
+    {
+      "id": 497,
+      "nama": "cuek_ardi_497",
+      "kategori": "cuek",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "+5%",
+      "volume": "+10%",
+      "pitch": "-2Hz"
+    },
+    {
+      "id": 498,
+      "nama": "marah_ardi_498",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-10%",
+      "volume": "+0%",
+      "pitch": "+2Hz"
+    },
+    {
+      "id": 499,
+      "nama": "marah_ardi_499",
+      "kategori": "marah",
+      "voice": "id-ID-ArdiNeural",
+      "rate": "-15%",
+      "volume": "-10%",
+      "pitch": "-2Hz"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+# ORION v2.0 - Dependencies
+
+# AI
+torch>=2.0.0
+
+# Monitoring & Kontrol
+psutil>=5.9.0
+pyautogui>=0.9.54
+pycaw>=20230407
+comtypes>=1.2.0
+screen-brightness-control>=0.22.0
+
+# Internet & Info
+requests>=2.31.0
+edge-tts>=6.1.0
+deep-translator>=1.11.0
+
+# Audio & TTS
+pygame-ce>=2.4.0
+
+# Notifikasi & Voice
+plyer>=2.1.0
+speechrecognition>=3.10.0
+
+# Grafik
+matplotlib>=3.8.0

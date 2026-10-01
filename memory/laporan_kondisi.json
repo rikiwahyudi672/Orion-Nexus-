@@ -1,0 +1,49 @@
+{
+  "waktu": "2026-10-01T17:36:58.099145",
+  "jumlah": 9,
+  "kondisi": [
+    {
+      "kondisi": "battery",
+      "nilai": 98,
+      "tercolok": true
+    },
+    {
+      "kondisi": "jam",
+      "jam": "17:36",
+      "hari": "Thursday"
+    },
+    {
+      "kondisi": "internet",
+      "online": true
+    },
+    {
+      "kondisi": "mode",
+      "offline": false
+    },
+    {
+      "kondisi": "cpu",
+      "nilai": 78.1,
+      "beban": "sedang"
+    },
+    {
+      "kondisi": "ram",
+      "nilai": 60.6,
+      "terpakai_gb": 7.2,
+      "total_gb": 11.89
+    },
+    {
+      "kondisi": "idle",
+      "detik": 0,
+      "menit": 0.0
+    },
+    {
+      "kondisi": "update",
+      "perlu_update": false
+    },
+    {
+      "kondisi": "jadwal",
+      "ada_jadwal": false,
+      "item": []
+    }
+  ]
+}

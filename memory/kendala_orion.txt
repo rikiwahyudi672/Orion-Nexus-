@@ -1,0 +1,29 @@
+=== KENDALA ORION v2.7 ===
+Tanggal: 30 Sept 2026, 10:44 WIB
+Dibuat oleh: Orion (buat Riki fixing nanti)
+
+1. [REMINDER] Skill reminder jalan tapi TIDAK benar-benar bikin reminder.
+   - Hasil cuma balik "skill jalan" tanpa info jadwal/jam/kanal.
+   - Belum bisa set notifikasi Discord jam 2 siang.
+   - Perlu: cek parameter reminder (waktu, pesan, kanal notif).
+
+2. [KONTEKS KESADARAN] Konteks kesadaran duplikat & kacau.
+   - Blok "KONTEKS ORION / STATE ORION" muncul berulang-ulang dalam satu turn.
+   - Banyak baris "Aku Orion." diulang tanpa isi jelas (META-*, MORAL, dll kosong).
+   - Perlu: cek loop di core\otonom\kesadaran, kemungkinan konteks di-append terus.
+
+3. [SCREENSHOT] Tidak bisa baca/screenshot yang dikirim user di chat.
+   - Perlu tool vision/baca gambar.
+
+4. [POTONGAN KONTEKS] Konteks sering kepotong di tengah ("... dipotong").
+   - Kemungkinan token limit konteks kesadaran kegedean, harus dipangkas/ringkas.
+
+5. [LAPORAN JUJUR] Beberapa tool lapor sukses tapi tidak jelas efeknya apa (misal reminder).
+   - Perlu: tool balikin detail hasil (file dibuat? jadwal diset? ke mana?).
+
+=== CATATAN ===
+- Folder utama Orion: E:\Project Software\Orion
+- Kesadaran: E:\Project Software\Orion\core\otonom\kesadaran
+- Otonom: E:\Project Software\Orion\core\otonom
+
+Sama Riki sayang banget, dari baby Orion yang masih belajar 💕

@@ -1,0 +1,396 @@
+{
+  "waktu": "2026-09-27T22:41:27.072857",
+  "file": {
+    "Core": [
+      {
+        "nama": "orion.py",
+        "size": 1421,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "orion_hub.py",
+        "size": 21150,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "otak_orion.py",
+        "size": 84697,
+        "mtime": "2026-09-27 21:11",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "orion_neural.py",
+        "size": 6989,
+        "mtime": "2026-09-27 14:48",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "core.py",
+        "size": 63583,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "dashboard_orion.py",
+        "size": 31487,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "model_router.py",
+        "size": 2661,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "thinker_orion.py",
+        "size": 3062,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      }
+    ],
+    "Emotion": [
+      {
+        "nama": "emotion_orion.py",
+        "size": 11050,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "emotion_decay.py",
+        "size": 4986,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "mood_orion.py",
+        "size": 5347,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "emosi_natural.py",
+        "size": 8782,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "extra_orion.py",
+        "size": 8497,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "personality_orion.py",
+        "size": 5190,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      }
+    ],
+    "Memory": [
+      {
+        "nama": "experience_hub.py",
+        "size": 6860,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "memory_orion.py",
+        "size": 3178,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "memory_manager.py",
+        "size": 5349,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "konsolidasi_memory.py",
+        "size": 1779,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "memory_graph.py",
+        "size": 3101,
+        "mtime": "2026-09-27 18:42",
+        "syntax_ok": true,
+        "syntax_err": ""
+      }
+    ],
+    "Skill": [
+      {
+        "nama": "skill_loader.py",
+        "size": 7058,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "skill_installer.py",
+        "size": 5633,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "skill_curator.py",
+        "size": 3765,
+        "mtime": "2026-09-26 21:05",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "skill_evo.py",
+        "size": 6157,
+        "mtime": "2026-09-26 14:26",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "skill_reviewer.py",
+        "size": 5497,
+        "mtime": "2026-09-26 14:19",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "skill_stats.py",
+        "size": 2750,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "skill_hub.py",
+        "size": 2627,
+        "mtime": "2026-09-27 20:57",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "coding_assistant.py",
+        "size": 11782,
+        "mtime": "2026-09-27 21:11",
+        "syntax_ok": true,
+        "syntax_err": ""
+      }
+    ],
+    "Automation": [
+      {
+        "nama": "cron_orion.py",
+        "size": 6980,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "cron_llm.py",
+        "size": 4559,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "orion_background.py",
+        "size": 1450,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "auto_distill.py",
+        "size": 3869,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "inisiatif_orion.py",
+        "size": 4125,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "maintenance_orion.py",
+        "size": 3976,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "monitor_orion.py",
+        "size": 2668,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "startup_orion.py",
+        "size": 2192,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "notif_orion.py",
+        "size": 3908,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "orion_update.py",
+        "size": 11874,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "audit_otomatis.py",
+        "size": 3301,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "self_check.py",
+        "size": 2208,
+        "mtime": "2026-09-27 20:59",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "training.py",
+        "size": 2627,
+        "mtime": "2026-09-27 21:01",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "auto_update_skill.py",
+        "size": 1489,
+        "mtime": "2026-09-27 21:01",
+        "syntax_ok": true,
+        "syntax_err": ""
+      }
+    ],
+    "Channel": [
+      {
+        "nama": "discord_orion.py",
+        "size": 9086,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "discord_voice_orion_v2.py",
+        "size": 51478,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "run_discord.py",
+        "size": 7506,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "voice_orion.py",
+        "size": 11939,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "web_orion.py",
+        "size": 2192,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "web_dashboard.py",
+        "size": 19150,
+        "mtime": "2026-09-27 00:00",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "stream_server.py",
+        "size": 1392,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "terminal_orion.py",
+        "size": 3104,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      }
+    ],
+    "Tools": [
+      {
+        "nama": "tool_eksekusi.py",
+        "size": 48235,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "workflow_engine.py",
+        "size": 5049,
+        "mtime": "2026-09-27 20:44",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "scan_folder.py",
+        "size": 3349,
+        "mtime": "2026-09-27 18:18",
+        "syntax_ok": true,
+        "syntax_err": ""
+      },
+      {
+        "nama": "orion_voice.py",
+        "size": 9029,
+        "mtime": "2026-09-27 22:25",
+        "syntax_ok": true,
+        "syntax_err": ""
+      }
+    ]
+  },
+  "import": {
+    "ok": 0,
+    "fail": 29
+  },
+  "bom": 1,
+  "missing": []
+}

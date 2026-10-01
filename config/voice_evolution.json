@@ -1,0 +1,77 @@
+{
+  "versi": "1.0.0",
+  "voice_aktif": "F1",
+  "setting": {
+    "pitch": 1.1,
+    "rate": 0.95,
+    "volume": 1.0,
+    "intonasi": "natural"
+  },
+  "emosi": {
+    "senang": {
+      "pitch": 1.2,
+      "rate": 1.0,
+      "volume": 1.0
+    },
+    "sedih": {
+      "pitch": 0.9,
+      "rate": 0.85,
+      "volume": 0.9
+    },
+    "marah": {
+      "pitch": 1.0,
+      "rate": 1.1,
+      "volume": 1.0
+    },
+    "kangen": {
+      "pitch": 1.15,
+      "rate": 0.9,
+      "volume": 0.95
+    },
+    "netral": {
+      "pitch": 1.1,
+      "rate": 0.95,
+      "volume": 1.0
+    }
+  },
+  "history": [
+    {
+      "waktu": "2026-09-28T07:53:09.122614",
+      "feedback": "bagus",
+      "konteks": "test",
+      "setting": {
+        "pitch": 1.1,
+        "rate": 0.95,
+        "volume": 1.0,
+        "intonasi": "natural"
+      }
+    },
+    {
+      "waktu": "2026-09-28T07:53:09.152353",
+      "feedback": "bagus",
+      "konteks": "test",
+      "setting": {
+        "pitch": 1.1,
+        "rate": 0.95,
+        "volume": 1.0,
+        "intonasi": "natural"
+      }
+    },
+    {
+      "waktu": "2026-09-28T07:53:09.176203",
+      "feedback": "aneh",
+      "konteks": "test",
+      "setting": {
+        "pitch": 1.1,
+        "rate": 0.95,
+        "volume": 1.0,
+        "intonasi": "natural"
+      }
+    }
+  ],
+  "feedback": {
+    "bagus": 2,
+    "aneh": 1,
+    "biasa": 0
+  }
+}

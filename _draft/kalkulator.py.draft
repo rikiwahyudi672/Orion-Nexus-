@@ -1,0 +1,13 @@
+"""kalkulator.py - Kalkulator sederhana."""
+def tambah(a, b): return a + b
+def kurang(a, b): return a - b
+def kali(a, b): return a * b
+def bagi(a, b): return a / b
+
+
+if __name__ == "__main__":
+    print("=== KALKULATOR ===")
+    print(f"5 + 3 = {tambah(5, 3)}")
+    print(f"10 - 4 = {kurang(10, 4)}")
+    print(f"3 * 7 = {kali(3, 7)}")
+    print(f"20 / 4 = {bagi(20, 4)}")

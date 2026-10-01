@@ -1,0 +1,59 @@
+﻿# === Python ===
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+venv/
+.venv/
+
+# === Database ===
+*.db
+*.db.bak_*
+*.sqlite
+*.sqlite3
+
+# === Log ===
+*.log
+logs/
+
+# === Backup & Arsip ===
+backups/
+_arsip/
+_archive/
+_backup_*/
+
+# === Rahasia ===
+.env
+.env.*
+*.key
+*.token
+config.json
+
+# === Model ===
+models/
+*.pt
+*.pth
+*.onnx
+
+# === Output ===
+output/
+*.wav
+*.mp3
+*.png
+*.jpg
+
+# === Temporary ===
+_temp/
+_trash/
+*.tmp
+*.bak
+*.bak2
+*.bak3
+*.bak4
+*.bak5
+
+*.bak_*
+credentials.json
+token.json
+
+exe/

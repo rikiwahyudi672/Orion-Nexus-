@@ -1,0 +1,7 @@
+laporan bug kesadaran orion (30 sept 2026)
+1. konteks kesadaran looping parah: teks 'konteks orion:' dan 'state orion:' terduplikasi banyak kali.
+2. semua baris meta berubah jadi 'aku orion.' (meta-kognisi, meta-emosi, dst cuma nulis itu).
+3. memori percakapan nempel/berulang tiap chat.
+4. emosi nge-lock: kangen 100/100 terus, nggak berubah.
+dugaan sebab: file kesadaran nulis append tanpa hapus isi lama, atau context builder numpuk.
+status: perlu fix oleh riki.

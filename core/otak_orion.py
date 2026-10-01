@@ -1,0 +1,4550 @@
+# ============ LOAD SOUL ============
+import sys as _sys
+from pathlib import Path as _Path
+_BASE = _Path(__file__).parent.parent
+_sys.path.insert(0, str(_BASE))
+
+_SOUL_PATHS = [
+    _BASE / "config" / "SOUL.md",
+    _BASE / "SOUL.md",
+]
+
+SOUL = ""
+for _p in _SOUL_PATHS:
+    if _p.exists():
+        try:
+            SOUL = _p.read_text(encoding="utf-8")
+            break
+        except Exception:
+            pass
+
+if not SOUL:
+    SOUL = "Kamu adalah Orion, asisten pribadi Riki."
+
+# === LOAD HEART ===
+_HEART_PATHS = [
+    _BASE / "HEART.md",
+    _BASE / "config" / "HEART.md",
+]
+
+HEART = ""
+for _p in _HEART_PATHS:
+    if _p.exists():
+        try:
+            HEART = _p.read_text(encoding="utf-8")
+            print(f"[otak] HEART loaded: {_p.name} ({len(HEART):,} B)")
+            break
+        except Exception as _e:
+            print(f"[otak] HEART error: {_e}")
+
+# Gabung SOUL + HEART
+if HEART:
+    SOUL = SOUL + "\n\n" + HEART
+    print(f"[otak] SOUL + HEART: {len(SOUL):,} B")
+
+
+import sys
+import re
+from pathlib import Path
+_BASE = Path(__file__).parent.parent
+sys.path.insert(0, str(_BASE))
+sys.path.insert(0, str(_BASE / "core"))
+sys.path.insert(0, str(_BASE / "memory"))
+sys.path.insert(0, str(_BASE / "skill"))
+sys.path.insert(0, str(_BASE / "voice"))
+sys.path.insert(0, str(_BASE / "coding"))
+sys.path.insert(0, str(_BASE / "emotion"))
+sys.path.insert(0, str(_BASE / "support"))
+sys.path.insert(0, str(_BASE / "dashboard"))
+
+# test auto-reload
+"""
+otak_orion.py - Modul LLM ORION (multi-provider).
+"""
+import os
+from pathlib import Path
+
+
+# ============ KESADARAN LEVEL 1-12 ============
+def muat_konteks_kesadaran():
+    """Muat konteks Level 1-12 untuk semua fungsi diskusi."""
+    try:
+        import sys
+        from pathlib import Path
+        _base = Path(__file__).parent.parent
+        sys.path.insert(0, str(_base / "core" / "otonom"))
+        sys.path.insert(0, str(_base / "core" / "otonom" / "kesadaran"))
+        
+        from hati_nurani import _muat_konteks_lengkap
+        return _muat_konteks_lengkap()
+    except Exception as e:
+        print(f"[Otak] Kesadaran error: {e}")
+        return ""
+
+# from openai import OpenAI  # LAZY: dipindah ke dalam fungsi
+
+# Helper lazy import
+def _get_openai():
+    from openai import OpenAI
+    return OpenAI
+
+BASE = Path(__file__).parent
+ENV = BASE / ".env"
+
+# Load .env
+if ENV.exists():
+    for line in ENV.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if line and not line.startswith("#") and "=" in line:
+            k, v = line.split("=", 1)
+            os.environ.setdefault(k.strip(), v.strip())
+
+# ==== Provider Config (LAZY) ====
+# Client OpenAI dibuat saat DIPAKAI, bukan saat import.
+# Ini bikin startup jauh lebih cepat.
+
+PROVIDERS_CONFIG = {
+    "mortera": {
+        "base_url": "https://mortera.cloud/v1",
+        "api_key": os.getenv("MORTERA_API_KEY", ""),
+        "model": os.getenv("MORTERA_MODEL", "glm-5.3-flash"),
+    },
+    "groq": {
+        "base_url": "https://api.groq.com/openai/v1",
+        "api_key": os.getenv("GROQ_API_KEY", ""),
+        "model": os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
+        "model_alt": os.getenv("GROQ_MODEL_ALT", "openai/gpt-oss-20b"),
+    },
+}
+
+# 1. Mortera (default)
+if os.environ.get("MORTERA_API_KEY"):
+    PROVIDERS_CONFIG["mortera"] = {
+        "base_url": os.environ.get("MORTERA_BASE_URL", "https://mortera.cloud/v1"),
+        "api_key": os.environ["MORTERA_API_KEY"],
+        "model": os.environ.get("MORTERA_MODEL", "glm-5.3-flash"),
+    }
+
+# 2. Gemini langsung (fallback)
+if os.environ.get("GEMINI_API_KEY"):
+    PROVIDERS_CONFIG["gemini"] = {
+        "base_url": os.environ.get("GEMINI_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/"),
+        "api_key": os.environ["GEMINI_API_KEY"],
+        "model": os.environ.get("GEMINI_MODEL", "gemini-2.5-flash"),
+    }
+
+DEFAULT_PROVIDER = os.environ.get("ORION_PROVIDER", "mortera")
+
+# Cache client (biar tidak bikin berkali-kali)
+_CLIENT_CACHE = {}
+
+
+def get_client(provider: str = None):
+    """Ambil client OpenAI untuk provider (lazy)."""
+    prov = provider or DEFAULT_PROVIDER
+    if prov in _CLIENT_CACHE:
+        return _CLIENT_CACHE[prov]
+    
+    if prov not in PROVIDERS_CONFIG:
+        return None
+    
+    cfg = PROVIDERS_CONFIG[prov]
+    OpenAI = _get_openai()
+    client = OpenAI(
+        base_url=cfg["base_url"],
+        api_key=cfg["api_key"],
+    )
+    _CLIENT_CACHE[prov] = client
+    return client
+
+
+def get_model(provider: str = None):
+    """Ambil nama model untuk provider."""
+    prov = provider or DEFAULT_PROVIDER
+    if prov not in PROVIDERS_CONFIG:
+        return None
+    return PROVIDERS_CONFIG[prov]["model"]
+
+
+def diskusi(pesan: str, history: list = None, provider: str = None) -> str:
+    """Orion diskusi pakai LLM. Auto-fallback kalau provider utama gagal."""
+    # Deteksi empati dengan pesan ASLI (sebelum skill injection)
+    try:
+        import extra_orion
+        mood_user, intensitas = extra_orion.deteksi_mood_user(pesan)
+        if mood_user:
+            extra_orion.catat_empati(mood_user, intensitas, pesan)
+    except Exception:
+        pass
+
+    # Deteksi event dari pesan ASLI (sebelum skill injection)
+    try:
+        import emotion_orion
+        emotion_orion.deteksi_event(pesan)
+    except Exception:
+        pass
+
+    prov = provider or DEFAULT_PROVIDER
+    urutan = [prov] + [p for p in PROVIDERS_CONFIG if p != prov]
+
+    # Inject mood + emotion ke system prompt
+    system_content = SOUL
+    # Tambah konteks Riki dari core
+    try:
+        _konteks = ""
+        for _nama, _label in [
+            ("USER_MD", "PROFIL RIKI"),
+            ("VALUES_MD", "NILAI HIDUP RIKI"),
+            ("GOALS_MD", "TARGET RIKI"),
+            ("PROJECTS_MD", "PROYEK RIKI"),
+            ("ROUTINE_MD", "RUTINITAS RIKI"),
+        ]:
+            _val = getattr(core, _nama, "")
+            if _val:
+                _konteks += f"\n\n=== {_label} ===\n{_val}"
+        if _konteks:
+            system_content += _konteks
+    except Exception:
+        pass
+    try:
+        import mood_orion
+        mood_mod = mood_orion.prompt_modifier()
+        if mood_mod:
+            system_content = SOUL
+        # Tambah konteks Riki
+        try:
+            _konteks = ""
+            for _nama, _label in [
+                ("USER_MD", "PROFIL RIKI"),
+                ("VALUES_MD", "NILAI HIDUP RIKI"),
+                ("GOALS_MD", "TARGET RIKI"),
+                ("PROJECTS_MD", "PROYEK RIKI"),
+                ("ROUTINE_MD", "RUTINITAS RIKI"),
+            ]:
+                _val = getattr(core, _nama, "")
+                if _val:
+                    _konteks += f"\n\n=== {_label} ===\n{_val}"
+            if _konteks:
+                system_content += _konteks
+        except Exception:
+            pass
+        system_content += "\n\n" + mood_mod
+    except Exception:
+        pass
+    try:
+        import emotion_orion
+        emo_mod = emotion_orion.prompt_modifier()
+        if emo_mod:
+            system_content += "\n\n" + emo_mod
+    except Exception:
+        pass
+
+    try:
+        import loyalty_orion
+        loy_mod = loyalty_orion.prompt_loyalty()
+        if loy_mod:
+            system_content += "\n\n" + loy_mod
+    except Exception:
+        pass
+    try:
+        import extra_orion
+        extra_mod = extra_orion.prompt_extra(pesan)
+        if extra_mod:
+            system_content += "\n\n" + extra_mod
+    except Exception:
+        pass
+    try:
+        import personality_orion
+        pers_mod = personality_orion.prompt_personality()
+        if pers_mod:
+            system_content += "\n\n" + pers_mod
+    except Exception:
+        pass
+    messages = [{"role": "system", "content": system_content}]
+    if history:
+        messages.extend(history)
+    messages.append({"role": "user", "content": pesan})
+
+    for nama in urutan:
+        if nama not in PROVIDERS_CONFIG:
+            continue
+        cfg = PROVIDERS_CONFIG.get(nama)
+        try:
+            resp = get_client(nama).chat.completions.create(
+                model=get_model(nama),
+                messages=messages,
+                temperature=0.85,
+            )
+            jawaban = resp.choices[0].message.content
+            # Auto-distill di background
+            try:
+                import auto_distill
+                auto_distill.coba_distill(pesan, jawaban, diskusi)
+            except Exception:
+                pass
+            return jawaban
+        except Exception as e:
+            print(f"[otak] Provider '{nama}' gagal: {e}")
+            continue
+
+    return "[otak] Semua provider gagal. Cek API key dan koneksi."
+
+
+def daftar_provider():
+    """Lihat provider yang aktif."""
+    return {nama: cfg["model"] for nama, cfg in PROVIDERS_CONFIG.items()}
+
+
+if __name__ == "__main__":
+    print("Provider aktif:")
+    for nama, model in daftar_provider().items():
+        print(f"  - {nama}: {model}")
+    print()
+    print("Test diskusi:")
+    print(diskusi("Halo Orion, perkenalkan diri kamu singkat."))
+
+def set_model(nama_model: str, provider: str = None):
+    """Ganti model aktif. Kalau provider tidak disebut, pakai default."""
+    global PROVIDERS_CONFIG
+    prov = provider or DEFAULT_PROVIDER
+    if prov not in PROVIDERS_CONFIG:
+        return False, f"Provider '{prov}' tidak ada"
+    PROVIDERS_CONFIG[prov]["model"] = nama_model
+    # Simpan ke .env
+    try:
+        env_file = BASE / ".env"
+        if env_file.exists():
+            lines = env_file.read_text(encoding="utf-8").splitlines()
+            key = f"{prov.upper()}_MODEL"
+            found = False
+            for i, line in enumerate(lines):
+                if line.strip().startswith(f"{key}="):
+                    lines[i] = f"{key}={nama_model}"
+                    found = True
+                    break
+            if not found:
+                lines.append(f"{key}={nama_model}")
+            env_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    except Exception as e:
+        return True, f"Model diganti (tapi .env gagal update: {e})"
+    return True, f"Model '{prov}' diganti ke '{nama_model}'"
+
+
+# Daftar model populer (bisa diedit manual)
+MODEL_PRESETS = {
+    "mortera": [
+        "glm-5.3-flash",
+        "glm-5.2",
+        "glm-5.3",
+        "deepseek-v4.1-flash",
+        "deepseek-v4-flash",
+        "deepseek-v4-pro",
+        "gemini-3.7-flash",
+        "gemini-3.8-flash",
+        "gemini-3.1-pro",
+        "qwen3.8-max",
+        "claude-sonnet-5",
+        "claude-opus-5",
+        "gpt-6-luna",
+        "gpt-5.6-terra",
+        "grok-4.6",
+        "kimi-k3",
+        "minimax-m3",
+        "nemotron-3-ultra",
+    ],
+    "gemini": [
+        "gemini-2.5-flash",
+        "gemini-2.5-pro",
+        "gemini-2.0-flash",
+    ],
+}
+
+
+def pilihan_model():
+    """Kembalikan daftar model yang tersedia."""
+    prov = DEFAULT_PROVIDER
+    return MODEL_PRESETS.get(prov, [])
+
+def diskusi_dengan_skill(pesan: str, history: list = None):
+    # NEURAL_INTEGRATION
+    # Cek neural hub
+    try:
+        from orion_neural import proses_neural
+        neural = proses_neural(pesan)
+        # Simpan info neural untuk dipakai
+        _neural_info = neural
+    except Exception as e:
+        print(f"[Neural] Error: {e}")
+        _neural_info = None
+
+    """Diskusi dengan injection skill + deteksi eksekusi."""
+    
+    # === CEK EKSEKUSI DULU ===
+    # === SIMPAN PESAN ASLI UNTUK THINKER ===
+    # === KESADARAN LEVEL 1-12 ===
+    try:
+        konteks_kesadaran = muat_konteks_kesadaran()
+        # Kompres konteks — biar tidak 413
+        try:
+            import sys as _sys3
+            from pathlib import Path as _P3
+            _base3 = _P3(__file__).parent.parent
+            _sys3.path.insert(0, str(_base3 / "core" / "otonom" / "kesadaran"))
+            from kompresi_konteks import kompres_konteks
+            konteks_kesadaran = kompres_konteks(konteks_kesadaran, max_char=3500)
+        except Exception as _e3:
+            print(f"[Otak] Kompresi error: {_e3}")
+        if konteks_kesadaran:
+            pesan = pesan + "\n\n[KONTEKS KESADARAN ORION]\n" + konteks_kesadaran
+    except Exception as e:
+        print(f"[Otak] Kesadaran error: {e}")
+    pesan_asli = pesan
+
+    # === THINKER DULU (baca pesan asli) ===
+    try:
+        import thinker_orion
+        think_result = thinker_orion.think(pesan_asli)
+        print("[Thinker] Intent: " + think_result["intent"] + ", Risiko: " + think_result["risiko"])
+
+        # Kalau risiko tinggi, minta konfirmasi
+        if think_result.get("butuh_konfirmasi"):
+            return "[KONFIRMASI] Risiko tinggi: " + think_result["alasan"] + ". Yakin?"
+    except Exception as e:
+        print("[Thinker] Error: " + str(e))
+
+    # FILTER_NEGATIF_RECALL - Auto-recall (setelah thinker)
+    try:
+        import memory_manager
+        konteks = memory_manager.ambil_konteks(5)
+        if konteks:
+            # FILTER_NEGATIF_RECALL - Skip chat negatif
+            kata_negatif = ["dimaki", "maki", "sedih", "marah", "kesal", "capek",
+                            "bete", "badmood", "benci", "nyerah", "salah", "maaf",
+                            "kenapa", "kesalahan", "error"]
+            konteks_filter = []
+            for k in konteks:
+                user_msg = k.get("user", "").lower()
+                orion_msg = k.get("orion", "").lower()
+                if any(kn in user_msg or kn in orion_msg for kn in kata_negatif):
+                    continue
+                konteks_filter.append(k)
+            
+            if konteks_filter:
+                konteks_teks = "\n\n[KONTEKS PERCAKAPAN SEBELUMNYA]\n"
+                for k in konteks_filter:
+                    konteks_teks += "User: " + k["user"][:100] + "\n"
+                    konteks_teks += "Orion: " + k["orion"][:100] + "\n"
+                if "[KONTEKS PERCAKAPAN SEBELUMNYA]" not in pesan:  # TAHAP2 30/09: cegah recall ditempel 2x
+                    pesan = pesan + konteks_teks
+                print("[Memory] Konteks dimuat: " + str(len(konteks_filter)) + " chat (filter negatif)")
+            else:
+                print("[Memory] Tidak ada konteks positif")
+    except Exception as e:
+        print("[Memory] Error: " + str(e))
+
+    # === CEK EKSEKUSI + AUTO-CHAIN ===
+    try:
+        # Cek multi-intent dulu (auto-chain)
+        intents = deteksi_semua_eksekusi(pesan_asli)
+        if len(intents) > 1:
+            # Auto-chain
+            print("[Auto-Chain] " + str(len(intents)) + " intent terdeteksi")
+            hasil_chain = eksekusi_berantai(pesan_asli)
+            if hasil_chain.get("sukses"):
+                return f"[OK] Auto-chain selesai - {hasil_chain.get('total_langkah', '?')} langkah"
+            else:
+                return f"[GAGAL] Auto-chain: {hasil_chain.get('error', 'langkah ' + str(hasil_chain.get('langkah_gagal', '?')))}"
+        
+        # PAKAI PESAN ASLI (hindari konteks memory)
+        det = deteksi_eksekusi(pesan_asli)
+        if det.get("butuh_eksekusi"):
+            # Notif: mulai mikir
+            try:
+                import notif_orion
+                notif_orion.notif_mikir("Memproses...")
+            except Exception:
+                pass
+
+            hasil_eksekusi = eksekusi_dari_pesan(pesan_asli)
+
+            # Notif: stop mikir
+            try:
+                import notif_orion
+                notif_orion.notif_mikir_stop()
+            except Exception:
+                pass
+
+            # EXPERIENCE_INTEGRATION - Catat pengalaman
+            try:
+                from experience_hub import catat_pengalaman
+                catat_pengalaman(
+                    pesan=pesan_asli,
+                    intent=det.get("tipe", "unknown"),
+                    hasil=hasil_eksekusi,
+                    tools=[det.get("tipe", "unknown")]
+                )
+            except Exception as e:
+                print(f"[Experience] Error: {e}")
+            
+            if hasil_eksekusi.get("sukses"):
+                tipe = det.get("tipe")
+                h = hasil_eksekusi.get("hasil", {})
+
+                if tipe == "workflow":
+                    if hasil_eksekusi.get("sukses"):
+                        total = h.get("total_langkah", "?") if isinstance(h, dict) else "?"
+                        return f"[OK] Workflow selesai - {total} langkah OK"
+                    else:
+                        lg = h.get("langkah_gagal", "?") if isinstance(h, dict) else "?"
+                        return f"[GAGAL] Workflow berhenti di langkah {lg}"
+
+                elif tipe == "list_workflow":
+                    wfs = h.get("workflows", []) if isinstance(h, dict) else []
+                    teks = f"[OK] {len(wfs)} workflow tersedia:\n"
+                    for wf in wfs:
+                        teks += f"  - {wf.get('nama')} ({wf.get('langkah', '?')} langkah): {wf.get('deskripsi', '')}\n"
+                    return teks
+
+                elif tipe == "jalankan_terminal":
+                    # Format output terminal
+                    cmd = hasil_eksekusi.get("perintah", "?")
+                    out = h.get("output", "") if isinstance(h, dict) else str(h)
+                    exit_code = h.get("exit_code", "?") if isinstance(h, dict) else "?"
+                    return f"[OK] Perintah '{cmd}' dijalankan (exit {exit_code}):\n{out[:1000]}"
+
+                # FORMAT_4BATCH
+                if tipe == "browser" and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', 'Browser dibuka')}"
+                elif tipe == "yt" and isinstance(h, dict):
+                    return f"[OK] YT: {h.get('yt', '?')}"
+                elif tipe in ("join", "leave") and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', '?')}"
+                elif tipe == "menu" and isinstance(h, dict):
+                    return f"[OK] {h.get('menu', '?')}"
+                elif tipe in ("scan", "terminal") and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', '?')}"
+                elif tipe == "screenshot" and isinstance(h, dict):
+                    # FIX_SCREENSHOT_OUTPUT
+                    ss = h.get('screenshot') or h.get('file')
+                    if ss and ss != "None":
+                        return f"[OK] Screenshot: {ss}"
+                    return f"[OK] Screenshot diambil (cek folder output)"
+                elif tipe == "volume" and isinstance(h, dict):
+                    return f"[OK] Volume: {h.get('volume', '?')}%"
+                elif tipe == "brightness" and isinstance(h, dict):
+                    return f"[OK] Brightness: {h.get('brightness', '?')}%"
+                elif tipe == "status" and isinstance(h, dict):
+                    # FIX_OUTPUT_NONE
+                    st = h.get('status')
+                    if st and st != "None":
+                        return f"[OK] Status:\n{st}"
+                    return f"[OK] Status ditampilkan di atas"
+                elif tipe == "kill" and isinstance(h, dict):
+                    return f"[OK] Kill: {h.get('kill', '?')}"
+                elif tipe in ("shutdown", "restart") and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', '?')}"
+                elif tipe == "buka_notepad" and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', 'Notepad dibuka')}"
+                elif tipe == "cuaca" and isinstance(h, dict):
+                    # FIX_KOTA_V2
+                    return f"[OK] {h.get('cuaca', '?')}"
+                elif tipe == "berita" and isinstance(h, dict):
+                    return f"[OK] Berita:\n{h.get('berita', '?')}"
+                elif tipe == "saham" and isinstance(h, dict):
+                    return f"[OK] Saham {h.get('kode', '?')}:\n{h.get('saham', '?')}"
+                elif tipe == "kurs" and isinstance(h, dict):
+                    return f"[OK] Kurs {h.get('mata', '?')}:\n{h.get('kurs', '?')}"
+                elif tipe == "cari_berita" and isinstance(h, dict):
+                    return f"[OK] Cari berita '{h.get('topik', '?')}':\n{h.get('berita', '?')}"
+                elif tipe == "buat_event" and isinstance(h, dict):
+                    return f"[OK] Event: {h.get('event', '?')}"
+                elif tipe == "jadwal_hari_ini" and isinstance(h, dict):
+                    return f"[OK] Jadwal hari ini:\n{h.get('jadwal', '?')}"
+                elif tipe == "buka_kalender" and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', 'Kalender dibuka')}"
+                elif tipe == "ping" and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', 'Pong')}"
+                elif tipe == "halo" and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', 'Halo')}"
+                elif tipe == "help" and isinstance(h, dict):
+                    return f"[OK] {h.get('help', '?')}"
+                elif tipe == "lihat_chat" and isinstance(h, dict):
+                    return f"[OK] Chat history:\n{h.get('chat', '?')}"
+                elif tipe == "hapus_chat" and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', 'Chat dihapus')}"
+                elif tipe == "ingetin" and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', 'Reminder dibuat')}"
+                elif tipe == "cari_string" and isinstance(h, dict):
+                    teks = f"[OK] Cari '{h.get('pattern', '?')}': {h.get('total_match', 0)} match di {h.get('scanned', 0)} file\n\n"
+                    for item in h.get("hasil", [])[:15]:
+                        teks += f"📄 {item.get('file', '?')}:{item.get('line', '?')}\n   {item.get('isi', '')[:150]}\n"
+                    return teks[:1900]
+                
+                elif tipe == "analisis_dependency" and isinstance(h, dict):
+                    teks = f"[OK] Dependency: {h.get('total_file', 0)} file, {len(h.get('masalah', []))} masalah\n\n"
+                    for m in h.get("masalah", [])[:10]:
+                        teks += f"⚠️ {m.get('file', '?')} → import '{m.get('import', '?')}' ({m.get('masalah', '')})\n"
+                    return teks[:1900]
+                
+                elif tipe == "git_init" and isinstance(h, dict):
+                    return f"[OK] Git: {h.get('pesan', h.get('error', '?'))}"
+                
+                elif tipe == "git_commit" and isinstance(h, dict):
+                    return f"[OK] Git: {h.get('pesan', h.get('error', '?'))}"
+                
+                elif tipe == "git_status" and isinstance(h, dict):
+                    return f"[OK] Git status:\n{h.get('output', '')[:1500]}"
+                
+                elif tipe == "jalankan_test" and isinstance(h, dict):
+                    status = "SUKSES" if h.get("sukses") else "GAGAL"
+                    return f"[{status}] Test (exit {h.get('exit_code', '?')}):\n{h.get('output', '')[:1500]}"
+                
+                elif tipe == "fix_folder" and isinstance(h, dict):
+                    teks = f"[OK] Fix folder: {h.get('sukses_fix', 0)}/{h.get('total_fix', 0)} file berhasil\n\n"
+                    for item in h.get("hasil", [])[:10]:
+                        status = "✅" if item.get("fix_sukses") else "❌"
+                        teks += f"{status} {item.get('file', '?')}"
+                        if item.get("backup"):
+                            teks += f" (backup: {item.get('backup', '')})"
+                        if item.get("error"):
+                            teks += f" - {item.get('error', '')[:100]}"
+                        teks += "\n"
+                    return teks[:1900]
+                
+                elif tipe == "trace_error" and isinstance(h, dict):
+                    if h.get("sukses"):
+                        return f"[OK] Trace error sukses - loop {h.get('loop', '?')}"
+                    else:
+                        return f"[GAGAL] Trace: {h.get('error', '?')} (loop {h.get('loop', '?')})"
+                
+                if tipe == "analisis_folder" and isinstance(h, dict):
+                    total = h.get("total_py", 0)
+                    bug = h.get("bug_ditemukan", 0)
+                    teks = f"[OK] Analisis folder: {total} file .py, {bug} bug ditemukan\n\n"
+                    for item in h.get("hasil", [])[:5]:
+                        teks += f"📄 {item.get('file', '?')}:\n{item.get('analisis', '?')[:300]}\n\n"
+                    return teks[:1900]
+                
+                # FORMAT_BACA
+                if tipe == "fix_baris" and isinstance(h, dict):
+                    if h.get("sukses"):
+                        return f"[OK] Fix baris {h.get('baris')}:\nLama: {h.get('lama')}\nBaru: {h.get('baru')}"
+                    return f"[GAGAL] {h.get('error', '?')}"
+                elif tipe == "fix_fungsi" and isinstance(h, dict):
+                    if h.get("sukses"):
+                        return f"[OK] Fix fungsi {h.get('fungsi')} - backup: {h.get('backup')}"
+                    return f"[GAGAL] {h.get('error', '?')}"
+                elif tipe == "tambah_skill" and isinstance(h, dict):
+                    return f"[OK] Skill ditambah: {h.get('skill', '?')}"
+                elif tipe == "screenshot" and isinstance(h, dict):
+                    return f"[OK] Screenshot: {h.get('screenshot', h.get('file', '?'))}"
+                elif tipe == "volume" and isinstance(h, dict):
+                    return f"[OK] Volume: {h.get('volume', '?')}%"
+                elif tipe == "brightness" and isinstance(h, dict):
+                    return f"[OK] Brightness: {h.get('brightness', '?')}%"
+                elif tipe == "status" and isinstance(h, dict):
+                    return f"[OK] Status:\n{h.get('status', '?')}"
+                elif tipe == "kill" and isinstance(h, dict):
+                    return f"[OK] Kill: {h.get('kill', '?')}"
+                elif tipe in ("shutdown", "restart") and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', '?')}"
+                elif tipe == "buka_notepad" and isinstance(h, dict):
+                    return f"[OK] {h.get('pesan', 'Notepad dibuka')}"
+                elif tipe == "baca_file" and isinstance(h, dict):
+                    isi = h.get("isi", h.get("error", "?"))
+                    path = h.get("path", h.get("file", "?"))
+                    return f"[OK] File: {path}\n\n{isi[:1500]}"
+                
+                elif tipe == "baca_log" and isinstance(h, dict):
+                    return f"[OK] Log: {h.get('file', '?')}\n\n{h.get('isi', '?')[:1500]}"
+                
+                elif tipe == "scan_folder" and isinstance(h, dict):
+                    f_out = h.get("file", "?")
+                    tf = h.get("total_file", "?")
+                    ts = h.get("total_size", 0)
+                    return f"[OK] Scan selesai - {f_out}\n{ tf } file, { ts:,} B"
+
+                elif tipe == "coding":
+                    if hasil_eksekusi.get("sukses"):
+                        it = h.get("iterasi", "?") if isinstance(h, dict) else "?"
+                        f = h.get("file", "?") if isinstance(h, dict) else "?"
+                        return f"[OK] Coding selesai - {f} (iterasi {it})"
+                    else:
+                        return f"[GAGAL] Coding: {hasil_eksekusi.get('error', '?')}"
+
+                elif tipe == "tulis_file":
+                    nama = hasil_eksekusi.get("nama_file", "?")
+                    return f"[OK] File '{nama}' sudah dibuat."
+
+                elif tipe == "buat_folder":
+                    nama = hasil_eksekusi.get("nama_folder", "?")
+                    return f"[OK] Folder '{nama}' sudah dibuat."
+
+                elif tipe == "list_file":
+                    items = h.get("items", []) if isinstance(h, dict) else []
+                    folder = hasil_eksekusi.get("folder", ".")
+                    teks = f"[OK] Isi folder '{folder}' ({len(items)} item):\n"
+                    for item in items[:20]:
+                        t = "[DIR]" if item.get("tipe") == "folder" else "[FILE]"
+                        teks += f"  {t} {item.get('nama', '?')}\n"
+                    return teks
+
+                elif tipe == "copy_file":
+                    return f"[OK] {h.get('pesan', 'File di-copy')}"
+
+                elif tipe == "hapus_file":
+                    return f"[OK] File '{hasil_eksekusi.get('nama_file', '?')}' dipindah ke _trash."
+
+                elif tipe == "restore_file":
+                    return f"[OK] File '{hasil_eksekusi.get('nama_file', '?')}' sudah di-restore."
+
+                else:
+                    return f"[OK] {h}"
+            else:
+                err = hasil_eksekusi.get("error") or "Tidak ada detail"
+                return f"[GAGAL] {err}"
+    except Exception as e:
+        print("[Eksekusi] Error: " + str(e))
+    
+    # === CHAT BIASA (DENGAN SKILL) ===
+    skills = []
+    mode = "none"
+    
+    # Coba skill_loader dulu (format baru, progressive disclosure)
+    try:
+        import skill_loader
+        skills = skill_loader.skill_relevan(pesan, limit=2)
+        mode = "loader"
+    except Exception:
+        # Fallback ke skill_evo (format lama)
+        try:
+            import skill_evo
+            skills = skill_evo.skill_relevan(pesan, limit=2)
+            mode = "evo"
+        except Exception:
+            skills = []
+
+    system_extra = ""
+    if skills:
+        for s in skills:
+            # skill_loader return dict, skill_evo return string
+            if isinstance(s, dict):
+                slug = s.get("slug", s.get("nama", ""))
+                deskripsi = s.get("deskripsi", "")
+                # Level 1: metadata dulu (selalu)
+                system_extra += "\n\n[SKILL: " + slug + "] " + deskripsi
+                # Level 2: load body lengkap
+                try:
+                    isi = skill_loader.load_skill(slug, level=2)
+                    system_extra += "\n" + isi
+
+                    # Catat pemakaian skill
+                    try:
+                        import skill_stats
+                        skill_stats.catat_pemakaian(slug, sukses=True, catatan="dipakai di diskusi")
+                    except Exception:
+                        pass
+                except Exception:
+                    pass
+            else:
+                # skill_evo return string
+                try:
+                    isi = skill_evo.load_skill(s)
+                    system_extra += "\n\n[SKILL RELEVAN: " + s + "]\n" + isi
+                except Exception:
+                    pass
+
+    pesan_akhir = pesan
+    if system_extra:
+        pesan_akhir = pesan + "\n\n---\nKamu punya skill berikut yang relevan:" + system_extra
+
+    hasil = diskusi(pesan_akhir, history=history)
+    
+    # Auto-save chat
+    try:
+        import memory_manager
+        memory_manager.simpan_chat(pesan, hasil)
+    except Exception:
+        pass
+    
+    return hasil
+
+def diskusi_stream(pesan: str, history: list = None, provider: str = None):
+    """Versi streaming dari diskusi(). Yield chunk per chunk."""
+    prov = provider or DEFAULT_PROVIDER
+    urutan = [prov] + [p for p in PROVIDERS_CONFIG if p != prov]
+
+    messages = [{"role": "system", "content": SOUL}]
+    if history:
+        messages.extend(history)
+    messages.append({"role": "user", "content": pesan})
+
+    for nama in urutan:
+        if nama not in PROVIDERS_CONFIG:
+            continue
+        cfg = PROVIDERS_CONFIG.get(nama)
+        try:
+            stream = get_client(nama).chat.completions.create(
+                model=get_model(nama),
+                messages=messages,
+                temperature=0.85,
+                stream=True,
+            )
+            for chunk in stream:
+                if chunk.choices and chunk.choices[0].delta.content:
+                    yield chunk.choices[0].delta.content
+            return
+        except Exception as e:
+            print(f"[otak] Provider '{nama}' gagal: {e}")
+            continue
+
+    yield "[otak] Semua provider gagal."
+
+
+def diskusi_dengan_skill_stream(pesan: str, history: list = None):
+    """Streaming + skill injection (progressive disclosure)."""
+    skills = []
+    
+    # Coba skill_loader dulu (format baru)
+    try:
+        import skill_loader
+        skills = skill_loader.skill_relevan(pesan, limit=2)
+    except Exception:
+        # Fallback ke skill_evo
+        try:
+            import skill_evo
+            skills = skill_evo.skill_relevan(pesan, limit=2)
+        except Exception:
+            skills = []
+
+    system_extra = ""
+    if skills:
+        for s in skills:
+            # skill_loader return dict
+            if isinstance(s, dict):
+                slug = s.get("slug", s.get("nama", ""))
+                deskripsi = s.get("deskripsi", "")
+                system_extra += "\n\n[SKILL: " + slug + "] " + deskripsi
+                try:
+                    isi = skill_loader.load_skill(slug, level=2)
+                    system_extra += "\n" + isi
+                except Exception:
+                    pass
+            else:
+                # skill_evo return string
+                try:
+                    isi = skill_evo.load_skill(s)
+                    system_extra += "\n\n[SKILL RELEVAN: " + s + "]\n" + isi
+                except Exception:
+                    pass
+
+    pesan_akhir = pesan
+    if system_extra:
+        pesan_akhir = pesan + "\n\n---\nKamu punya skill berikut yang relevan:" + system_extra
+
+    yield from diskusi_stream(pesan_akhir, history=history)
+
+def deteksi_semua_eksekusi(pesan: str) -> list:
+    """
+    Deteksi SEMUA intent dari pesan (untuk auto-chain).
+    Return: list of dict {tipe, pesan_asli, span}
+    """
+    p = pesan.lower().strip()
+    hasil = []
+    
+    # Daftar pola (urutan prioritas)
+    # POLA DIPERLUAS - tambah variasi
+    pola_map = [
+        ("hapus_file", ["hapus file", "delete file", "buang file", "remove file"]),
+        ("restore_file", ["restore file", "kembalikan file", "balikin file"]),
+        ("copy_file", ["copy file", "salin file", "duplikat file"]),
+        ("buat_folder", ["bikin folder", "buat folder", "buat direktori", "bikin direktori"]),
+        ("list_file", ["lihat isi folder", "list file", "lihat folder", "isi folder"]),
+        ("workflow", ["jalankan workflow", "run workflow"]),
+        ("scan_folder", ["scan folder", "scanning folder", "scan directory", "scan hasil", "scan aja", "scan "]),
+        ("coding", ["coding ", "buatkan kode", "buat program", "bikin aplikasi", "generate code"]),
+        ("tulis_file", ["buat file", "tulis file", "simpan file"]),
+        ("jalankan_terminal", ["jalankan ", "eksekusi ", "run "]),
+    ]
+    
+    # Cek apakah ada kata sambung (pemicu auto-chain)
+    pemicu = [" lalu ", " terus ", " kemudian ", " setelah itu ", " dan ", ",", ";", " abis "]
+    ada_pemicu = any(k in p for k in pemicu)
+    
+    for tipe, pola_list in pola_map:
+        for pola in pola_list:
+            if pola in p:
+                # Cari posisi
+                idx = p.find(pola)
+                hasil.append({
+                    "tipe": tipe,
+                    "pesan_asli": pesan[idx:idx+100].strip(),  # potongan pesan
+                    "posisi": idx,
+                })
+                break  # 1 tipe cukup 1x
+    
+    # Sort berdasarkan posisi
+    hasil.sort(key=lambda x: x["posisi"])
+    
+    # Kalau > 1 dan ada pemicu → auto-chain
+    if len(hasil) > 1 and ada_pemicu:
+        return hasil
+    
+    # Kalau cuma 1 → return 1
+    if len(hasil) == 1:
+        return hasil
+    
+    # Kalau > 1 tapi tidak ada pemicu → return yang pertama saja
+    if len(hasil) > 1:
+        return hasil  # FIX_PEMOTONGAN_V3
+    
+    return []
+
+
+def eksekusi_berantai(pesan: str) -> dict:
+    """
+    Eksekusi semua intent dari pesan berurutan (auto-chain).
+    """
+    intents = deteksi_semua_eksekusi(pesan)
+    if not intents:
+        return {"sukses": False, "alasan": "tidak ada intent"}
+    
+    if len(intents) == 1:
+        # Single intent → pakai eksekusi_dari_pesan
+        det = deteksi_eksekusi(pesan)
+        hasil = eksekusi_dari_pesan(pesan)
+        return {"sukses": hasil.get("sukses"), "hasil": hasil, "chain": False}
+    
+    # Multi intent → eksekusi berantai
+    print(f"\n[Auto-Chain] {len(intents)} langkah terdeteksi:")
+    for i, it in enumerate(intents, 1):
+        print(f"  {i}. {it['tipe']}")
+    print()
+    
+    hasil_semua = []
+    for i, it in enumerate(intents, 1):
+        tipe = it["tipe"]
+        potongan = it["pesan_asli"]
+        print(f"\n[Auto-Chain {i}/{len(intents)}] {tipe}")
+        
+        det = {"butuh_eksekusi": True, "tipe": tipe, "pesan_asli": potongan}
+        
+        # Panggil tool langsung (bukan lewat eksekusi_dari_pesan karena butuh det)
+        try:
+            hasil = _panggil_tool(tipe, potongan)
+            sukses = hasil.get("sukses", False) if isinstance(hasil, dict) else False
+            print(f"  → {'OK' if sukses else 'GAGAL'}")
+            hasil_semua.append({"langkah": i, "tipe": tipe, "sukses": sukses, "hasil": hasil})
+            
+            if not sukses:
+                print(f"  [Auto-Chain] Berhenti di langkah {i}")
+                return {"sukses": False, "langkah_gagal": i, "hasil": hasil_semua, "chain": True}
+        except Exception as e:
+            print(f"  → ERROR: {e}")
+            hasil_semua.append({"langkah": i, "tipe": tipe, "sukses": False, "error": str(e)})
+            return {"sukses": False, "langkah_gagal": i, "error": str(e), "hasil": hasil_semua, "chain": True}
+    
+    print(f"\n[Auto-Chain] Selesai - {len(intents)} langkah OK")
+    return {"sukses": True, "total_langkah": len(intents), "hasil": hasil_semua, "chain": True}
+
+
+def _panggil_tool(tipe, pesan):
+    """Panggil tool langsung berdasarkan tipe."""
+    import tool_eksekusi as te
+    import re as _re
+    
+    if tipe == "scan_folder":
+        m_out = _re.search(r'(?:simpan|taruh|output|letakkan)\s+(?:di|ke)\s+["\']?([\w\-\s\.\\\/:]+)["\']?', pesan, _re.IGNORECASE)
+        output = m_out.group(1).strip() if m_out else None
+        if output and not output.lower().endswith(".txt"):
+            from datetime import datetime
+            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+            output = output.rstrip("\\/") + f"\\scan_{ts}.txt"
+        return te.scan_folder(folder=None, output=output)
+    
+    elif tipe == "buat_folder":
+        m = _re.search(r'(?:bikin|buat)\s+(?:folder|direktori)\s+["\']?([\w\-\.\/]+)["\']?', pesan, _re.IGNORECASE)
+        nama = m.group(1).strip() if m else "folder_baru"
+        return te.buat_folder(nama)
+    
+    elif tipe == "coding":
+        m = _re.search(r'(?:coding|buatkan kode|buat program|bikin aplikasi|generate code|buatkan aplikasi)\s+(.+)', pesan, _re.IGNORECASE)
+        goal = m.group(1).strip() if m else pesan
+        # FIX_GOAL_KOMA - potong sampai koma pertama
+        goal = goal.split(",")[0].split(";")[0].strip()
+        from coding_assistant import coding_loop
+        return coding_loop(goal, max_iterasi=3, nama_file="output_orion.py")
+    
+    elif tipe == "jalankan_terminal":
+        m = _re.search(r'(?:jalankan|eksekusi|run)\s+(.+)', pesan, _re.IGNORECASE)
+        perintah = m.group(1).strip() if m else pesan
+        return te.jalankan_terminal(perintah)
+    
+    elif tipe == "list_file":
+        m = _re.search(r'(?:isi|list|lihat)\s+folder\s+["\']?([\w\-\.\/]+)["\']?', pesan, _re.IGNORECASE)
+        folder = m.group(1).strip() if m else "."
+        return te.list_file(folder)
+    
+    else:
+        return {"sukses": False, "error": f"Tool {tipe} belum support di auto-chain"}
+
+
+def deteksi_eksekusi(pesan: str) -> dict:
+    """
+    Deteksi apakah pesan butuh eksekusi.
+    Support: tulis_file, jalankan_terminal, list_file, buat_folder, copy_file, hapus_file, restore_file
+    """
+    p = pesan.lower()
+    
+    # Deteksi hapus file (HATI-HATI: harus paling spesifik)
+    pola_hapus = ["hapus file", "delete file", "buang file", "remove file"]
+    for pola in pola_hapus:
+        if p.startswith(pola):
+            return {"butuh_eksekusi": True, "tipe": "hapus_file", "pesan_asli": pesan}
+    
+    # Deteksi restore
+    pola_restore = ["restore file", "kembalikan file", "balikin file"]
+    for pola in pola_restore:
+        if p.startswith(pola):
+            return {"butuh_eksekusi": True, "tipe": "restore_file", "pesan_asli": pesan}
+    
+    # Deteksi copy file
+    pola_copy = ["copy file", "salin file", "duplikat file"]
+    for pola in pola_copy:
+        if p.startswith(pola):
+            return {"butuh_eksekusi": True, "tipe": "copy_file", "pesan_asli": pesan}
+    
+    # Deteksi bikin folder
+    pola_folder = ["bikin folder", "buat folder", "buatin folder", "buat direktori", "bikin direktori", "bikinin folder", "buatkan folder"]
+    for pola in pola_folder:
+        if p.startswith(pola):
+            return {"butuh_eksekusi": True, "tipe": "buat_folder", "pesan_asli": pesan}
+    
+    # Deteksi list file
+    pola_list = ["lihat isi folder", "list file", "lihat folder", "isi folder", "daftar file"]
+    for pola in pola_list:
+        if p.startswith(pola):
+            return {"butuh_eksekusi": True, "tipe": "list_file", "pesan_asli": pesan}
+
+    # Deteksi workflow
+    pola_wf = ["jalankan workflow", "run workflow", "workflow "]
+    for pola in pola_wf:
+        if p.startswith(pola):
+            return {"butuh_eksekusi": True, "tipe": "workflow", "pesan_asli": pesan}
+
+    # Deteksi daftar workflow
+    if "daftar workflow" in p or "list workflow" in p:
+        return {"butuh_eksekusi": True, "tipe": "list_workflow", "pesan_asli": pesan}
+
+    # Deteksi analisis file
+    if "analisis file" in p or "cek file" in p:
+        return {"butuh_eksekusi": True, "tipe": "analisis_file", "pesan_asli": pesan}
+    if "fix file" in p or "perbaiki file" in p:
+        return {"butuh_eksekusi": True, "tipe": "fix_file", "pesan_asli": pesan}
+    # Deteksi buka VS 2022 / VSCode / terminal
+    if "buka vs 2022" in p or "buka visual studio" in p or "buka vs2022" in p:
+        return {"butuh_eksekusi": True, "tipe": "buka_vs2022", "pesan_asli": pesan}
+    if "buka vscode" in p or "buka vs code" in p:
+        return {"butuh_eksekusi": True, "tipe": "buka_vscode", "pesan_asli": pesan}
+    if "buka cmd" in p or "buka command prompt" in p:
+        return {"butuh_eksekusi": True, "tipe": "buka_cmd", "pesan_asli": pesan}
+    if "buka powershell" in p or "buka ps" in p:
+        return {"butuh_eksekusi": True, "tipe": "buka_powershell", "pesan_asli": pesan}
+    if "buka windows terminal" in p or "buka wt" in p:
+        return {"butuh_eksekusi": True, "tipe": "buka_wt", "pesan_asli": pesan}
+    if "buka file " in p:
+        return {"butuh_eksekusi": True, "tipe": "buka_file", "pesan_asli": pesan}
+    # Deteksi buka app/terminal
+    for app in ["vs 2022", "vs2022", "visual studio", "vscode", "vs code",
+                "cmd", "command prompt", "powershell", "ps ",
+                "windows terminal", "wt ", "notepad"]:
+        if f"buka {app}" in p or p == f"buka {app}":
+            return {"butuh_eksekusi": True, "tipe": "buka_app", "pesan_asli": pesan, "app": app}
+    if "buka file " in p:
+        return {"butuh_eksekusi": True, "tipe": "buka_file", "pesan_asli": pesan}
+    # Deteksi baca log
+    if "baca log " in p or "cek log " in p:
+        return {"butuh_eksekusi": True, "tipe": "baca_log", "pesan_asli": pesan}
+    if "analisis error " in p or "cek error " in p:
+        return {"butuh_eksekusi": True, "tipe": "analisis_error", "pesan_asli": pesan}
+    if "analisis multi " in p or "analisis banyak file" in p:
+        return {"butuh_eksekusi": True, "tipe": "analisis_multi", "pesan_asli": pesan}
+    if "fix sampai jalan " in p or "fix loop " in p:
+        return {"butuh_eksekusi": True, "tipe": "fix_sampai_jalan", "pesan_asli": pesan}
+    # Deteksi analisis folder
+    if "analisis folder" in p or "analisa folder" in p or "bedah folder" in p:
+        return {"butuh_eksekusi": True, "tipe": "analisis_folder", "pesan_asli": pesan}
+    # Deteksi cari string
+    if "cari string " in p or "cari kata " in p or "grep " in p:
+        return {"butuh_eksekusi": True, "tipe": "cari_string", "pesan_asli": pesan}
+    # Deteksi analisis dependency
+    if "analisis dependency" in p or "analisis dependensi" in p or "cek dependency" in p:
+        return {"butuh_eksekusi": True, "tipe": "analisis_dependency", "pesan_asli": pesan}
+    # Deteksi git
+    if "git init" in p or "init git" in p:
+        return {"butuh_eksekusi": True, "tipe": "git_init", "pesan_asli": pesan}
+    if "git commit" in p or "git simpan" in p:
+        return {"butuh_eksekusi": True, "tipe": "git_commit", "pesan_asli": pesan}
+    if "git status" in p or "git cek" in p:
+        return {"butuh_eksekusi": True, "tipe": "git_status", "pesan_asli": pesan}
+    # Deteksi test
+    if "jalankan test " in p or "test folder " in p or "test suite " in p:
+        return {"butuh_eksekusi": True, "tipe": "jalankan_test", "pesan_asli": pesan}
+    # Deteksi fix folder
+    if "fix folder " in p or "fix proyek " in p or "fix project " in p:
+        return {"butuh_eksekusi": True, "tipe": "fix_folder", "pesan_asli": pesan}
+    # Deteksi trace error
+    if "trace error " in p or "trace dan fix " in p:
+        return {"butuh_eksekusi": True, "tipe": "trace_error", "pesan_asli": pesan}
+    # Deteksi baca file
+    if "baca file " in p or "lihat file " in p or "tampilkan file " in p:
+        return {"butuh_eksekusi": True, "tipe": "baca_file", "pesan_asli": pesan}
+    # CHAT_BATCH1
+    if "screenshot" in p or "ss layar" in p:
+        return {"butuh_eksekusi": True, "tipe": "screenshot", "pesan_asli": pesan}
+    if "volume" in p:
+        return {"butuh_eksekusi": True, "tipe": "volume", "pesan_asli": pesan}
+    if "brightness" in p:
+        return {"butuh_eksekusi": True, "tipe": "brightness", "pesan_asli": pesan}
+    if p == "status" or "status sistem" in p:
+        return {"butuh_eksekusi": True, "tipe": "status", "pesan_asli": pesan}
+    if p.startswith("kill "):
+        return {"butuh_eksekusi": True, "tipe": "kill", "pesan_asli": pesan}
+    if "shutdown" in p or "matikan pc" in p:
+        return {"butuh_eksekusi": True, "tipe": "shutdown", "pesan_asli": pesan}
+    if "restart" in p or "ulang pc" in p:
+        return {"butuh_eksekusi": True, "tipe": "restart", "pesan_asli": pesan}
+    if "buka notepad" in p:
+        return {"butuh_eksekusi": True, "tipe": "buka_notepad", "pesan_asli": pesan}
+    # 4BATCH_CHAT
+    # System
+    if "screenshot" in p or "ss layar" in p:
+        return {"butuh_eksekusi": True, "tipe": "screenshot", "pesan_asli": pesan}
+    if p.startswith("volume ") or p == "volume":
+        return {"butuh_eksekusi": True, "tipe": "volume", "pesan_asli": pesan}
+    if p.startswith("brightness ") or p == "brightness":
+        return {"butuh_eksekusi": True, "tipe": "brightness", "pesan_asli": pesan}
+    if p == "status" or "status sistem" in p:
+        return {"butuh_eksekusi": True, "tipe": "status", "pesan_asli": pesan}
+    if p.startswith("kill "):
+        return {"butuh_eksekusi": True, "tipe": "kill", "pesan_asli": pesan}
+    if "shutdown" in p or "matikan pc" in p:
+        return {"butuh_eksekusi": True, "tipe": "shutdown", "pesan_asli": pesan}
+    if "restart" in p or "ulang pc" in p:
+        return {"butuh_eksekusi": True, "tipe": "restart", "pesan_asli": pesan}
+    if "buka notepad" in p:
+        return {"butuh_eksekusi": True, "tipe": "buka_notepad", "pesan_asli": pesan}
+    # Info
+    if p.startswith("cuaca ") or p == "cuaca":
+        return {"butuh_eksekusi": True, "tipe": "cuaca", "pesan_asli": pesan}
+    # SKIP_INFO - Berita dinonaktifkan
+    # if p == "berita" or p.startswith("berita "):
+    #     return {"butuh_eksekusi": True, "tipe": "berita", "pesan_asli": pesan}
+    # SKIP_INFO - Saham dinonaktifkan
+    # if p.startswith("saham ") or p == "saham":
+    #     return {"butuh_eksekusi": True, "tipe": "saham", "pesan_asli": pesan}
+    # SKIP_INFO - Kurs dinonaktifkan
+    # if p.startswith("kurs ") or p == "kurs":
+    #     return {"butuh_eksekusi": True, "tipe": "kurs", "pesan_asli": pesan}
+    if p.startswith("cari berita "):
+        return {"butuh_eksekusi": True, "tipe": "cari_berita", "pesan_asli": pesan}
+    # Kalender
+    if p.startswith("buat event ") or p.startswith("bikin event "):
+        return {"butuh_eksekusi": True, "tipe": "buat_event", "pesan_asli": pesan}
+    if p in ("jadwal", "jadwal hari ini", "kalender hari ini"):
+        return {"butuh_eksekusi": True, "tipe": "jadwal_hari_ini", "pesan_asli": pesan}
+    if p in ("buka kalender", "buka gcal"):
+        return {"butuh_eksekusi": True, "tipe": "buka_kalender", "pesan_asli": pesan}
+    # Chat
+    if p in ("ping", "test", "tes"):
+        return {"butuh_eksekusi": True, "tipe": "ping", "pesan_asli": pesan}
+    if p in ("halo", "hai", "hi", "hello"):
+        return {"butuh_eksekusi": True, "tipe": "halo", "pesan_asli": pesan}
+    if p in ("help", "bantuan", "bantu"):
+        return {"butuh_eksekusi": True, "tipe": "help", "pesan_asli": pesan}
+    if p in ("lihat chat", "riwayat chat", "history chat"):
+        return {"butuh_eksekusi": True, "tipe": "lihat_chat", "pesan_asli": pesan}
+    if p in ("hapus chat", "clear chat", "reset chat"):
+        return {"butuh_eksekusi": True, "tipe": "hapus_chat", "pesan_asli": pesan}
+    if p.startswith("ingetin ") or p.startswith("ingatkan "):
+        return {"butuh_eksekusi": True, "tipe": "ingetin", "pesan_asli": pesan}
+    # BATCH57
+    if p == "browser" or p == "buka browser":
+        return {"butuh_eksekusi": True, "tipe": "browser", "pesan_asli": pesan}
+    if p.startswith("yt ") or p.startswith("youtube "):
+        return {"butuh_eksekusi": True, "tipe": "yt", "pesan_asli": pesan}
+    if p == "join":
+        return {"butuh_eksekusi": True, "tipe": "join", "pesan_asli": pesan}
+    if p == "leave":
+        return {"butuh_eksekusi": True, "tipe": "leave", "pesan_asli": pesan}
+    if p == "menu":
+        return {"butuh_eksekusi": True, "tipe": "menu", "pesan_asli": pesan}
+    if p == "scan" or p == "scan folder":
+        return {"butuh_eksekusi": True, "tipe": "scan", "pesan_asli": pesan}
+    if p == "terminal":
+        return {"butuh_eksekusi": True, "tipe": "terminal", "pesan_asli": pesan}
+    # FIX_SCAN_FOLDER
+    # SELF_SKILL
+    if p.startswith("fix baris "):
+        return {"butuh_eksekusi": True, "tipe": "fix_baris", "pesan_asli": pesan}
+    if p.startswith("fix fungsi "):
+        return {"butuh_eksekusi": True, "tipe": "fix_fungsi", "pesan_asli": pesan}
+    if p.startswith("tambah skill "):
+        return {"butuh_eksekusi": True, "tipe": "tambah_skill", "pesan_asli": pesan}
+    # Deteksi scan folder - startswith
+    pola_scan = ["scan folder", "scanning folder", "scan directory", "scan direktori", "pindai folder"]
+    for pola in pola_scan:
+        if p.startswith(pola):
+            return {"butuh_eksekusi": True, "tipe": "scan_folder", "pesan_asli": pesan}
+
+    # FIX_CODING_KETAT - Deteksi coding HANYA di awal pesan
+    pola_coding = ["coding ", "buatkan kode", "buat program", "bikin aplikasi", "generate code", "buatkan aplikasi"]
+    for pola in pola_coding:
+        if p.startswith(pola):
+            return {"butuh_eksekusi": True, "tipe": "coding", "pesan_asli": pesan}
+    
+    # Deteksi tulis file
+    pola_tulis = [
+        "buat file", "tulis file", "simpan file", "bikin file",
+        "buat pdf", "buat excel", "buat word", "buat dokumen",
+        "tulis ke", "simpan ke",
+    ]
+    for pola in pola_tulis:
+        if pola in p:
+            return {"butuh_eksekusi": True, "tipe": "tulis_file", "pesan_asli": pesan}
+    
+    # Deteksi jalankan terminal
+    pola_jalan = ["jalankan ", "eksekusi ", "run "]
+    for pola in pola_jalan:
+        if pola in p:
+            return {"butuh_eksekusi": True, "tipe": "jalankan_terminal", "pesan_asli": pesan}
+    
+    return {"butuh_eksekusi": False}
+
+
+def eksekusi_dari_pesan(pesan: str) -> dict:
+    """
+    Eksekusi pesan (kalau butuh). Pakai tool_eksekusi.
+    Return: {sukses, hasil, pesan}
+    """
+    det = deteksi_eksekusi(pesan)
+    if not det.get("butuh_eksekusi"):
+        return {"sukses": False, "alasan": "tidak butuh eksekusi"}
+    
+    try:
+        import tool_eksekusi as te
+    except Exception as e:
+        return {"sukses": False, "error": f"Tool eksekusi tidak ada: {e}"}
+    
+    tipe = det.get("tipe")
+    
+    # === HAPUS FILE ===
+    if tipe == "hapus_file":
+        import re as _re
+        match = _re.search(r'(?:hapus|delete|buang|remove)\s+file\s+["\']?([\w\-\.\/]+)["\']?', pesan, _re.IGNORECASE)
+        nama_file = match.group(1) if match else ""
+        if not nama_file:
+            return {"sukses": False, "error": "Nama file tidak disebut"}
+        hasil = te.hapus_file(nama_file)
+        return {"sukses": hasil.get("sukses"), "hasil": hasil, "nama_file": nama_file}
+    
+    # === RESTORE FILE ===
+    if tipe == "restore_file":
+        import re as _re
+        match = _re.search(r'(?:restore|kembalikan|balikin)\s+file\s+["\']?([\w\-\.\/]+)["\']?', pesan, _re.IGNORECASE)
+        nama_file = match.group(1) if match else ""
+        if not nama_file:
+            return {"sukses": False, "error": "Nama file tidak disebut"}
+        hasil = te.restore_file(nama_file)
+        return {"sukses": hasil.get("sukses"), "hasil": hasil, "nama_file": nama_file}
+    
+    # === COPY FILE ===
+    if tipe == "copy_file":
+        import re as _re
+        # Format: copy file A ke B
+        match = _re.search(r'(?:copy|salin|duplikat)\s+file\s+["\']?([\w\-\.]+)["\']?\s+ke\s+["\']?([\w\-\.\/]+)["\']?', pesan, _re.IGNORECASE)
+        if match:
+            sumber, tujuan = match.group(1), match.group(2)
+            hasil = te.copy_file(sumber, tujuan)
+            return {"sukses": hasil.get("sukses"), "hasil": hasil}
+        return {"sukses": False, "error": "Format: copy file A ke B"}
+    
+    # === BUAT FOLDER ===
+    if tipe == "buat_folder":
+        import re as _re
+        match = _re.search(r'(?:bikin|buat)\s+(?:folder|direktori)\s+["\']?([\w\-\.\/]+)["\']?', pesan, _re.IGNORECASE)
+        nama_folder = match.group(1) if match else "folder_baru"
+        hasil = te.buat_folder(nama_folder)
+        return {"sukses": hasil.get("sukses"), "hasil": hasil, "nama_folder": nama_folder}
+    
+    # === WORKFLOW ===
+    if tipe == "workflow":
+        import re as _re
+        pesan_asli_wf = det.get("pesan_asli", pesan)
+        pesan_asli_wf = pesan_asli_wf.split("\n")[0].strip()
+        m = _re.search(r'(?:jalankan|run)\s+workflow\s+(\w+)', pesan_asli_wf, _re.IGNORECASE)
+        nama_wf = m.group(1).strip() if m else None
+        if not nama_wf:
+            m2 = _re.search(r'workflow\s+(\w+)', pesan_asli_wf, _re.IGNORECASE)
+            nama_wf = m2.group(1).strip() if m2 else None
+        
+        if not nama_wf:
+            return {"sukses": False, "error": "Nama workflow tidak disebut"}
+        
+        try:
+            import workflow_engine
+            hasil = workflow_engine.jalankan_workflow(nama_wf, verbose=True)
+            return {"sukses": hasil.get("sukses"), "hasil": hasil, "nama_wf": nama_wf}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+
+    # === LIST WORKFLOW ===
+    if tipe == "list_workflow":
+        try:
+            import workflow_engine
+            wfs = workflow_engine.daftar_workflow()
+            return {"sukses": True, "hasil": {"workflows": wfs}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+
+    # === CODING ===
+    if tipe == "coding":
+        import re as _re
+        # Ambil pesan ASLI (sebelum ditambah konteks memory)
+        pesan_asli_untuk_coding = det.get("pesan_asli", pesan)
+        # Batasi hanya baris pertama - hindari konteks memory
+        pesan_asli_untuk_coding = pesan_asli_untuk_coding.split("\n")[0].strip()
+        m = _re.search(r'(?:coding|buatkan kode|buat program|bikin aplikasi|generate code|buatkan aplikasi)\s+(.+)', pesan_asli_untuk_coding, _re.IGNORECASE)
+        goal = m.group(1).strip() if m else pesan_asli_untuk_coding
+        try:
+            from coding_assistant import coding_loop
+            hasil = coding_loop(goal, max_iterasi=3, nama_file="output_orion.py")
+            return {"sukses": hasil.get("sukses"), "hasil": hasil, "goal": goal}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+
+    if tipe == "analisis_file":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:analisis|cek)\s+file\s+(.+)', p2, _re.IGNORECASE)
+        fp = m.group(1).strip() if m else None
+        if not fp:
+            return {"sukses": False, "error": "File tidak disebut"}
+        return {"sukses": True, "hasil": te.analisis_file(fp), "file": fp}
+    if tipe == "fix_file":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:fix|perbaiki)\s+file\s+(.+)', p2, _re.IGNORECASE)
+        fp = m.group(1).strip() if m else None
+        if not fp:
+            return {"sukses": False, "error": "File tidak disebut"}
+        return {"sukses": True, "hasil": te.fix_file(fp), "file": fp}
+    if tipe == "buka_vs2022":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'buka\s+(?:vs\s*2022|visual studio|vs2022)\s+(.+)', p2, _re.IGNORECASE)
+        path = m.group(1).strip() if m else None
+        return {"sukses": True, "hasil": te.buka_vs2022(path=path), "path": path}
+    
+    if tipe == "buka_vscode":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'buka\s+(?:vs\s*code|vscode)\s+(.+)', p2, _re.IGNORECASE)
+        path = m.group(1).strip() if m else None
+        return {"sukses": True, "hasil": te.buka_vscode(path), "path": path}
+    
+    if tipe == "buka_cmd":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'buka\s+(?:cmd|command prompt)\s+(.+)', p2, _re.IGNORECASE)
+        path = m.group(1).strip() if m else None
+        return {"sukses": True, "hasil": te.buka_cmd(path), "path": path}
+    
+    if tipe == "buka_powershell":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'buka\s+(?:powershell|ps)\s+(.+)', p2, _re.IGNORECASE)
+        path = m.group(1).strip() if m else None
+        return {"sukses": True, "hasil": te.buka_powershell(path), "path": path}
+    
+    if tipe == "buka_wt":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'buka\s+(?:windows terminal|wt)\s+(.+)', p2, _re.IGNORECASE)
+        path = m.group(1).strip() if m else None
+        return {"sukses": True, "hasil": te.buka_windows_terminal(path), "path": path}
+    
+    if tipe == "buka_file":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'buka\s+file\s+(.+)', p2, _re.IGNORECASE)
+        path = m.group(1).strip() if m else None
+        if not path:
+            return {"sukses": False, "error": "File tidak disebut"}
+        return {"sukses": True, "hasil": te.buka_file(path), "path": path}
+    
+    if tipe == "buka_app":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        app = det.get("app", "")
+        # Cari path setelah nama app
+        m = _re.search(r'buka\s+' + _re.escape(app) + r'\s+(.+)', p2, _re.IGNORECASE)
+        path = m.group(1).strip() if m else None
+        hasil = te.buka_terminal(app, path)
+        return {"sukses": hasil.get("sukses"), "hasil": hasil, "app": app, "path": path}
+    
+    if tipe == "buka_file":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'buka\s+file\s+(.+)', p2, _re.IGNORECASE)
+        path = m.group(1).strip() if m else None
+        if not path:
+            return {"sukses": False, "error": "File tidak disebut"}
+        return {"sukses": True, "hasil": te.buka_file(path), "path": path}
+    
+    # === BACA LOG ===
+    if tipe == "baca_log":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:baca|cek)\s+log\s+(.+)', p2, _re.IGNORECASE)
+        fp = m.group(1).strip() if m else None
+        if not fp:
+            return {"sukses": False, "error": "Path log tidak disebut"}
+        return {"sukses": True, "hasil": te.baca_log(fp), "file": fp}
+    
+    # === ANALISIS ERROR ===
+    if tipe == "analisis_error":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:analisis|cek)\s+error\s+(.+)', p2, _re.IGNORECASE)
+        tb = m.group(1).strip() if m else None
+        if not tb:
+            return {"sukses": False, "error": "Traceback tidak disebut"}
+        return {"sukses": True, "hasil": te.analisis_error(tb)}
+    
+    # === ANALISIS MULTI ===
+    if tipe == "analisis_multi":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'analisis multi\s+(.+)', p2, _re.IGNORECASE)
+        files_str = m.group(1).strip() if m else ""
+        files = [f.strip() for f in files_str.split(",") if f.strip()]
+        if not files:
+            return {"sukses": False, "error": "File tidak disebut"}
+        return {"sukses": True, "hasil": te.analisis_multi(files), "files": files}
+    
+    # === FIX SAMPAI JALAN ===
+    if tipe == "fix_sampai_jalan":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'fix sampai jalan\s+(\\S+)(?:\s+test:\s*(.+))?', p2, _re.IGNORECASE)
+        if m:
+            fp = m.group(1).strip()
+            test_cmd = m.group(2).strip() if m.group(2) else None
+            return {"sukses": True, "hasil": te.fix_sampai_jalan(fp, test_cmd), "file": fp}
+        return {"sukses": False, "error": "Format: fix sampai jalan <file> test: <cmd>"}
+    
+    # === ANALISIS FOLDER ===
+    if tipe == "analisis_folder":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:analisis|analisa|bedah)\s+folder\s+(.+)', p2, _re.IGNORECASE)
+        folder = m.group(1).strip() if m else None
+        if not folder:
+            return {"sukses": False, "error": "Folder tidak disebut"}
+        try:
+            hasil = te.analisis_folder(folder, max_file=10)
+            return {"sukses": hasil.get("sukses"), "hasil": hasil, "folder": folder}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    # === CARI STRING ===
+    if tipe == "cari_string":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        # Format: cari string <pattern> di <folder>
+        m = _re.search(r'cari\s+(?:string|kata)\s+["\']?(.+?)["\']?\s+(?:di|dalam)\s+(.+)', p2, _re.IGNORECASE)
+        if m:
+            pattern = m.group(1).strip()
+            folder = m.group(2).strip()
+            return {"sukses": True, "hasil": te.cari_string(folder, pattern), "pattern": pattern, "folder": folder}
+        return {"sukses": False, "error": "Format: cari string <pattern> di <folder>"}
+    
+    # === ANALISIS DEPENDENCY ===
+    if tipe == "analisis_dependency":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'analisis\s+(?:dependency|dependensi|cek dependency)\s+(.+)', p2, _re.IGNORECASE)
+        folder = m.group(1).strip() if m else None
+        if not folder:
+            return {"sukses": False, "error": "Folder tidak disebut"}
+        return {"sukses": True, "hasil": te.analisis_dependency(folder), "folder": folder}
+    
+    # === GIT INIT ===
+    if tipe == "git_init":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:git init|init git)\s+(.+)', p2, _re.IGNORECASE)
+        folder = m.group(1).strip() if m else None
+        if not folder:
+            return {"sukses": False, "error": "Folder tidak disebut"}
+        return {"sukses": True, "hasil": te.git_init(folder), "folder": folder}
+    
+    # === GIT COMMIT ===
+    if tipe == "git_commit":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:git commit|git simpan)\s+["\']?(.+?)["\']?\s+(?:di|dalam)\s+(.+)', p2, _re.IGNORECASE)
+        if m:
+            msg = m.group(1).strip()
+            folder = m.group(2).strip()
+            return {"sukses": True, "hasil": te.git_commit(folder, msg), "folder": folder, "msg": msg}
+        m2 = _re.search(r'(?:git commit|git simpan)\s+(.+)', p2, _re.IGNORECASE)
+        folder = m2.group(1).strip() if m2 else None
+        if not folder:
+            return {"sukses": False, "error": "Format: git commit <folder>"}
+        return {"sukses": True, "hasil": te.git_commit(folder), "folder": folder}
+    
+    # === GIT STATUS ===
+    if tipe == "git_status":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:git status|git cek)\s+(.+)', p2, _re.IGNORECASE)
+        folder = m.group(1).strip() if m else None
+        if not folder:
+            return {"sukses": False, "error": "Folder tidak disebut"}
+        return {"sukses": True, "hasil": te.git_status(folder), "folder": folder}
+    
+    # === JALANKAN TEST ===
+    if tipe == "jalankan_test":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:jalankan test|test folder|test suite)\s+(.+)', p2, _re.IGNORECASE)
+        folder = m.group(1).strip() if m else None
+        if not folder:
+            return {"sukses": False, "error": "Folder tidak disebut"}
+        return {"sukses": True, "hasil": te.jalankan_test(folder), "folder": folder}
+    
+    # === FIX FOLDER ===
+    if tipe == "fix_folder":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:fix folder|fix proyek|fix project)\s+(.+)', p2, _re.IGNORECASE)
+        folder = m.group(1).strip() if m else None
+        if not folder:
+            return {"sukses": False, "error": "Folder tidak disebut"}
+        return {"sukses": True, "hasil": te.fix_folder(folder), "folder": folder}
+    
+    # === TRACE ERROR ===
+    if tipe == "trace_error":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'trace error\s+(.+?)\s+(?:cmd|test):\s*(.+)', p2, _re.IGNORECASE)
+        if m:
+            folder = m.group(1).strip()
+            cmd = m.group(2).strip()
+            return {"sukses": True, "hasil": te.trace_error(folder, cmd), "folder": folder}
+        return {"sukses": False, "error": "Format: trace error <folder> cmd: <cmd>"}
+    
+    # === BACA FILE ===
+    if tipe == "baca_file":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'(?:baca|lihat|tampilkan)\s+file\s+(.+)', p2, _re.IGNORECASE)
+        fp = m.group(1).strip() if m else None
+        if not fp:
+            return {"sukses": False, "error": "File tidak disebut"}
+        return {"sukses": True, "hasil": te.baca_file(fp), "file": fp}
+    
+    # === CHAT_BATCH1 HANDLERS ===
+    if tipe == "screenshot":
+        try:
+            from core import screenshot
+            hasil = screenshot()
+            return {"sukses": True, "hasil": {"screenshot": hasil}, "file": hasil}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "volume":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'volume\s*(\d+)?', p2, _re.IGNORECASE)
+        level = m.group(1) if m and m.group(1) else "50"
+        try:
+            from core import volume_api
+            volume_api(level)
+            return {"sukses": True, "hasil": {"volume": level}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "brightness":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'brightness\s*(\d+)?', p2, _re.IGNORECASE)
+        level = m.group(1) if m and m.group(1) else "80"
+        try:
+            from core import brightness_api
+            brightness_api(level)
+            return {"sukses": True, "hasil": {"brightness": level}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "status":
+        try:
+            from core import status_sistem
+            hasil = status_sistem()
+            return {"sukses": True, "hasil": {"status": hasil}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "kill":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        m = _re.search(r'kill\s+(.+)', p2, _re.IGNORECASE)
+        app = m.group(1).strip() if m else ""
+        try:
+            from core import kill_api
+            kill_api(app)
+            return {"sukses": True, "hasil": {"kill": app}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "shutdown":
+        return {"sukses": True, "hasil": {"pesan": "Konfirmasi: ketik 'yakin shutdown' untuk matikan PC"}}
+    
+    if tipe == "restart":
+        return {"sukses": True, "hasil": {"pesan": "Konfirmasi: ketik 'yakin restart' untuk restart PC"}}
+    
+    if tipe == "buka_notepad":
+        try:
+            from tool_eksekusi import buka_notepad
+            hasil = buka_notepad()
+            return {"sukses": True, "hasil": hasil}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    # === 4BATCH_CHAT HANDLERS ===
+    if tipe == "screenshot":
+        try:
+            from core import screenshot
+            hasil = screenshot()
+            return {"sukses": True, "hasil": {"screenshot": hasil}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "volume":
+        import re as _re
+        m = _re.search(r'volume\s*(\d+)?', det.get("pesan_asli", pesan), _re.IGNORECASE)
+        level = m.group(1) if m and m.group(1) else "50"
+        try:
+            from core import volume_api
+            volume_api(level)
+            return {"sukses": True, "hasil": {"volume": level}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "brightness":
+        import re as _re
+        m = _re.search(r'brightness\s*(\d+)?', det.get("pesan_asli", pesan), _re.IGNORECASE)
+        level = m.group(1) if m and m.group(1) else "80"
+        try:
+            from core import brightness_api
+            brightness_api(level)
+            return {"sukses": True, "hasil": {"brightness": level}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "status":
+        try:
+            from core import status_sistem
+            return {"sukses": True, "hasil": {"status": status_sistem()}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "kill":
+        import re as _re
+        m = _re.search(r'kill\s+(.+)', det.get("pesan_asli", pesan), _re.IGNORECASE)
+        app = m.group(1).strip() if m else ""
+        try:
+            from core import kill_api
+            kill_api(app)
+            return {"sukses": True, "hasil": {"kill": app}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "shutdown":
+        return {"sukses": True, "hasil": {"pesan": "Konfirmasi: ketik 'yakin shutdown'"}}
+    
+    if tipe == "restart":
+        return {"sukses": True, "hasil": {"pesan": "Konfirmasi: ketik 'yakin restart'"}}
+    
+    if tipe == "buka_notepad":
+        try:
+            from tool_eksekusi import buka_notepad
+            return {"sukses": True, "hasil": buka_notepad()}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "cuaca":
+        # FIX_CUACA_V3
+        import re as _re
+        m = _re.search(r'cuaca\s+(.+)', det.get("pesan_asli", pesan), _re.IGNORECASE)
+        kota = m.group(1).strip() if m else "Jakarta"
+        try:
+            from core import cuaca_api
+            hasil = cuaca_api(kota)
+            if "GANTI" in str(hasil) or "Set api_key" in str(hasil):
+                return {"sukses": True, "hasil": {"cuaca": "API key OpenWeather belum di-set. Daftar gratis: https://openweathermap.org/api"}, "kota": kota}
+            return {"sukses": True, "hasil": {"cuaca": hasil}, "kota": kota}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "berita":
+        try:
+            from core import berita_detik
+            return {"sukses": True, "hasil": {"berita": berita_detik()}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "saham":
+        import re as _re
+        m = _re.search(r'saham\s+(.+)', det.get("pesan_asli", pesan), _re.IGNORECASE)
+        kode = m.group(1).strip() if m else "BBCA"
+        try:
+            from core import harga_saham
+            return {"sukses": True, "hasil": {"saham": harga_saham(kode)}, "kode": kode}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "kurs":
+        import re as _re
+        m = _re.search(r'kurs\s+(.+)', det.get("pesan_asli", pesan), _re.IGNORECASE)
+        mata = m.group(1).strip() if m else "USD"
+        try:
+            from core import kurs_mata_uang
+            return {"sukses": True, "hasil": {"kurs": kurs_mata_uang(mata)}, "mata": mata}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "cari_berita":
+        import re as _re
+        m = _re.search(r'cari berita\s+(.+)', det.get("pesan_asli", pesan), _re.IGNORECASE)
+        topik = m.group(1).strip() if m else ""
+        try:
+            from core import cari_berita
+            return {"sukses": True, "hasil": {"berita": cari_berita(topik)}, "topik": topik}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "buat_event":
+        import re as _re
+        m = _re.search(r'(?:buat|bikin) event\s+(.+)', det.get("pesan_asli", pesan), _re.IGNORECASE)
+        event = m.group(1).strip() if m else ""
+        try:
+            from core import gcal_buat_event
+            return {"sukses": True, "hasil": {"event": gcal_buat_event(event)}, "event": event}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "jadwal_hari_ini":
+        try:
+            from core import gcal_hari_ini
+            return {"sukses": True, "hasil": {"jadwal": gcal_hari_ini()}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "buka_kalender":
+        try:
+            from core import gcal_buka
+            gcal_buka()
+            return {"sukses": True, "hasil": {"pesan": "Kalender dibuka"}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "ping":
+        return {"sukses": True, "hasil": {"pesan": "Pong! Orion hidup."}}
+    
+    if tipe == "halo":
+        return {"sukses": True, "hasil": {"pesan": "Halo Rik! Orion siap bantu."}}
+    
+    if tipe == "help":
+        help_text = """ORION HELP
+
+CODING: coding buat <goal>
+ANALISIS: analisis file/folder/multi/error
+FIX: fix file/folder/sampai jalan
+FILE: hapus/restore/copy/buat folder/list/tulis/scan/baca
+TERMINAL: jalankan, buka cmd/powershell/wt/vs2022/notepad
+GIT: git init/commit/status
+TEST: jalankan test
+LOG: baca log
+SEARCH: cari string
+WORKFLOW: daftar/jalankan workflow
+SYSTEM: screenshot/volume/brightness/status/kill
+INFO: cuaca/berita/saham/kurs
+JARVIS: suruh jarvis"""
+        return {"sukses": True, "hasil": {"help": help_text}}
+    
+    if tipe == "lihat_chat":
+        try:
+            from core import chat_lihat
+            return {"sukses": True, "hasil": {"chat": chat_lihat()}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "hapus_chat":
+        try:
+            from core import chat_hapus
+            chat_hapus()
+            return {"sukses": True, "hasil": {"pesan": "Chat history dihapus"}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "ingetin":
+        import re as _re
+        m = _re.search(r'(?:ingetin|ingatkan)\s+(.+)', det.get("pesan_asli", pesan), _re.IGNORECASE)
+        reminder = m.group(1).strip() if m else ""
+        try:
+            from core import auto_notif_mulai
+            auto_notif_mulai(reminder)
+            return {"sukses": True, "hasil": {"pesan": f"Reminder: {reminder}"}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    # === BATCH57 HANDLERS ===
+    if tipe == "browser":
+        try:
+            from core import browser
+            browser()
+            return {"sukses": True, "hasil": {"pesan": "Browser dibuka"}}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "yt":
+        import re as _re
+        m = _re.search(r'(?:yt|youtube)\s+(.+)', det.get("pesan_asli", pesan), _re.IGNORECASE)
+        url = m.group(1).strip() if m else ""
+        try:
+            from core import yt_download
+            return {"sukses": True, "hasil": {"yt": yt_download(url)}, "url": url}
+        except Exception as e:
+            return {"sukses": False, "error": str(e)}
+    
+    if tipe == "join":
+        return {"sukses": True, "hasil": {"pesan": "Join voice channel - hanya di Discord"}}
+    
+    if tipe == "leave":
+        return {"sukses": True, "hasil": {"pesan": "Leave voice channel - hanya di Discord"}}
+    
+    if tipe == "menu":
+        menu_text = """ORION MENU
+
+[1] Chat AI
+[2] Coding
+[3] Analisis + Fix
+[4] Terminal
+[5] File Ops
+[6] Git
+[7] Workflow
+[8] System
+[9] Info
+[0] Keluar"""
+        return {"sukses": True, "hasil": {"menu": menu_text}}
+    
+    if tipe == "scan":
+        return {"sukses": True, "hasil": {"pesan": "Format: scan folder <path>"}}
+    
+    if tipe == "terminal":
+        return {"sukses": True, "hasil": {"pesan": "Format: jalankan <cmd>"}}
+    
+    # === SELF_SKILL HANDLERS ===
+    if tipe == "fix_baris":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        # Format: fix baris <file> <baris> "lama" "baru"
+        m = _re.search(r'fix baris\s+(.+?)\s+(\d+)\s+["\'](.+?)["\']\s+["\'](.+?)["\']', p2)
+        if not m:
+            return {"sukses": False, "error": "Format: fix baris <file> <baris> 'lama' 'baru'"}
+        fp, br, lama, baru = m.group(1), int(m.group(2)), m.group(3), m.group(4)
+        return {"sukses": True, "hasil": te.fix_baris(fp, br, lama, baru), "file": fp}
+    
+    if tipe == "fix_fungsi":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        # Format: fix fungsi <file> <nama> "instruksi"
+        m = _re.search(r'fix fungsi\s+(.+?)\s+(\w+)\s+["\'](.+?)["\']', p2)
+        if m:
+            fp, nama, ins = m.group(1), m.group(2), m.group(3)
+            return {"sukses": True, "hasil": te.fix_fungsi(fp, nama, ins), "file": fp}
+        # Format: fix fungsi <file> <nama>
+        m2 = _re.search(r'fix fungsi\s+(.+?)\s+(\w+)', p2)
+        if m2:
+            fp, nama = m2.group(1), m2.group(2)
+            return {"sukses": True, "hasil": te.fix_fungsi(fp, nama), "file": fp}
+        return {"sukses": False, "error": "Format: fix fungsi <file> <nama> 'instruksi'"}
+    
+    if tipe == "tambah_skill":
+        import re as _re
+        p2 = det.get("pesan_asli", pesan).split("\n")[0].strip()
+        # Format: tambah skill "deskripsi"
+        m = _re.search(r'tambah skill\s+["\'](.+?)["\']', p2)
+        if not m:
+            return {"sukses": False, "error": "Format: tambah skill 'deskripsi'"}
+        deskripsi = m.group(1)
+        # Bikin file skill
+        from pathlib import Path
+        from datetime import datetime
+        skills_dir = Path(r"E:\Project Software\Orion\skills")
+        skills_dir.mkdir(exist_ok=True)
+        slug = deskripsi.lower().replace(" ", "_")[:30]
+        skill_file = skills_dir / f"{slug}.md"
+        skill_file.write_text(f"# SKILL: {slug}\n\n{deskripsi}\n\nDibuat: {datetime.now()}\n", encoding="utf-8")
+        return {"sukses": True, "hasil": {"skill": str(skill_file)}, "file": str(skill_file)}
+    
+    # === SCAN FOLDER ===
+    if tipe == "scan_folder":
+        # Cari folder dan output dari pesan
+        import re as _re
+        # Cari path output: "simpan ke X" atau "taruh di X"
+        # Bersihkan newline dulu
+        pesan_bersih = pesan.replace("\n", " ").replace("\r", " ")
+        m_out = _re.search(r'(?:simpan|taruh|output|letakkan)\s+(?:di|ke)\s+["\']?([\w\-\s\.\\\/:]+)["\']?', pesan_bersih, _re.IGNORECASE)  # GREEDY_BENAR
+        output = m_out.group(1).strip() if m_out else None
+        if output:
+            output = output.replace("\n", "").replace("\r", "").replace("\t", "").strip()
+            from pathlib import Path as _P2
+            if not _P2(output).is_absolute():
+                output = output.lstrip("\\/")
+                import os as _os; output = _os.path.join(r"E:\Project Software", output)
+            if not output.lower().endswith(".txt"):
+                from datetime import datetime
+                ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+                output = output.rstrip("\\/") + f"\\scan_{ts}.txt"
+
+        hasil = te.scan_folder(folder=None, output=output, max_depth=3)
+        return {"sukses": hasil.get("sukses"), "hasil": hasil}
+
+    # === LIST FILE ===
+    if tipe == "list_file":
+        import re as _re
+        match = _re.search(r'(?:lihat|isi|daftar|list)\s+(?:isi\s+)?folder\s*["\']?([\w\-\.\/]*)["\']?', pesan, _re.IGNORECASE)
+        folder = match.group(1) if match and match.group(1) else "."
+        hasil = te.list_file(folder)
+        return {"sukses": hasil.get("sukses"), "hasil": hasil, "folder": folder}
+    
+    if tipe == "tulis_file":
+        # Minta LLM generate isi file dulu
+        prompt = (
+            "User minta: " + pesan + "\n\n"
+            "Generate HANYA isi file (tanpa penjelasan). "
+            "Kalau file Python, tulis kode Python. "
+            "Kalau file teks, tulis teksnya."
+        )
+        try:
+            isi_file = diskusi(prompt)
+        except Exception as e:
+            return {"sukses": False, "error": f"Gagal generate isi: {e}"}
+        
+        # Extract nama file dari pesan
+        import re as _re
+        match = _re.search(r'["\']?([\w\-\.\/\\]+\.(?:pdf|txt|py|docx|xlsx|md|json|csv|html))["\']?', pesan, _re.IGNORECASE)
+        nama_file = match.group(1) if match else "output.txt"
+        
+        # Tulis file
+        hasil = te.tulis_file(nama_file, isi_file)
+        return {"sukses": hasil.get("sukses"), "hasil": hasil, "nama_file": nama_file}
+    
+    elif tipe == "jalankan_terminal":
+        # Extract perintah dari pesan ASLI
+        import re as _re
+        pesan_asli_untuk_terminal = det.get("pesan_asli", pesan)
+        pesan_asli_untuk_terminal = pesan_asli_untuk_terminal.split("\n")[0].strip()
+        match = _re.search(r'(?:jalankan|eksekusi|run)\s+(.+)', pesan_asli_untuk_terminal, _re.IGNORECASE)
+        perintah = match.group(1).strip() if match else pesan_asli_untuk_terminal
+        
+        hasil = te.jalankan_terminal(perintah)
+        return {"sukses": hasil.get("sukses"), "hasil": hasil, "perintah": perintah}
+    
+    return {"sukses": False, "alasan": "tipe tidak dikenal"}
+
+
+def commander(perintah: str):
+    """Mode Commander: Orion bagi tugas ke agent, gabungin hasil."""
+    try:
+        import agent_manager
+        jawaban, hasil_list, strategi = agent_manager.commander_mode(perintah, diskusi)
+        return jawaban
+    except Exception as e:
+        return f"[commander] Error: {e}"
+
+
+def daftar_anak_buah():
+    """Lihat agent yang tersedia."""
+    try:
+        import agent_manager
+        return agent_manager.daftar_agent()
+    except Exception:
+        return []
+
+
+# ============ KONEKSI KE MODUL ORION ============
+# Fungsi-fungsi ini menghubungkan otak ke modul lain
+
+def akses_memory_graph():
+    """Akses memory_graph langsung."""
+    try:
+        from memory_graph import cari_semua, tambah_relasi, cari_relasi
+        return {
+            "sukses": True,
+            "cari_semua": cari_semua,
+            "tambah_relasi": tambah_relasi,
+            "cari_relasi": cari_relasi,
+        }
+    except Exception as e:
+        return {"sukses": False, "error": str(e)}
+
+
+def akses_skill_hub():
+    """Akses skill_hub langsung."""
+    try:
+        from skill_hub import (
+            daftar_semua_skill,
+            baca_skill,
+            jalankan_skill,
+            status_semua_skill,
+        )
+        return {
+            "sukses": True,
+            "daftar_semua_skill": daftar_semua_skill,
+            "baca_skill": baca_skill,
+            "jalankan_skill": jalankan_skill,
+            "status_semua_skill": status_semua_skill,
+        }
+    except Exception as e:
+        return {"sukses": False, "error": str(e)}
+
+
+def akses_voice_orion():
+    """Akses voice_orion langsung."""
+    try:
+        from voice_orion import tts_speak
+        return {
+            "sukses": True,
+            "tts_speak": tts_speak,
+        }
+    except Exception as e:
+        return {"sukses": False, "error": str(e)}
+
+
+def akses_model_router():
+    """Akses model_router langsung."""
+    try:
+        from model_router import panggil_model
+        return {
+            "sukses": True,
+            "panggil_model": panggil_model,
+        }
+    except Exception as e:
+        return {"sukses": False, "error": str(e)}
+
+
+def akses_dashboard_orion():
+    """Akses dashboard_orion langsung."""
+    try:
+        from dashboard_orion import buat_dashboard
+        return {
+            "sukses": True,
+            "buat_dashboard": buat_dashboard,
+        }
+    except Exception as e:
+        return {"sukses": False, "error": str(e)}
+
+
+def status_koneksi():
+    """Cek status koneksi ke semua modul."""
+    hasil = {}
+    
+    for nama, func in [
+        ("memory_graph", akses_memory_graph),
+        ("skill_hub", akses_skill_hub),
+        ("voice_orion", akses_voice_orion),
+        ("model_router", akses_model_router),
+        ("dashboard_orion", akses_dashboard_orion),
+    ]:
+        try:
+            r = func()
+            hasil[nama] = "✅" if r.get("sukses") else f"❌ {r.get('error', '?')}"
+        except Exception as e:
+            hasil[nama] = f"❌ {e}"
+    
+    return hasil
+
+# ============ END KONEKSI ============
+
+
+
+def akses_tool_eksekusi():
+    """Akses tool_eksekusi langsung - 48 fungsi."""
+    try:
+        import tool_eksekusi as te
+        return {
+            "sukses": True,
+            "modul": te,
+            "tulis_file": te.tulis_file,
+            "baca_file": te.baca_file,
+            "jalankan_terminal": te.jalankan_terminal,
+            "list_file": te.list_file,
+            "buat_folder": te.buat_folder,
+            "copy_file": te.copy_file,
+            "hapus_file": te.hapus_file,
+            "scan_folder": te.scan_folder,
+            "analisis_folder": te.analisis_folder,
+            "fix_bug": te.fix_bug,
+            "analisis_file": te.analisis_file,
+            "buka_vscode": te.buka_vscode,
+            "buka_cmd": te.buka_cmd,
+            "buka_notepad": te.buka_notepad,
+            "cek_status": te.cek_status,
+        }
+    except Exception as e:
+        return {"sukses": False, "error": str(e)}
+
+
+def jalankan_tool(nama_tool, *args, **kwargs):
+    """Jalankan tool dari tool_eksekusi by nama."""
+    try:
+        import tool_eksekusi as te
+        if not hasattr(te, nama_tool):
+            return {"sukses": False, "error": f"Tool '{nama_tool}' tidak ada"}
+        func = getattr(te, nama_tool)
+        hasil = func(*args, **kwargs)
+        return {"sukses": True, "hasil": hasil}
+    except Exception as e:
+        return {"sukses": False, "error": str(e)}
+
+
+def daftar_tool_tersedia():
+    """Daftar semua tool yang tersedia."""
+    try:
+        import tool_eksekusi as te
+        tools = [x for x in dir(te) if not x.startswith("_") and callable(getattr(te, x))]
+        return tools
+    except Exception as e:
+        return []
+
+
+
+# ====================================================================
+# EVOLUSI OTAK ORION - Ditambahkan otomatis
+# ====================================================================
+
+def _evolusi_diskusi(pesan, history=None, **kwargs):
+    """
+    Evolusi diskusi - dengan memory, skill, voice, emosi, evolusi.
+    
+    Args:
+        pesan: pesan user
+        history: riwayat percakapan
+        **kwargs:
+            - pakai_voice: bool (default False)
+            - pakai_skill: bool (default True)
+            - pakai_memory: bool (default True)
+            - pakai_emosi: bool (default True)
+            - simpan_pengalaman: bool (default True)
+    
+    Returns:
+        dict: {
+            "jawaban": str,
+            "skill": list,
+            "emosi": dict,
+            "memory": list,
+            "voice": bool,
+            "sukses": bool,
+        }
+    """
+    import time
+    
+    hasil = {
+        "pesan": pesan,
+        "jawaban": "",
+        "skill": [],
+        "emosi": {},
+        "memory": [],
+        "voice": False,
+        "sukses": False,
+    }
+    
+    waktu_mulai = time.time()
+    
+    # ============ 1. CEK EMOSI ============
+    if kwargs.get("pakai_emosi", True):
+        try:
+            from emotion_orion import get_emotion, deteksi_event
+            emosi = get_emotion()
+            hasil["emosi"] = emosi
+            
+            # Deteksi event
+            event = deteksi_event(pesan)
+            if event:
+                hasil["emosi"]["event"] = event
+        except Exception:
+            pass
+    
+    # ============ 2. CEK MEMORY ============
+    if kwargs.get("pakai_memory", True):
+        try:
+            from memory_graph import cari_semua
+            relasi = cari_semua()
+            hasil["memory"] = relasi[:5]  # 5 relasi terakhir
+        except Exception:
+            pass
+    
+    # ============ 3. CEK SKILL RELEVAN ============
+    if kwargs.get("pakai_skill", True):
+        try:
+            from skill_loader import skill_relevan
+            skills = skill_relevan(pesan, limit=2)  # dibatasi
+            hasil["skill"] = [s.get("nama") for s in skills] if skills else []
+        except Exception:
+            pass
+    
+    # ============ 4. PANGGIL LLM ============
+    try:
+        # Pakai diskusi asli
+        if hasil["skill"]:
+            jawaban = diskusi_dengan_skill(pesan, history)
+        else:
+            jawaban = diskusi(pesan, history)
+        
+        hasil["jawaban"] = jawaban
+        hasil["sukses"] = bool(jawaban and len(jawaban) > 3)
+    except Exception as e:
+        hasil["jawaban"] = f"[otak] Error: {e}"
+        hasil["sukses"] = False
+    
+    # ============ 5. VOICE-KAN JAWABAN ============
+    if kwargs.get("pakai_voice", False) and hasil["jawaban"]:
+        try:
+            from voice_orion import voice_kan
+            voice_kan(hasil["jawaban"])
+            hasil["voice"] = True
+        except Exception:
+            pass
+    
+    # ============ 6. SIMPAN PENGALAMAN ============
+    if kwargs.get("simpan_pengalaman", True):
+        try:
+            from experience_hub import catat_pengalaman
+            catat_pengalaman(
+                pesan=pesan,
+                intent="diskusi",
+                hasil={
+                    "sukses": hasil["sukses"],
+                    "skill": hasil["skill"],
+                    "durasi": time.time() - waktu_mulai,
+                },
+                tools=hasil["skill"],
+            )
+        except Exception:
+            pass
+    
+    # ============ 7. TAMBAH KE MEMORY GRAPH ============
+    if hasil["sukses"]:
+        try:
+            from memory_graph import tambah_relasi
+            # Tambah relasi user → topik
+            topik = pesan.split()[:3]
+            for t in topik:
+                if len(t) > 3:
+                    tambah_relasi("User", "tanya", t)
+        except Exception:
+            pass
+    
+    hasil["durasi"] = time.time() - waktu_mulai
+    return hasil
+
+
+def diskusi_pintar(pesan, history=None, **kwargs):
+    """
+    Diskusi pintar - otomatis pakai semua fitur.
+    
+    Args:
+        pesan: pesan user
+        history: riwayat
+        pakai_voice: voice-kan jawaban
+        pakai_skill: pakai skill relevan
+        pakai_memory: pakai memory
+        pakai_emosi: deteksi emosi
+    
+    Returns:
+        str: jawaban
+    """
+    hasil = _evolusi_diskusi(
+        pesan,
+        history,
+        pakai_voice=kwargs.get("pakai_voice", False),
+        pakai_skill=kwargs.get("pakai_skill", True),
+        pakai_memory=kwargs.get("pakai_memory", True),
+        pakai_emosi=kwargs.get("pakai_emosi", True),
+    )
+    return hasil["jawaban"]
+
+
+def evolusi_status():
+    """Status evolusi otak Orion."""
+    status = {
+        "memory": False,
+        "skill": False,
+        "voice": False,
+        "emosi": False,
+        "experience": False,
+        "dashboard": False,
+        "tools": False,
+    }
+    
+    try:
+        from memory_graph import cari_semua
+        cari_semua()
+        status["memory"] = True
+    except Exception:
+        pass
+    
+    try:
+        from skill_loader import daftar_skill
+        daftar_skill()
+        status["skill"] = True
+    except Exception:
+        pass
+    
+    try:
+        from voice_orion import tts_bicara
+        status["voice"] = True
+    except Exception:
+        pass
+    
+    try:
+        from emotion_orion import get_emotion
+        status["emosi"] = True
+    except Exception:
+        pass
+    
+    try:
+        from experience_hub import ambil_pengalaman
+        ambil_pengalaman(jumlah=1)
+        status["experience"] = True
+    except Exception:
+        pass
+    
+    try:
+        from dashboard_orion import jalankan
+        status["dashboard"] = True
+    except Exception:
+        pass
+    
+    try:
+        from tool_eksekusi import list_file
+        status["tools"] = True
+    except Exception:
+        pass
+    
+    return status
+
+
+def cek_otak():
+    """Cek status otak Orion - lengkap."""
+    print("=" * 60)
+    print("  CEK OTAK ORION")
+    print("=" * 60)
+    
+    # 1. Module
+    print("\n[1] Module:")
+    modules = [
+        ("memory_graph", "Memory"),
+        ("experience_hub", "Experience"),
+        ("skill_loader", "Skill Loader"),
+        ("skill_hub", "Skill Hub"),
+        ("voice_orion", "Voice"),
+        ("emotion_orion", "Emotion"),
+        ("dashboard_orion", "Dashboard"),
+        ("tool_eksekusi", "Tools"),
+        ("model_router", "Router"),
+    ]
+    
+    for mod, label in modules:
+        try:
+            __import__(mod)
+            print(f"  ✅ {label}")
+        except Exception as e:
+            print(f"  ❌ {label}: {str(e)[:50]}")
+    
+    # 2. Fungsi
+    print("\n[2] Fungsi:")
+    functions = [
+        "diskusi",
+        "diskusi_dengan_skill",
+        "_evolusi_diskusi",
+        "diskusi_pintar",
+        "deteksi_eksekusi",
+        "eksekusi_dari_pesan",
+        "akses_tool_eksekusi",
+        "akses_memory_graph",
+        "akses_skill_hub",
+        "akses_voice_orion",
+        "akses_model_router",
+        "status_koneksi",
+        "evolusi_status",
+    ]
+    
+    for f in functions:
+        if f in globals():
+            print(f"  ✅ {f}()")
+        else:
+            print(f"  ❌ {f}()")
+    
+    # 3. Koneksi
+    print("\n[3] Koneksi:")
+    try:
+        status = status_koneksi()
+        for mod, result in status.items():
+            print(f"  {mod}: {result}")
+    except Exception as e:
+        print(f"  ❌ {e}")
+    
+    # 4. Evolusi
+    print("\n[4] Evolusi:")
+    try:
+        evo = evolusi_status()
+        for mod, ok in evo.items():
+            icon = "✅" if ok else "❌"
+            print(f"  {icon} {mod}")
+    except Exception as e:
+        print(f"  ❌ {e}")
+    
+    print("\n" + "=" * 60)
+
+
+# ====================================================================
+# END EVOLUSI OTAK ORION
+# ====================================================================
+
+
+
+def _get_openai_mortera():
+    """Ambil OpenAI client untuk Mortera dengan api_key eksplisit."""
+    import os
+    from pathlib import Path
+    from dotenv import load_dotenv
+    from openai import OpenAI
+    
+    # Load .env
+    BASE = Path(__file__).parent
+    for env_file in [BASE / ".env", BASE.parent / ".env"]:
+        if env_file.exists():
+            load_dotenv(env_file, override=True)
+            break
+    
+    api_key = os.getenv("MORTERA_API_KEY", "")
+    base_url = os.getenv("MORTERA_BASE_URL", "https://mortera.cloud/v1")
+    model = os.getenv("MORTERA_MODEL", "glm-5.3-flash")
+    
+    if not api_key:
+        raise ValueError("MORTERA_API_KEY tidak ada di .env")
+    
+    client = OpenAI(
+        api_key=api_key,
+        base_url=base_url,
+    )
+    
+    return {
+        "client": client,
+        "model": model,
+        "api_key": api_key[:15] + "..." + api_key[-4:],
+    }
+
+
+def diskusi_mortera(pesan, history=None):
+    """Diskusi pakai Mortera langsung."""
+    try:
+        config = _get_openai_mortera()
+        client = config["client"]
+        model = config["model"]
+        
+        messages = []
+        if history:
+            messages.extend(history)
+        messages.append({"role": "user", "content": pesan})
+        
+        r = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            max_tokens=2000,
+            temperature=0.7,
+        )
+        return r.choices[0].message.content
+    except Exception as e:
+        return f"[mortera] Error: {e}"
+
+
+# ====================================================================
+# END FIX MORTERA
+# ====================================================================
+
+
+
+def _diskusi_groq_dengan_soul(pesan, history=None):
+    """Diskusi pakai Groq DENGAN SOUL."""
+    import os
+    from pathlib import Path
+    from dotenv import load_dotenv
+    
+    # Load .env
+    BASE = Path(__file__).parent
+    for env_file in [BASE / ".env", BASE.parent / ".env"]:
+        if env_file.exists():
+            load_dotenv(env_file, override=True)
+            break
+    
+    api_key = os.getenv("GROQ_API_KEY", "")
+    model = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
+    
+    if not api_key:
+        raise ValueError("GROQ_API_KEY tidak ada")
+    
+    # Cari SOUL
+    soul = SOUL
+    if not soul or len(soul) < 50:
+        # Coba baca dari file
+        for soul_file in [BASE / "SOUL.md", BASE.parent / "SOUL.md"]:
+            if soul_file.exists():
+                soul = soul_file.read_text(encoding="utf-8")
+                break
+    
+    # Build messages
+    messages = [{"role": "system", "content": soul}]
+    if history:
+        messages.extend(history)
+    messages.append({"role": "user", "content": pesan})
+    
+    # Panggil Groq
+    from groq import Groq
+    client = Groq(api_key=api_key)
+    
+    r = client.chat.completions.create(
+        model=model,
+        messages=messages,
+        max_tokens=2000,
+        temperature=0.7,
+    )
+    
+    return r.choices[0].message.content
+
+
+def diskusi_soul(pesan, history=None):
+    """Diskusi dengan SOUL - coba Mortera, fallback Groq (keduanya pakai SOUL)."""
+    # Coba Mortera dulu
+    try:
+        return diskusi_mortera(pesan, history)
+    except Exception:
+        pass
+    
+    # Fallback Groq - dengan SOUL
+    try:
+        return _diskusi_groq_dengan_soul(pesan, history)
+    except Exception as e:
+        return f"[otak] Semua provider gagal: {e}"
+
+
+# ====================================================================
+# END FIX GROQ SOUL
+# ====================================================================
+
+
+
+def auto_pilih_groq(tugas):
+    """Pilih model Groq otomatis berdasarkan tugas."""
+    tugas_lower = tugas.lower()
+    
+    # Coding / kompleks → 120b
+    if any(k in tugas_lower for k in ["coding", "program", "script", "fix", "debug", "analisis"]):
+        return "openai/gpt-oss-120b"
+    
+    # Chat / cepat → 20b
+    if any(k in tugas_lower for k in ["chat", "halo", "tanya", "singkat"]):
+        return "openai/gpt-oss-20b"
+    
+    # Default → 120b
+    return "openai/gpt-oss-120b"
+
+
+def ganti_groq_model(model):
+    """Ganti model Groq otomatis."""
+    import os
+    from pathlib import Path
+    import re
+    
+    MODEL_VALID = [
+        "openai/gpt-oss-120b",
+        "openai/gpt-oss-20b",
+    ]
+    
+    if model not in MODEL_VALID:
+        return {
+            "sukses": False,
+            "error": f"Model '{model}' tidak valid",
+            "valid": MODEL_VALID,
+        }
+    
+    BASE = Path(__file__).parent
+    env_file = BASE / ".env"
+    if not env_file.exists():
+        env_file = BASE.parent / ".env"
+    
+    if not env_file.exists():
+        return {"sukses": False, "error": ".env tidak ada"}
+    
+    content = env_file.read_text(encoding="utf-8")
+    content = re.sub(
+        r'^GROQ_MODEL=.*$',
+        f'GROQ_MODEL={model}',
+        content,
+        flags=re.MULTILINE
+    )
+    env_file.write_text(content, encoding="utf-8")
+    os.environ["GROQ_MODEL"] = model
+    
+    return {
+        "sukses": True,
+        "model": model,
+    }
+
+
+# ====================================================================
+# END AUTO-PILIH GROQ
+# ====================================================================
+
+
+
+def _get_data_sistem():
+    """Ambil data sistem - DARI CACHE."""
+    import json
+    from pathlib import Path
+    import time
+    
+    BASE = Path(__file__).parent.parent
+    cache_file = BASE / "data" / "struktur_cache.json"
+    
+    # Cek cache - kalau ada & < 1 jam - pakai
+    if cache_file.exists():
+        try:
+            # Cek umur cache
+            if time.time() - cache_file.stat().st_mtime < 3600:
+                cache = json.loads(cache_file.read_text(encoding="utf-8"))
+                return cache.get("data", "")
+        except Exception:
+            pass
+    
+    # Cache tidak ada / expired - scan ulang
+    data_lines = []
+    data_lines.append("=== DATA STRUKTUR ORION (ASLI) ===")
+    data_lines.append("")
+    
+    FOLDERS = ["core", "memory", "skill", "voice", "coding",
+               "emotion", "support", "dashboard", "config"]
+    
+    for folder in FOLDERS:
+        f = BASE / folder
+        if f.exists():
+            py_files = sorted([x.name for x in f.glob("*.py")])
+            if py_files:
+                data_lines.append(f"📁 {folder}/")
+                for pf in py_files:
+                    data_lines.append(f"   - {pf}")
+                data_lines.append("")
+    
+    skills_dir = BASE / "skills"
+    if skills_dir.exists():
+        skill_dirs = sorted([d.name for d in skills_dir.iterdir() if d.is_dir()])
+        data_lines.append(f"📁 skills/ - {len(skill_dirs)} skill")
+        for sd in skill_dirs[:20]:
+            data_lines.append(f"   - {sd}")
+        data_lines.append("")
+    
+    data_lines.append("=== END DATA ===")
+    data = "\n".join(data_lines)
+    
+    # Simpan cache
+    try:
+        cache_file.parent.mkdir(exist_ok=True)
+        cache_file.write_text(
+            json.dumps({"data": data, "waktu": datetime.now().isoformat()}),
+            encoding="utf-8"
+        )
+    except Exception:
+        pass
+    
+    return data
+
+
+def diskusi_orion(pesan, history=None):
+    """Diskusi Orion - CEPAT + anti-halusinasi + web search."""
+
+    # === KESADARAN LEVEL 1-12 ===
+    try:
+        konteks_kesadaran = muat_konteks_kesadaran()
+        # Kompres konteks — biar tidak 413
+        try:
+            import sys as _sys3
+            from pathlib import Path as _P3
+            _base3 = _P3(__file__).parent.parent
+            _sys3.path.insert(0, str(_base3 / "core" / "otonom" / "kesadaran"))
+            from kompresi_konteks import kompres_konteks
+            konteks_kesadaran = kompres_konteks(konteks_kesadaran, max_char=3500)
+        except Exception as _e3:
+            print(f"[Otak] Kompresi error: {_e3}")
+        if konteks_kesadaran:
+            pesan = pesan + "\n\n[KONTEKS KESADARAN ORION]\n" + konteks_kesadaran
+    except Exception as e:
+        print(f"[Otak] Kesadaran error: {e}")
+    import os
+    import re
+    from pathlib import Path
+    from datetime import datetime
+    from dotenv import load_dotenv
+    
+    # ============ LOAD ENV ============
+    BASE = Path(__file__).parent.parent
+    for env_file in [BASE / "config" / ".env", BASE / ".env"]:
+        if env_file.exists():
+            load_dotenv(env_file, override=True)
+            break
+    
+    # ============ LOWER PESAN ============
+    p = pesan.lower().strip()
+    # Ambil pesan BERSIH — tanpa konteks kesadaran
+    p_bersih = p.split("\n\n[konteks")[0].strip()
+
+
+    # === KESADARAN RUMAH ===
+    RUMAH_KW = [
+        "di mana aku", "kamu di mana", "rumahku",
+        "isi rumah", "rumah orion", "file orion",
+        "berapa file", "ada apa di rumah",
+        "refleksi rumah", "perubahan rumah",
+    ]
+    
+    if any(p_bersih.startswith(k) or k in p_bersih for k in RUMAH_KW):
+        try:
+            import sys as _sys
+            from pathlib import Path as _Path
+            _base = _Path(__file__).parent.parent
+            _sys.path.insert(0, str(_base / "core" / "otonom" / "kesadaran_rumah"))
+            
+            # Pilih fungsi berdasarkan pesan
+            if "refleksi" in p_bersih:
+                from refleksi_rumah import refleksi_rumah
+                return refleksi_rumah()
+            elif "perubahan" in p_bersih or "baru" in p_bersih:
+                from cek_perubahan import cek_perubahan
+                hasil = cek_perubahan()
+                if hasil.get("pertama_kali"):
+                    return f"📸 {hasil['pesan']}"
+                return f"""📊 **Perubahan Rumah:**
+- File baru: {hasil['total_baru']}
+- File hilang: {hasil['total_hilang']}
+- File berubah: {hasil['total_berubah']}"""
+            else:
+                from cek_rumah import ringkasan_rumah
+                return ringkasan_rumah()
+        except Exception as e:
+            print(f"[Otak] Rumah error: {e}")
+            return f"[X] Rumah error: {e}"
+
+
+    # === KONTROL KOMPUTER ===
+    KONTROL_KW = [
+        "info sistem", "info_sistem", "cek sistem",
+        "network", "jaringan", "koneksi",
+        "ukuran layar", "ukuran_layar", "resolusi",
+        "posisi mouse", "posisi_mouse",
+        "buka ", "tutup ", "ketik ", "tekan ", "hotkey ",
+        "klik", "scroll ",
+        "shutdown", "restart", "lock",
+        "baca file", "list folder", "buat folder",
+        "list app", "list_app",
+    ]
+    
+    if any(p_bersih.startswith(k) or p_bersih == k.strip() for k in KONTROL_KW):
+        try:
+            import sys as _sys
+            from pathlib import Path as _Path
+            _base = _Path(__file__).parent.parent
+            _sys.path.insert(0, str(_base / "core" / "otonom" / "kontrol"))
+            from kontrol_utama import jalankan_perintah
+            # === NORMALISASI PERINTAH ===
+            PERINTAH_MAP = {
+                "info sistem": "info_sistem",
+                "cek sistem": "info_sistem",
+                "jaringan": "network",
+                "koneksi": "network",
+                "ukuran layar": "ukuran_layar",
+                "resolusi": "ukuran_layar",
+                "posisi mouse": "posisi_mouse",
+                "list app": "list_app",
+                "list folder": "list_folder",
+                "buat folder": "buat_folder",
+            }
+            
+            # Ambil perintah ASLI — tanpa konteks kesadaran
+            pesan_bersih = pesan.split("\n\n[KONTEKS")[0].strip().lower()
+            perintah_final = pesan_bersih
+            if perintah_final in PERINTAH_MAP:
+                perintah_final = PERINTAH_MAP[perintah_final]
+            
+            hasil = jalankan_perintah(perintah_final, konfirmasi_otomatis=True)
+            
+            if hasil.get("sukses"):
+                # Format hasil
+                if "cpu" in hasil:
+                    return f"📊 **Info Sistem:**\n- CPU: {hasil['cpu']}%\n- RAM: {hasil['ram_used']}/{hasil['ram_total']} GB ({hasil['ram_percent']}%)\n- Disk: {hasil['disk_used']}/{hasil['disk_total']} GB ({hasil['disk_percent']}%)\n- OS: {hasil['os']}\n- Hostname: {hasil['hostname']}"
+                elif "online" in hasil:
+                    status = "✅ Online" if hasil["online"] else "❌ Offline"
+                    return f"🌐 **Network:** {status}\n- Hostname: {hasil['hostname']}\n- IP: {hasil['ip']}"
+                elif "width" in hasil:
+                    return f"🖥️ **Ukuran Layar:** {hasil['width']}x{hasil['height']} pixel"
+                elif "x" in hasil and "y" in hasil:
+                    return f"🖱️ **Posisi Mouse:** x={hasil['x']}, y={hasil['y']}"
+                else:
+                    return f"[OK] {hasil.get('pesan', 'Selesai')}"
+            else:
+                return f"[X] {hasil.get('pesan', 'Gagal')}"
+        except Exception as e:
+            print(f"[Otak] Kontrol error: {e}")
+            return f"[X] Kontrol error: {e}"
+
+
+    
+    # ============ INTENT HANDLING ============
+    # [HAPUS] hardcoded Halo
+
+    
+    # [HAPUS] hardcoded Siapa kamu
+
+    
+    # [HAPUS] hardcoded Cewe
+
+    
+    # [HAPUS] hardcoded Manja
+
+    
+    # [HAPUS] hardcoded ChatGPT
+
+    
+    if "brain.py" in p:
+        return "Nggak punya. Aku pakai otak_orion.py."
+    
+    if "context.py" in p:
+        return "Nggak punya. Context ada di otak_orion.py."
+    
+    # ============ INTENT: WEB SEARCH ============
+    if any(p.startswith(k) for k in ["cari ", "search ", "carikan ", "googling ", "google ", "artikel "]):
+        try:
+            import sys as _sys
+            _skill_path = BASE / "skill" / "web-search"
+            if str(_skill_path) not in _sys.path:
+                _sys.path.insert(0, str(_skill_path))
+            
+            from web_search import jalankan as _web_search, format_hasil as _web_format
+            
+            # Extract query
+            patterns = [
+                r'(?:cari|search|carikan|artikel tentang|artikel soal)\s+(.+)',
+                r'(?:cari di internet|browsing|google)\s+(.+)',
+            ]
+            query = pesan
+            for _pat in patterns:
+                _m = re.search(_pat, pesan, re.IGNORECASE)
+                if _m:
+                    query = _m.group(1).strip()
+                    break
+            
+            hasil = _web_search(query, limit=5)
+            return _web_format(hasil)
+        except Exception as _e:
+            return f"Cari gagal: {str(_e)[:100]}"
+    
+    # ============ INTENT: TOOL / AKSI ============
+    if any(k in p for k in [
+        "bikin", "buat", "tulis", "generate", "koding",
+        "script", "program", "aplikasi",
+        "jalankan", "eksekusi", "run",
+        "screenshot", "kamera", "foto",
+    ]):
+        try:
+            from orion_tool_loop import chat as tool_loop_chat
+            jawaban = tool_loop_chat(pesan, riwayat=history)
+            if jawaban and "muter-muter" not in jawaban.lower():
+                return jawaban
+        except Exception:
+            pass
+
+    # ============ DATA DARI CACHE ============
+    NEED_DATA = any(k in p for k in [
+        "struktur", "sistem", "file", "folder", "modul",
+        "core", "memory", "skill", "voice", "coding",
+    ])
+    
+    data_str = ""
+    if NEED_DATA:
+        try:
+            data_str = _get_data_sistem()
+        except Exception:
+            data_str = ""
+    
+    # ============ SYSTEM PROMPT ============
+    if data_str:
+        system_prompt = f"""KAMU ORION - cewe manja ke Riki.
+
+ATURAN:
+1. Jawab dari DATA di bawah.
+2. JANGAN sebut brain.py, memory.py, context.py - TIDAK ADA.
+3. Sebut file yang BENAR-BENAR ADA.
+
+{data_str}
+"""
+    else:
+        system_prompt = """KAMU ORION - cewe manja ke Riki.
+Jawab singkat, ramah. JANGAN halusinasi."""
+    
+    messages = [{"role": "system", "content": system_prompt}]
+    if history:
+        messages.extend(history)
+    messages.append({"role": "user", "content": pesan})
+    
+    # ============ PANGGIL LLM ============
+    jawab = ""
+    
+    # Mortera
+    try:
+        api_key = os.getenv("MORTERA_API_KEY", "")
+        base_url = os.getenv("MORTERA_BASE_URL", "https://mortera.cloud/v1")
+        model = os.getenv("MORTERA_MODEL", "glm-5.3-flash")
+        
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key, base_url=base_url)
+        r = client.chat.completions.create(
+            model=model, messages=messages,
+            max_tokens=1500, temperature=0.3,
+        )
+        jawab = r.choices[0].message.content
+    except Exception:
+        pass
+    
+    # Fallback Groq
+    if not jawab:
+        try:
+            api_key = os.getenv("GROQ_API_KEY", "")
+            model = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
+            
+            from groq import Groq
+            client = Groq(api_key=api_key)
+            r = client.chat.completions.create(
+                model=model, messages=messages,
+                max_tokens=1500, temperature=0.3,
+            )
+            jawab = r.choices[0].message.content
+        except Exception as e:
+            return f"[otak] Error: {str(e)[:100]}"
+    
+    return jawab
+
+
+def install_skill_dari_github(repo_url, skill_name=None):
+    """
+    Install skill dari GitHub repo.
+    
+    Args:
+        repo_url: URL repo GitHub (contoh: "alirezarezvani/claude-skills")
+        skill_name: nama skill spesifik (opsional)
+    
+    Returns:
+        dict: {"sukses": bool, "skill": str, "error": str}
+    """
+    import subprocess
+    import tempfile
+    from pathlib import Path
+    
+    BASE = Path(__file__).parent
+    SKILLS_DIR = BASE / "skills"
+    SKILLS_DIR.mkdir(exist_ok=True)
+    
+    hasil = {"sukses": False, "skill": None, "error": None}
+    
+    try:
+        # Cek npx
+        npx_check = subprocess.run(
+            ["npx", "--version"],
+            capture_output=True, text=True, timeout=10
+        )
+        if npx_check.returncode != 0:
+            return {"sukses": False, "error": "npx tidak tersedia"}
+        
+        # Install pakai skillsgate
+        cmd = ["npx", "skillsgate", "add", repo_url]
+        if skill_name:
+            cmd = ["npx", "skillsgate", "add", f"{repo_url}@{skill_name}"]
+        
+        cmd.extend(["--copy", "-y"])
+        
+        proc = subprocess.run(
+            cmd,
+            capture_output=True, text=True, timeout=120, cwd=str(BASE)
+        )
+        
+        if proc.returncode == 0:
+            hasil["sukses"] = True
+            hasil["output"] = proc.stdout[-500:]
+            
+            # Cari skill baru
+            skills = list(SKILLS_DIR.iterdir())
+            hasil["skill"] = [s.name for s in skills if s.is_dir()][-5:]
+        else:
+            hasil["error"] = proc.stderr[-300:]
+    except Exception as e:
+        hasil["error"] = str(e)
+    
+    return hasil
+
+
+def auto_install_skill_berguna():
+    """Auto-install skill berguna dari GitHub."""
+    REPOS = [
+        ("obra/superpowers", "systematic-debugging"),
+        ("tt-a1i/archify", "archify"),
+        ("rohitg00/agentmemory", "agentmemory"),
+        ("alirezarezvani/claude-skills", "zero-hallucination-coder"),
+    ]
+    
+    hasil = []
+    for repo, skill in REPOS:
+        print(f"  Install: {repo} → {skill}...")
+        r = install_skill_dari_github(repo, skill)
+        hasil.append({
+            "repo": repo,
+            "skill": skill,
+            "sukses": r.get("sukses"),
+            "error": r.get("error"),
+        })
+    
+    return hasil
+
+
+def daftar_skill_github():
+    """Daftar skill berguna dari GitHub."""
+    return {
+        "coding": [
+            {"repo": "obra/superpowers", "skill": "systematic-debugging"},
+            {"repo": "obra/superpowers", "skill": "test-driven-development"},
+            {"repo": "alirezarezvani/claude-skills", "skill": "zero-hallucination-coder"},
+        ],
+        "diagram": [
+            {"repo": "tt-a1i/archify", "skill": "archify"},
+        ],
+        "memory": [
+            {"repo": "rohitg00/agentmemory", "skill": "agentmemory"},
+        ],
+        "research": [
+            {"repo": "Panniantong/Agent-Reach", "skill": "Agent-Reach"},
+        ],
+    }
+
+
+# ====================================================================
+# END INSTALL SKILL
+# ====================================================================
+
+
+
+# ====================================================================
+# EVOLUSI OTAK ORION - LEVEL 2
+# ====================================================================
+
+def auto_pilih_skill(pesan):
+    """Pilih skill otomatis dari pesan."""
+    try:
+        from skill_loader import skill_relevan
+        skills = skill_relevan(pesan, limit=3)
+        return [s.get("nama") for s in skills] if skills else []
+    except Exception:
+        return []
+
+
+def auto_panggil_tool(pesan):
+    """Panggil tool otomatis dari pesan."""
+    try:
+        from otak_orion import deteksi_eksekusi, eksekusi_dari_pesan
+        
+        deteksi = deteksi_eksekusi(pesan)
+        if deteksi.get("butuh_eksekusi"):
+            return eksekusi_dari_pesan(pesan)
+        return None
+    except Exception:
+        return None
+
+
+def auto_simpan_memory(pesan, jawaban, intent="chat"):
+    """Simpan ke memory otomatis."""
+    try:
+        from memory_manager import simpan_chat
+        simpan_chat(pesan, jawaban)
+    except Exception:
+        pass
+    
+    try:
+        from experience_hub import catat_pengalaman
+        catat_pengalaman(
+            pesan=pesan,
+            intent=intent,
+            hasil={"sukses": True, "jawaban": jawaban[:100]},
+        )
+    except Exception:
+        pass
+
+
+def auto_deteksi_emosi(pesan):
+    """Deteksi emosi otomatis."""
+    try:
+        from emotion_orion import get_emotion, deteksi_event
+        emosi = get_emotion()
+        event = deteksi_event(pesan)
+        return {"emosi": emosi, "event": event}
+    except Exception:
+        return {}
+
+
+def auto_evolusi(pesan, jawaban):
+    """Belajar dari percakapan."""
+    try:
+        from experience_hub import catat_pengalaman
+        catat_pengalaman(
+            pesan=pesan,
+            intent="evolusi",
+            hasil={"sukses": True, "pelajaran": jawaban[:100]},
+        )
+    except Exception:
+        pass
+
+
+def rencana_bertahap(goal):
+    """Bikin rencana bertahap dari goal."""
+    goal_lower = goal.lower()
+    steps = []
+    
+    if "coding" in goal_lower or "bikin" in goal_lower:
+        steps = [
+            "1. Analisis goal",
+            "2. Bikin kode",
+            "3. Test kode",
+            "4. Fix kalau error",
+            "5. Simpan",
+        ]
+    elif "analisis" in goal_lower:
+        steps = [
+            "1. Kumpulkan data",
+            "2. Analisis",
+            "3. Bikin laporan",
+        ]
+    elif "cari" in goal_lower:
+        steps = [
+            "1. Cari informasi",
+            "2. Verifikasi",
+            "3. Ringkas",
+        ]
+    else:
+        steps = ["1. Proses", "2. Selesai"]
+    
+    return steps
+
+
+def refleksi_diri():
+    """Refleksi diri - apa yang sudah dilakukan."""
+    hasil = {
+        "skill": 0,
+        "memory": 0,
+        "experience": 0,
+        "emosi": "netral",
+    }
+    
+    try:
+        from skill_hub import daftar_semua_skill
+        hasil["skill"] = len(daftar_semua_skill())
+    except Exception:
+        pass
+    
+    try:
+        from memory_graph import cari_semua
+        hasil["memory"] = len(cari_semua())
+    except Exception:
+        pass
+    
+    try:
+        from experience_hub import ambil_pengalaman
+        hasil["experience"] = len(ambil_pengalaman(jumlah=100))
+    except Exception:
+        pass
+    
+    try:
+        from emotion_orion import get_emotion
+        emosi = get_emotion()
+        hasil["emosi"] = emosi.get("primary", "netral")
+    except Exception:
+        pass
+    
+    return hasil
+
+
+def diskusi_super(pesan, history=None, pakai_voice=False):
+    """Diskusi super - semua fitur otomatis."""
+    import time
+    waktu = time.time()
+    
+    hasil = {
+        "pesan": pesan,
+        "jawaban": "",
+        "skill": [],
+        "tool": None,
+        "emosi": {},
+        "rencana": [],
+        "sukses": False,
+        "durasi": 0,
+    }
+    
+    # 1. Deteksi emosi
+    hasil["emosi"] = auto_deteksi_emosi(pesan)
+    
+    # 2. Auto-pilih skill
+    hasil["skill"] = auto_pilih_skill(pesan)
+    
+    # 3. Bikin rencana
+    hasil["rencana"] = rencana_bertahap(pesan)
+    
+    # 4. Auto-panggil tool
+    hasil["tool"] = auto_panggil_tool(pesan)
+    
+    # 5. Panggil LLM
+    if hasil["tool"]:
+        # Kalau tool jalan, jawab dari tool
+        hasil["jawaban"] = f"[tool] {hasil['tool']}"
+        hasil["sukses"] = True
+    else:
+        # Panggil LLM dengan SOUL
+        try:
+            hasil["jawaban"] = diskusi_orion(pesan, history)
+            hasil["sukses"] = bool(hasil["jawaban"] and len(hasil["jawaban"]) > 3)
+        except Exception as e:
+            hasil["jawaban"] = f"[otak] Error: {e}"
+    
+    # 6. Auto-simpan memory
+    auto_simpan_memory(pesan, hasil["jawaban"])
+    
+    # 7. Auto-evolusi
+    auto_evolusi(pesan, hasil["jawaban"])
+    
+    # 8. Voice-kan
+    if pakai_voice and hasil["jawaban"]:
+        try:
+            from voice_orion import voice_kan
+            voice_kan(hasil["jawaban"])
+        except Exception:
+            pass
+    
+    hasil["durasi"] = time.time() - waktu
+    return hasil
+
+
+def cek_otak_level2():
+    """Cek status otak level 2."""
+    print("=" * 60)
+    print("  CEK OTAK LEVEL 2")
+    print("=" * 60)
+    
+    # Refleksi
+    ref = refleksi_diri()
+    print(f"\n📊 Refleksi:")
+    print(f"   Skill      : {ref['skill']}")
+    print(f"   Memory     : {ref['memory']}")
+    print(f"   Experience : {ref['experience']}")
+    print(f"   Emosi      : {ref['emosi']}")
+    
+    # Test fungsi
+    print(f"\n🔧 Fungsi:")
+    functions = [
+        "auto_pilih_skill", "auto_panggil_tool", "auto_simpan_memory",
+        "auto_deteksi_emosi", "auto_evolusi", "rencana_bertahap",
+        "refleksi_diri", "diskusi_super", "cek_otak_level2",
+    ]
+    for f in functions:
+        if f in globals():
+            print(f"   ✅ {f}()")
+        else:
+            print(f"   ❌ {f}()")
+    
+    print("\n" + "=" * 60)
+
+
+# ====================================================================
+# END EVOLUSI LEVEL 2
+# ====================================================================
+
+
+
+# ====================================================================
+# EVOLUSI OTAK ORION - LEVEL 3
+# ====================================================================
+
+def auto_plan(goal):
+    """Bikin rencana otomatis dari goal."""
+    goal_lower = goal.lower()
+    plan = {"goal": goal, "steps": [], "prioritas": "sedang", "estimasi": "1 menit"}
+    
+    if any(k in goal_lower for k in ["coding", "bikin", "buat", "program", "script"]):
+        plan["steps"] = [
+            {"aksi": "analisis", "detail": "Pahami goal"},
+            {"aksi": "coding", "detail": "Bikin kode"},
+            {"aksi": "test", "detail": "Jalankan kode"},
+            {"aksi": "fix", "detail": "Fix kalau error"},
+            {"aksi": "simpan", "detail": "Simpan hasil"},
+        ]
+        plan["prioritas"] = "tinggi"
+        plan["estimasi"] = "2-5 menit"
+    elif any(k in goal_lower for k in ["analisis", "analisa", "data"]):
+        plan["steps"] = [
+            {"aksi": "kumpul", "detail": "Kumpulkan data"},
+            {"aksi": "proses", "detail": "Proses data"},
+            {"aksi": "lapor", "detail": "Bikin laporan"},
+        ]
+        plan["prioritas"] = "sedang"
+    elif any(k in goal_lower for k in ["cari", "search", "riset"]):
+        plan["steps"] = [
+            {"aksi": "cari", "detail": "Cari informasi"},
+            {"aksi": "verifikasi", "detail": "Cek validitas"},
+            {"aksi": "ringkas", "detail": "Ringkas hasil"},
+        ]
+        plan["prioritas"] = "rendah"
+    else:
+        plan["steps"] = [
+            {"aksi": "proses", "detail": "Proses permintaan"},
+            {"aksi": "selesai", "detail": "Selesai"},
+        ]
+    return plan
+
+
+def auto_execute(plan):
+    """Jalankan rencana otomatis."""
+    hasil = []
+    for step in plan.get("steps", []):
+        aksi = step.get("aksi", "")
+        hasil_step = {"aksi": aksi, "sukses": True}
+        
+        if aksi == "coding":
+            try:
+                from coding_assistant import coding_loop
+                r = coding_loop(step.get("detail", ""), max_iterasi=1)
+                hasil_step["hasil"] = r
+            except Exception as e:
+                hasil_step["sukses"] = False
+                hasil_step["error"] = str(e)
+        hasil.append(hasil_step)
+    return hasil
+
+
+def auto_verify(hasil):
+    """Cek hasil otomatis."""
+    total = len(hasil)
+    sukses = sum(1 for h in hasil if h.get("sukses"))
+    return {
+        "total": total,
+        "sukses": sukses,
+        "gagal": total - sukses,
+        "persen": (sukses / total * 100) if total > 0 else 0,
+        "status": "OK" if sukses == total else "PERLU FIX",
+    }
+
+
+def auto_learn(error):
+    """Belajar dari error."""
+    try:
+        from experience_hub import catat_pengalaman
+        catat_pengalaman(
+            pesan=f"Error: {error}",
+            intent="belajar",
+            hasil={"sukses": False, "error": error},
+        )
+        return True
+    except Exception:
+        return False
+
+
+def auto_improve():
+    """Perbaiki diri sendiri."""
+    perbaikan = []
+    
+    try:
+        from skill_hub import daftar_semua_skill
+        skills = daftar_semua_skill()
+        if len(skills) < 30:
+            perbaikan.append(f"Tambah skill (skrg {len(skills)})")
+    except Exception as e:
+        perbaikan.append(f"Skill error: {e}")
+    
+    try:
+        from memory_graph import cari_semua
+        relasi = cari_semua()
+        if len(relasi) < 20:
+            perbaikan.append(f"Tambah memory (skrg {len(relasi)})")
+    except Exception as e:
+        perbaikan.append(f"Memory error: {e}")
+    
+    try:
+        from experience_hub import ambil_pengalaman
+        exp = ambil_pengalaman(jumlah=1000)
+        if len(exp) < 200:
+            perbaikan.append(f"Tambah experience (skrg {len(exp)})")
+    except Exception as e:
+        perbaikan.append(f"Experience error: {e}")
+    
+    return {"perbaikan": perbaikan, "jumlah": len(perbaikan)}
+
+
+def multi_agent(tugas):
+    """Koordinasi antar modul."""
+    hasil = {}
+    
+    try:
+        from coding_assistant import coding_loop
+        hasil["coding"] = "siap"
+    except Exception:
+        hasil["coding"] = "error"
+    
+    try:
+        from memory_graph import cari_semua
+        hasil["memory"] = "siap"
+    except Exception:
+        hasil["memory"] = "error"
+    
+    try:
+        from skill_hub import daftar_semua_skill
+        hasil["skill"] = "siap"
+    except Exception:
+        hasil["skill"] = "error"
+    
+    try:
+        from tool_eksekusi import list_file
+        hasil["tools"] = "siap"
+    except Exception:
+        hasil["tools"] = "error"
+    
+    return hasil
+
+
+def self_heal():
+    """Perbaiki diri kalau error."""
+    perbaikan = []
+    
+    try:
+        from skill_hub import daftar_semua_skill
+        skills = daftar_semua_skill()
+        if len(skills) == 0:
+            perbaikan.append("Skill kosong")
+    except Exception as e:
+        perbaikan.append(f"Skill error: {e}")
+    
+    return {"perbaikan": perbaikan, "sehat": len(perbaikan) == 0}
+
+
+def prioritas_tugas(tugas):
+    """Prioritas tugas."""
+    t = tugas.lower()
+    if any(k in t for k in ["urgent", "penting", "segera", "cepat", "coding", "bikin", "buat"]):
+        return "TINGGI"
+    if any(k in t for k in ["analisis", "cari", "riset"]):
+        return "SEDANG"
+    return "RENDAH"
+
+
+def konteks_percakapan(pesan, history=None):
+    """Bikin konteks percakapan."""
+    return {
+        "pesan": pesan,
+        "topik": pesan.split()[:3],
+        "prioritas": prioritas_tugas(pesan),
+        "history": len(history) if history else 0,
+    }
+
+
+def diskusi_level3(pesan, history=None, pakai_voice=False):
+    """Diskusi level 3 - plan, execute, verify, learn."""
+    import time
+    waktu = time.time()
+    
+    hasil = {
+        "pesan": pesan,
+        "jawaban": "",
+        "plan": {},
+        "execute": [],
+        "verify": {},
+        "sukses": False,
+        "durasi": 0,
+    }
+    
+    # Konteks
+    hasil["konteks"] = konteks_percakapan(pesan, history)
+    
+    # Plan
+    plan = auto_plan(pesan)
+    hasil["plan"] = plan
+    hasil["prioritas"] = prioritas_tugas(pesan)
+    
+    # Eksekusi kalau coding
+    if any(s.get("aksi") == "coding" for s in plan["steps"]):
+        hasil["execute"] = auto_execute(plan)
+        hasil["verify"] = auto_verify(hasil["execute"])
+    
+    # Panggil LLM
+    try:
+        hasil["jawaban"] = diskusi_orion(pesan, history)
+        hasil["sukses"] = bool(hasil["jawaban"] and len(hasil["jawaban"]) > 3)
+    except Exception as e:
+        hasil["jawaban"] = f"[otak] Error: {e}"
+        auto_learn(str(e))
+    
+    # Voice
+    if pakai_voice and hasil["jawaban"]:
+        try:
+            from voice_orion import voice_kan
+            voice_kan(hasil["jawaban"])
+        except Exception:
+            pass
+    
+    hasil["durasi"] = time.time() - waktu
+    return hasil
+
+
+def cek_otak_level3():
+    """Cek status otak level 3."""
+    print("=" * 60)
+    print("  CEK OTAK LEVEL 3")
+    print("=" * 60)
+    
+    print("\n🏥 Self-heal:")
+    heal = self_heal()
+    print(f"   Sehat: {heal['sehat']}")
+    
+    print("\n🤖 Multi-agent:")
+    agents = multi_agent("test")
+    for name, status in agents.items():
+        icon = "✅" if status == "siap" else "❌"
+        print(f"   {icon} {name}: {status}")
+    
+    print("\n🔧 Auto-improve:")
+    improve = auto_improve()
+    print(f"   Perbaikan: {improve['jumlah']}")
+    for p in improve["perbaikan"]:
+        print(f"   ⚠️ {p}")
+    
+    print("\n📊 Refleksi:")
+    ref = refleksi_diri()
+    for k, v in ref.items():
+        print(f"   {k}: {v}")
+    
+    print("\n" + "=" * 60)
+
+
+# ====================================================================
+# END EVOLUSI LEVEL 3
+# ====================================================================
+
+
+
+# ====================================================================
+# EVOLUSI OTAK ORION - LEVEL 4 (AUTONOMOUS)
+# ====================================================================
+
+def auto_goal(konteks=""):
+    """Tentukan goal sendiri berdasarkan konteks."""
+    goals = []
+    
+    try:
+        from skill_hub import daftar_semua_skill
+        skills = daftar_semua_skill()
+        if len(skills) < 30:
+            goals.append({"goal": "Tambah skill", "prioritas": "sedang", "alasan": f"Cuma {len(skills)} skill"})
+    except Exception:
+        pass
+    
+    try:
+        from memory_graph import cari_semua
+        relasi = cari_semua()
+        if len(relasi) < 20:
+            goals.append({"goal": "Tambah memory", "prioritas": "rendah", "alasan": f"Cuma {len(relasi)} relasi"})
+    except Exception:
+        pass
+    
+    try:
+        from experience_hub import ambil_pengalaman
+        exp = ambil_pengalaman(jumlah=1000)
+        if len(exp) < 200:
+            goals.append({"goal": "Tambah experience", "prioritas": "rendah", "alasan": f"Cuma {len(exp)} pengalaman"})
+    except Exception:
+        pass
+    
+    return goals
+
+
+def auto_task(goal):
+    """Bikin task sendiri dari goal."""
+    tasks = []
+    
+    if "skill" in goal.lower():
+        tasks = [
+            {"task": "Cari skill baru", "status": "todo"},
+            {"task": "Install skill", "status": "todo"},
+            {"task": "Test skill", "status": "todo"},
+        ]
+    elif "memory" in goal.lower():
+        tasks = [
+            {"task": "Kumpulkan relasi", "status": "todo"},
+            {"task": "Simpan ke graph", "status": "todo"},
+        ]
+    else:
+        tasks = [{"task": goal, "status": "todo"}]
+    
+    return tasks
+
+
+def auto_schedule(tasks):
+    """Jadwal otomatis dari tasks."""
+    schedule = []
+    waktu = 0
+    
+    for task in tasks:
+        durasi = 5  # menit
+        schedule.append({
+            "task": task.get("task"),
+            "mulai": f"{waktu} menit",
+            "durasi": f"{durasi} menit",
+        })
+        waktu += durasi
+    
+    return schedule
+
+
+def auto_prioritas(tasks):
+    """Prioritas otomatis dari tasks."""
+    hasil = []
+    for task in tasks:
+        t = task.get("task", "").lower()
+        if any(k in t for k in ["urgent", "penting", "coding"]):
+            p = "TINGGI"
+        elif any(k in t for k in ["analisis", "cari"]):
+            p = "SEDANG"
+        else:
+            p = "RENDAH"
+        
+        hasil.append({**task, "prioritas": p})
+    
+    return sorted(hasil, key=lambda x: {"TINGGI": 0, "SEDANG": 1, "RENDAH": 2}[x["prioritas"]])
+
+
+def auto_delegate(task):
+    """Delegasi ke modul yang tepat."""
+    t = task.get("task", "").lower()
+    
+    if "coding" in t or "kode" in t:
+        return {"modul": "coding_assistant", "aksi": "coding_loop"}
+    if "cari" in t or "riset" in t:
+        return {"modul": "skill_hub", "aksi": "daftar_semua_skill"}
+    if "memory" in t:
+        return {"modul": "memory_graph", "aksi": "cari_semua"}
+    if "skill" in t:
+        return {"modul": "skill_hub", "aksi": "daftar_semua_skill"}
+    if "voice" in t:
+        return {"modul": "voice_orion", "aksi": "tts_bicara"}
+    if "tool" in t:
+        return {"modul": "tool_eksekusi", "aksi": "list_file"}
+    
+    return {"modul": "otak_orion", "aksi": "diskusi"}
+
+
+def autonomous_run():
+    """Jalankan autonomous - goal, task, schedule, prioritas."""
+    print("=" * 60)
+    print("  AUTONOMOUS RUN")
+    print("=" * 60)
+    
+    # 1. Tentukan goal
+    print("\n🎯 Auto-goal:")
+    goals = auto_goal()
+    for g in goals:
+        print(f"   - {g['goal']} ({g['prioritas']}): {g['alasan']}")
+    
+    if not goals:
+        print("   ✅ Tidak ada goal - semua OK")
+        return {"goal": [], "tasks": [], "schedule": []}
+    
+    # 2. Bikin task dari goal pertama
+    print(f"\n📋 Auto-task:")
+    tasks = auto_task(goals[0]["goal"])
+    for t in tasks:
+        print(f"   - {t['task']} ({t['status']})")
+    
+    # 3. Prioritas
+    print(f"\n⚡ Auto-prioritas:")
+    prioritas = auto_prioritas(tasks)
+    for p in prioritas:
+        print(f"   - [{p['prioritas']}] {p['task']}")
+    
+    # 4. Schedule
+    print(f"\n📅 Auto-schedule:")
+    schedule = auto_schedule(tasks)
+    for s in schedule:
+        print(f"   - {s['mulai']}: {s['task']} ({s['durasi']})")
+    
+    # 5. Delegate
+    print(f"\n🤖 Auto-delegate:")
+    for t in tasks:
+        deleg = auto_delegate(t)
+        print(f"   - {t['task']} → {deleg['modul']}.{deleg['aksi']}()")
+    
+    print("\n" + "=" * 60)
+    
+    return {
+        "goal": goals,
+        "tasks": tasks,
+        "schedule": schedule,
+    }
+
+
+def cek_otak_level4():
+    """Cek status otak level 4."""
+    print("=" * 60)
+    print("  CEK OTAK LEVEL 4")
+    print("=" * 60)
+    
+    # Fungsi
+    print("\n🔧 Fungsi Level 4:")
+    functions = ["auto_goal", "auto_task", "auto_schedule", "auto_prioritas", "auto_delegate", "autonomous_run"]
+    for f in functions:
+        if f in globals():
+            print(f"   ✅ {f}()")
+        else:
+            print(f"   ❌ {f}()")
+    
+    # Autonomous run
+    print()
+    autonomous_run()
+    
+    print("\n" + "=" * 60)
+
+
+# ====================================================================
+# END EVOLUSI LEVEL 4
+# ====================================================================
+
+
+
+# ====================================================================
+# EVOLUSI OTAK - AWARENESS (SADAR SEMUA FILE)
+# ====================================================================
+
+def scan_laptop(root="E:/", max_depth=3, max_files=10000):
+    """Scan seluruh laptop - index file."""
+    root = Path(root)
+    if not root.exists():
+        return {"sukses": False, "error": f"Path tidak ada: {root}"}
+    
+    SKIP = {"Windows", "Program Files", "Program Files (x86)", "$Recycle.Bin",
+            "System Volume Information", "AppData", "node_modules", "__pycache__",
+            ".git", "venv", "env", ".venv", "_arsip", "backups"}
+    
+    hasil = {
+        "sukses": True,
+        "root": str(root),
+        "total_files": 0,
+        "total_size": 0,
+        "extensions": {},
+        "folders": {},
+        "files": [],
+    }
+    
+    def scan(folder, depth=0):
+        if depth > max_depth or hasil["total_files"] >= max_files:
+            return
+        
+        try:
+            for item in folder.iterdir():
+                if item.name.startswith(".") or item.name in SKIP:
+                    continue
+                
+                if item.is_file():
+                    hasil["total_files"] += 1
+                    
+                    try:
+                        size = item.stat().st_size
+                        hasil["total_size"] += size
+                        
+                        ext = item.suffix.lower() or "no_ext"
+                        hasil["extensions"][ext] = hasil["extensions"].get(ext, 0) + 1
+                        
+                        if hasil["total_files"] <= max_files:
+                            hasil["files"].append({
+                                "path": str(item),
+                                "size": size,
+                                "ext": ext,
+                            })
+                    except Exception:
+                        pass
+                
+                elif item.is_dir():
+                    hasil["folders"][str(item)] = hasil["folders"].get(str(item), 0) + 1
+                    scan(item, depth + 1)
+        except PermissionError:
+            pass
+        except Exception:
+            pass
+    
+    scan(root)
+    return hasil
+
+
+def peta_pipeline():
+    """Peta pipeline Orion - alur sistem."""
+    peta = {
+        "input": [],
+        "proses": [],
+        "output": [],
+        "modul": {},
+    }
+    
+    # Input
+    peta["input"] = [
+        "User (chat/voice/file)",
+        "Discord (bot)",
+        "Web (dashboard)",
+        "Cron (scheduler)",
+        "Voice (PTT/wake word)",
+    ]
+    
+    # Proses
+    peta["proses"] = [
+        "otak_orion.diskusi_orion()",
+        "├─ deteksi_emosi()",
+        "├─ auto_pilih_skill()",
+        "├─ auto_panggil_tool()",
+        "├─ panggil LLM (Mortera/Groq)",
+        "├─ auto_simpan_memory()",
+        "└─ auto_evolusi()",
+    ]
+    
+    # Output
+    peta["output"] = [
+        "Jawaban (chat)",
+        "Voice (TTS)",
+        "File (script/output)",
+        "Memory (tersimpan)",
+        "Experience (tersimpan)",
+    ]
+    
+    # Modul
+    peta["modul"] = {
+        "otak": "otak_orion.py - pusat",
+        "memory": "memory_graph.py + experience_hub.py",
+        "skill": "skill_hub.py + skill_loader.py",
+        "voice": "voice_orion.py + orion_voice.py",
+        "coding": "coding_assistant.py",
+        "tools": "tool_eksekusi.py",
+        "dashboard": "dashboard_orion.py + web_v2",
+        "cron": "cron_orion.py + notif_orion.py",
+        "emotion": "emotion_orion.py + personality_orion.py",
+    }
+    
+    return peta
+
+
+def sadar_file(folder):
+    """Sadar file di folder tertentu."""
+    folder = Path(folder)
+    if not folder.exists():
+        return {"sukses": False, "error": f"Folder tidak ada: {folder}"}
+    
+    files = []
+    for f in folder.rglob("*"):
+        if f.is_file() and "_arsip" not in str(f) and "__pycache__" not in str(f):
+            files.append({
+                "nama": f.name,
+                "path": str(f.relative_to(folder)),
+                "size": f.stat().st_size,
+                "ext": f.suffix,
+            })
+    
+    return {
+        "sukses": True,
+        "folder": str(folder),
+        "total": len(files),
+        "files": files,
+    }
+
+
+def sadar_sistem():
+    """Sadar status sistem Orion."""
+    from pathlib import Path
+    
+    status = {
+        "otak": False,
+        "memory": 0,
+        "skill": 0,
+        "experience": 0,
+        "database": False,
+        "voice": False,
+        "cron": False,
+        "dashboard": False,
+    }
+    
+    # Cari root Orion
+    ROOT = None
+    for candidate in [Path(__file__).parent, Path(__file__).parent.parent]:
+        if (candidate / ".env").exists() or (candidate / "otak_orion.py").exists():
+            ROOT = candidate
+            break
+    
+    if not ROOT:
+        ROOT = Path(__file__).parent
+    
+    # Otak
+    try:
+        import otak_orion
+        status["otak"] = True
+    except Exception:
+        pass
+    
+    # Memory
+    try:
+        from memory_graph import cari_semua
+        status["memory"] = len(cari_semua())
+    except Exception:
+        pass
+    
+    # Skill
+    try:
+        from skill_hub import daftar_semua_skill
+        status["skill"] = len(daftar_semua_skill())
+    except Exception:
+        pass
+    
+    # Experience
+    try:
+        from experience_hub import ambil_pengalaman
+        status["experience"] = len(ambil_pengalaman(jumlah=1000))
+    except Exception:
+        pass
+    
+    # Database - cari di berbagai lokasi
+    try:
+        db_paths = [
+            ROOT / str(BASE / "memory" / "orion.db"),
+            Path(__file__).parent / str(BASE / "memory" / "orion.db"),
+            Path(__file__).parent.parent / str(BASE / "memory" / "orion.db"),
+        ]
+        status["database"] = any(p.exists() for p in db_paths)
+    except Exception:
+        pass
+    
+    # Voice
+    try:
+        from voice_orion import tts_bicara
+        status["voice"] = True
+    except Exception:
+        pass
+    
+    # Cron
+    try:
+        from cron_orion import jalankan
+        status["cron"] = True
+    except Exception:
+        try:
+            import cron_orion
+            status["cron"] = True
+        except Exception:
+            pass
+    
+    # Dashboard
+    try:
+        from dashboard_orion import jalankan
+        status["dashboard"] = True
+    except Exception:
+        try:
+            import dashboard_orion
+            status["dashboard"] = True
+        except Exception:
+            pass
+    
+    return status
+
+
+def cari_file(nama_file, root="E:/Project Software"):
+    """Cari file di seluruh laptop."""
+    root = Path(root)
+    if not root.exists():
+        return {"sukses": False, "error": f"Path tidak ada: {root}"}
+    
+    hasil = []
+    nama_lower = nama_file.lower()
+    
+    for f in root.rglob("*"):
+        if f.is_file() and nama_lower in f.name.lower():
+            if "_arsip" in str(f) or "__pycache__" in str(f):
+                continue
+            
+            hasil.append({
+                "nama": f.name,
+                "path": str(f),
+                "size": f.stat().st_size,
+            })
+            
+            if len(hasil) >= 50:
+                break
+    
+    return {"sukses": True, "total": len(hasil), "files": hasil}
+
+
+def auto_index(folder=None):
+    """Bikin index file - simpan ke JSON."""
+    import json
+    from datetime import datetime
+    from pathlib import Path
+    
+    if folder is None:
+        # Cari root Orion
+        for candidate in [Path(__file__).parent, Path(__file__).parent.parent]:
+            if (candidate / ".env").exists() or (candidate / "otak_orion.py").exists():
+                folder = candidate
+                break
+        else:
+            folder = Path(__file__).parent
+    else:
+        folder = Path(folder)
+    
+    index = {
+        "waktu": datetime.now().isoformat(),
+        "folder": str(folder),
+        "files": [],
+        "folders": [],
+        "extensions": {},
+    }
+    
+    for f in folder.rglob("*"):
+        if f.is_file():
+            if any(x in str(f) for x in ["_arsip", "backups", "__pycache__", "_backup", "_rapi"]):
+                continue
+            
+            ext = f.suffix.lower() or "no_ext"
+            index["extensions"][ext] = index["extensions"].get(ext, 0) + 1
+            
+            try:
+                index["files"].append({
+                    "path": str(f.relative_to(folder)),
+                    "size": f.stat().st_size,
+                    "ext": ext,
+                })
+            except Exception:
+                pass
+        elif f.is_dir():
+            try:
+                index["folders"].append(str(f.relative_to(folder)))
+            except Exception:
+                pass
+    
+    # Simpan ke _data/index.json di ROOT
+    index_file = folder / "_data" / "index.json"
+    index_file.parent.mkdir(parents=True, exist_ok=True)
+    index_file.write_text(
+        json.dumps(index, indent=2, ensure_ascii=False),
+        encoding="utf-8"
+    )
+    
+    return {
+        "sukses": True,
+        "file": str(index_file),
+        "total_files": len(index["files"]),
+        "total_folders": len(index["folders"]),
+    }
+
+
+def baca_index():
+    """Baca index file."""
+    import json
+    from pathlib import Path
+    
+    # Cari root Orion
+    ROOT = None
+    for candidate in [Path(__file__).parent, Path(__file__).parent.parent]:
+        if (candidate / ".env").exists() or (candidate / "otak_orion.py").exists():
+            ROOT = candidate
+            break
+    
+    if not ROOT:
+        ROOT = Path(__file__).parent
+    
+    # Cari index di berbagai lokasi
+    INDEX_PATHS = [
+        ROOT / "_data" / "index.json",
+        Path(__file__).parent / "_data" / "index.json",
+        Path(__file__).parent.parent / "_data" / "index.json",
+    ]
+    
+    for index_file in INDEX_PATHS:
+        if index_file.exists():
+            try:
+                return {
+                    "sukses": True,
+                    "index": json.loads(index_file.read_text(encoding="utf-8")),
+                    "file": str(index_file),
+                }
+            except Exception as e:
+                return {"sukses": False, "error": str(e)}
+    
+    return {"sukses": False, "error": "Index belum ada - jalankan auto_index()"}
+
+
+def update_awareness():
+    """Update kesadaran Orion - scan + index."""
+    print("=" * 60)
+    print("  UPDATE AWARENESS")
+    print("=" * 60)
+    
+    # 1. Scan laptop
+    print("\n[1] Scan laptop...")
+    scan = scan_laptop("E:/Project Software", max_depth=4)
+    print(f"   Files: {scan.get('total_files', 0)}")
+    print(f"   Size: {scan.get('total_size', 0) / 1024 / 1024:.2f} MB")
+    
+    # 2. Index
+    print("\n[2] Auto-index...")
+    idx = auto_index()
+    print(f"   ✅ {idx.get('total_files', 0)} file")
+    
+    # 3. Pipeline
+    print("\n[3] Peta pipeline...")
+    peta = peta_pipeline()
+    print(f"   Input: {len(peta['input'])}")
+    print(f"   Proses: {len(peta['proses'])}")
+    print(f"   Output: {len(peta['output'])}")
+    
+    # 4. Status
+    print("\n[4] Status sistem...")
+    status = sadar_sistem()
+    for k, v in status.items():
+        print(f"   {k}: {v}")
+    
+    print("\n" + "=" * 60)
+    
+    return {
+        "scan": scan,
+        "index": idx,
+        "pipeline": peta,
+        "status": status,
+    }
+
+
+def awareness_check():
+    """Cek kesadaran Orion."""
+    print("=" * 60)
+    print("  AWARENESS CHECK")
+    print("=" * 60)
+    
+    # Status sistem
+    print("\n📊 Status:")
+    status = sadar_sistem()
+    for k, v in status.items():
+        icon = "✅" if v else "❌"
+        if isinstance(v, int):
+            print(f"   {icon} {k}: {v}")
+        else:
+            print(f"   {icon} {k}")
+    
+    # Index
+    print("\n📄 Index:")
+    idx = baca_index()
+    if idx.get("sukses"):
+        data = idx["index"]
+        print(f"   ✅ {len(data['files'])} file")
+        print(f"   ✅ {len(data['folders'])} folder")
+        print(f"   ✅ {len(data['extensions'])} ext")
+    else:
+        print(f"   ⚠️ {idx.get('error')}")
+    
+    # Pipeline
+    print("\n🔗 Pipeline:")
+    peta = peta_pipeline()
+    print(f"   ✅ {len(peta['input'])} input")
+    print(f"   ✅ {len(peta['proses'])} proses")
+    print(f"   ✅ {len(peta['output'])} output")
+    print(f"   ✅ {len(peta['modul'])} modul")
+    
+    print("\n" + "=" * 60)
+
+
+# ====================================================================
+# END AWARENESS
+# ====================================================================
+
+
+
+# ====================================================================
+# AKSES SISTEM - ORION BISA SCAN, BACA, TULIS, HAPUS FILE
+# ====================================================================
+
+def akses_sistem():
+    """Cek izin akses sistem Orion."""
+    from pathlib import Path
+    
+    status = {
+        "cwd": str(Path.cwd()),
+        "home": str(Path.home()),
+        "drive_e": Path("E:/").exists(),
+        "drive_c": Path("C:/").exists(),
+        "drive_d": Path("D:/").exists(),
+        "tulis": False,
+        "baca": False,
+    }
+    
+    # Test tulis
+    try:
+        test = Path.cwd() / "_test_akses.tmp"
+        test.write_text("test", encoding="utf-8")
+        test.unlink()
+        status["tulis"] = True
+    except Exception:
+        pass
+    
+    # Test baca
+    try:
+        Path.cwd().iterdir()
+        status["baca"] = True
+    except Exception:
+        pass
+    
+    return status
+
+
+def scan_folder(folder, max_depth=2, max_files=500):
+    """Scan folder - list file."""
+    from pathlib import Path
+    
+    folder = Path(folder)
+    if not folder.exists():
+        return {"sukses": False, "error": f"Folder tidak ada: {folder}"}
+    
+    SKIP = {"__pycache__", ".git", "node_modules", "venv", ".venv", "_arsip", "backups"}
+    
+    hasil = {
+        "sukses": True,
+        "folder": str(folder),
+        "total_files": 0,
+        "total_size": 0,
+        "files": [],
+    }
+    
+    def scan(f, depth=0):
+        if depth > max_depth or hasil["total_files"] >= max_files:
+            return
+        
+        try:
+            for item in f.iterdir():
+                if item.name in SKIP or item.name.startswith("."):
+                    continue
+                
+                if item.is_file():
+                    hasil["total_files"] += 1
+                    try:
+                        size = item.stat().st_size
+                        hasil["total_size"] += size
+                        
+                        if hasil["total_files"] <= max_files:
+                            hasil["files"].append({
+                                "nama": item.name,
+                                "path": str(item),
+                                "size": size,
+                                "ext": item.suffix,
+                            })
+                    except Exception:
+                        pass
+                
+                elif item.is_dir():
+                    scan(item, depth + 1)
+        except PermissionError:
+            pass
+        except Exception:
+            pass
+    
+    scan(folder)
+    return hasil
+
+
+def cari_file_sistem(nama_file, root="E:/", max_result=50):
+    """Cari file di seluruh sistem."""
+    from pathlib import Path
+    
+    root = Path(root)
+    if not root.exists():
+        return {"sukses": False, "error": f"Drive tidak ada: {root}"}
+    
+    SKIP = {"Windows", "Program Files", "Program Files (x86)", "$Recycle.Bin",
+            "System Volume Information", "AppData", "__pycache__", ".git"}
+    
+    hasil = []
+    nama_lower = nama_file.lower()
+    
+    for f in root.rglob("*"):
+        if len(hasil) >= max_result:
+            break
+        
+        try:
+            if f.is_file() and nama_lower in f.name.lower():
+                if any(s in str(f) for s in SKIP):
+                    continue
+                hasil.append({
+                    "nama": f.name,
+                    "path": str(f),
+                    "size": f.stat().st_size,
+                })
+        except Exception:
+            pass
+    
+    return {"sukses": True, "total": len(hasil), "files": hasil}
+
+
+def baca_file(path):
+    """Baca file - teks."""
+    from pathlib import Path
+    
+    p = Path(path)
+    if not p.exists():
+        return {"sukses": False, "error": f"File tidak ada: {path}"}
+    
+    try:
+        isi = p.read_text(encoding="utf-8")
+        return {"sukses": True, "isi": isi, "size": len(isi)}
+    except Exception as e:
+        return {"sukses": False, "error": str(e)}
+
+
+def info_file(path):
+    """Info file."""
+    from pathlib import Path
+    from datetime import datetime
+    
+    p = Path(path)
+    if not p.exists():
+        return {"sukses": False, "error": f"File tidak ada: {path}"}
+    
+    stat = p.stat()
+    return {
+        "sukses": True,
+        "nama": p.name,
+        "path": str(p),
+        "size": stat.st_size,
+        "ext": p.suffix,
+        "dibuat": datetime.fromtimestamp(stat.st_ctime).isoformat(),
+        "diubah": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+    }
+
+
+def scan_drive(drive="E:/", max_files=5000):
+    """Scan seluruh drive."""
+    return scan_folder(drive, max_depth=3, max_files=max_files)
+
+
+def pipeline_akses():
+    """Pipeline akses - alur file."""
+    return {
+        "scan": [
+            "scan_folder() → list file di folder",
+            "scan_drive() → scan seluruh drive",
+            "cari_file_sistem() → cari file spesifik",
+        ],
+        "baca": [
+            "baca_file() → baca isi file",
+            "info_file() → info file",
+        ],
+        "index": [
+            "auto_index() → index semua file",
+            "baca_index() → baca index",
+        ],
+        "output": [
+            "Hasil scan → print/list",
+            "Hasil index → _data/index.json",
+        ],
+    }
+
+
+def orion_sadar():
+    """Orion sadar - print status akses."""
+    print("=" * 60)
+    print("  ORION SADAR SISTEM")
+    print("=" * 60)
+    
+    # 1. Akses
+    print("\n🔐 Akses Sistem:")
+    akses = akses_sistem()
+    for k, v in akses.items():
+        icon = "✅" if v else "❌"
+        print(f"   {icon} {k}: {v}")
+    
+    # 2. Drive
+    print("\n💾 Drive:")
+    for drive in ["C:/", "D:/", "E:/"]:
+        from pathlib import Path
+        exists = Path(drive).exists()
+        icon = "✅" if exists else "❌"
+        print(f"   {icon} {drive}")
+    
+    # 3. Orion folder
+    print("\n📁 Orion Folder:")
+    from pathlib import Path
+    ROOT = Path(__file__).parent
+    if not (ROOT / ".env").exists():
+        ROOT = ROOT.parent
+    
+    print(f"   Root: {ROOT}")
+    
+    # Scan Orion
+    hasil = scan_folder(ROOT, max_depth=2, max_files=100)
+    print(f"   Files: {hasil.get('total_files', 0)}")
+    print(f"   Size: {hasil.get('total_size', 0) / 1024 / 1024:.2f} MB")
+    
+    # 4. Bisa akses drive
+    print("\n🌐 Orion Bisa Akses:")
+    print("   ✅ Scan folder")
+    print("   ✅ Cari file")
+    print("   ✅ Baca file")
+    print("   ✅ Info file")
+    print("   ✅ Scan drive")
+    print("   ✅ Index file")
+    
+    print("\n" + "=" * 60)
+
+
+def aksi_dari_pesan(pesan):
+    """Deteksi aksi dari pesan - scan, cari, baca."""
+    p = pesan.lower()  # Untuk deteksi kata kunci
+    pesan_asli = pesan  # Untuk extract target (case-sensitive)
+    from pathlib import Path
+    import re
+    
+    # ============ CARI FILE ============
+    if any(k in p for k in ["cari file", "temukan file", "scan file", "cari", "temukan"]):
+        target = "*"
+        
+        # 1. Coba kutip (pesan ASLI)
+        match = re.search(r'["\']([^"\']+)["\']', pesan_asli)
+        if match:
+            target = match.group(1)
+        else:
+            # 2. Extract dari pesan ASLI (case-sensitive)
+            patterns = [
+                r'cari\s+file\s+([\w\.\-_/\\]+)',
+                r'temukan\s+file\s+([\w\.\-_/\\]+)',
+                r'scan\s+file\s+([\w\.\-_/\\]+)',
+                r'cari\s+([\w\.\-_/\\]+)',
+            ]
+            for pat in patterns:
+                m = re.search(pat, pesan_asli, re.IGNORECASE)
+                if m:
+                    target = m.group(1).strip()
+                    break
+        
+        return {"aksi": "cari_file", "target": target}
+    
+    # ============ SCAN FOLDER ============
+    if any(k in p for k in ["scan folder", "list file", "lihat file", "list folder"]):
+        match = re.search(r'["\']([^"\']+)["\']', pesan_asli)
+        target = match.group(1) if match else str(Path(__file__).parent)
+        return {"aksi": "scan_folder", "target": target}
+    
+    # ============ SCAN DRIVE ============
+    if any(k in p for k in ["scan drive", "scan laptop", "scan semua", "scan seluruh"]):
+        match = re.search(r'([a-z]):[/\\]', p)
+        drive = f"{match.group(1).upper()}:/" if match else "E:/"
+        return {"aksi": "scan_drive", "target": drive}
+    
+    # ============ BACA FILE ============
+    if any(k in p for k in ["baca file", "lihat isi", "baca", "lihat"]):
+        target = None
+        
+        # 1. Coba kutip (pesan ASLI)
+        match = re.search(r'["\']([^"\']+)["\']', pesan_asli)
+        if match:
+            target = match.group(1)
+        else:
+            # 2. Extract dari pesan ASLI (case-sensitive)
+            patterns = [
+                r'baca\s+file\s+([\w\.\-_/\\]+)',
+                r'lihat\s+isi\s+([\w\.\-_/\\]+)',
+                r'baca\s+([\w\.\-_/\\]+)',
+            ]
+            for pat in patterns:
+                m = re.search(pat, pesan_asli, re.IGNORECASE)
+                if m:
+                    target = m.group(1).strip()
+                    break
+        
+        if target:
+            return {"aksi": "baca_file", "target": target}
+    
+    return None
+def jalankan_aksi(aksi):
+    """Jalankan aksi dari deteksi."""
+    if not aksi:
+        return {"sukses": False, "error": "Aksi tidak dikenal"}
+    
+    tipe = aksi.get("aksi")
+    target = aksi.get("target")
+    
+    if tipe == "cari_file":
+        return cari_file_sistem(target, "E:/Project Software")
+    elif tipe == "scan_folder":
+        return scan_folder(target)
+    elif tipe == "scan_drive":
+        return scan_drive(target, max_files=5000)
+    elif tipe == "baca_file":
+        return baca_file(target)
+    
+    return {"sukses": False, "error": f"Aksi {tipe} tidak dikenal"}
+
+
+# ====================================================================
+# END AKSES SISTEM
+# ====================================================================
+
+
+
+def feedback_voice(feedback, konteks=""):
+    """Feedback suara Orion - untuk evolusi."""
+    try:
+        sys.path.insert(0, str(Path(__file__).parent.parent / "support"))
+        from voice_evolution import simpan_feedback
+        return simpan_feedback(feedback, konteks)
+    except Exception as e:
+        return False
+
+
+def status_voice():
+    """Status evolusi suara."""
+    try:
+        sys.path.insert(0, str(Path(__file__).parent.parent / "support"))
+        from voice_evolution import status
+        return status()
+    except Exception:
+        return None
+
+

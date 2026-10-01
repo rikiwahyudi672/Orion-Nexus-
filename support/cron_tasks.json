@@ -1,0 +1,36 @@
+﻿{
+    "tasks":  [
+                  {
+                      "jam":  "08:00",
+                      "pesan":  "Selamat pagi bos. Hari ini siap kerja?"
+                  },
+                  {
+                      "jam":  "09:30",
+                      "pesan":  "Bos, jangan lupa minum air. Serius."
+                  },
+                  {
+                      "jam":  "12:00",
+                      "pesan":  "Waktunya makan siang, Riki. Jangan skip."
+                  },
+                  {
+                      "jam":  "15:00",
+                      "pesan":  "Bos, postur lo benerin. Bungkuk itu."
+                  },
+                  {
+                      "jam":  "17:30",
+                      "pesan":  "Riki, hari udah sore. Cek target hari ini udah kelar?"
+                  },
+                  {
+                      "jam":  "20:00",
+                      "pesan":  "Bos, udah waktunya santai. Jangan kerja terus."
+                  },
+                  {
+                      "jam":  "22:00",
+                      "pesan":  "Udah malem, Riki. Istirahat."
+                  },
+                  {
+                      "jam":  "23:30",
+                      "pesan":  "Bos, tidur. Besok masih ada kerjaan."
+                  }
+              ]
+}

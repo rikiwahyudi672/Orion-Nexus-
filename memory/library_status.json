@@ -1,0 +1,42 @@
+{
+  "waktu": "2026-09-27T21:32:46.671519",
+  "installed": [
+    "PyQt5",
+    "PySide6",
+    "gTTS",
+    "vosk",
+    "pystray"
+  ],
+  "failed": [],
+  "skipped": [
+    "watchdog",
+    "pyperclip"
+  ],
+  "ada": [
+    "tkinter",
+    "PyQt5",
+    "PyQt6",
+    "PySide6",
+    "customtkinter",
+    "flet",
+    "speech_recognition",
+    "pyttsx3",
+    "gtts",
+    "edge_tts",
+    "whisper",
+    "vosk",
+    "sounddevice",
+    "flask",
+    "fastapi",
+    "streamlit",
+    "nicegui",
+    "PIL",
+    "pyperclip",
+    "watchdog",
+    "pystray"
+  ],
+  "tidak": [
+    "kivy",
+    "wx"
+  ]
+}

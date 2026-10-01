@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ORION Live Stream</title>
+    <meta charset="UTF-8">
+    <style>
+        body { background:#1e1e1e; color:#d4d4d4; font-family:Consolas,monospace; padding:20px; margin:0; }
+        h1 { color:#00d4ff; }
+        #info { color:#888; font-size:12px; margin-bottom:10px; }
+        #status { position:fixed; top:10px; right:10px; background:#0f0; color:#000; padding:5px 15px; border-radius:20px; font-size:12px; font-weight:bold; }
+        #status.off { background:#f00; color:#fff; }
+        pre { background:#252526; padding:20px; border-radius:8px; border-left:4px solid #00d4ff; white-space:pre-wrap; min-height:200px; }
+        .cursor { background:#00d4ff; color:#000; animation:blink 0.7s infinite; }
+        @keyframes blink { 50% { opacity:0; } }
+    </style>
+</head>
+<body>
+    <div id="status">● STREAMING</div>
+    <h1>ORION - Live Code Stream</h1>
+    <div id="info">Menunggu kode...</div>
+    <pre id="code"></pre>
+
+    <script>
+        const codeEl = document.getElementById('code');
+        const infoEl = document.getElementById('info');
+        const statusEl = document.getElementById('status');
+        let lineCount = 0;
+
+        const es = new EventSource('/stream');
+
+        es.onopen = () => {
+            statusEl.textContent = '● STREAMING';
+            statusEl.className = '';
+            infoEl.textContent = 'Terhubung — menunggu kode...';
+        };
+
+        es.onmessage = (e) => {
+            codeEl.textContent += e.data + '\n';
+            lineCount++;
+            infoEl.textContent = lineCount + ' baris • streaming...';
+            window.scrollTo(0, document.body.scrollHeight);
+        };
+
+        es.addEventListener('reset', () => {
+            codeEl.textContent = '';
+            lineCount = 0;
+            infoEl.textContent = 'Reset — mulai ulang...';
+        });
+
+        es.onerror = () => {
+            statusEl.textContent = '● TERPUTUS';
+            statusEl.className = 'off';
+            infoEl.textContent = 'Koneksi terputus — reconnect otomatis...';
+        };
+    </script>
+</body>
+</html>

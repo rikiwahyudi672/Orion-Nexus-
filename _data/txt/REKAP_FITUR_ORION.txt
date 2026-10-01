@@ -1,0 +1,269 @@
+﻿================================================================
+  ORION — REKAP FITUR YANG PERLU DITAMBAH
+  Tanggal: 2026-09-27
+  Status saat ini: Otonom 95%
+  Target: Otonom 99% (dengan safety)
+================================================================
+
+----------------------------------------------------------------
+  STATUS SAAT INI (SUDAH SELESAI)
+----------------------------------------------------------------
+
+[✅] 1. Scan folder dari chat
+       - Tool: scan_folder() di tool_eksekusi.py
+       - Deteksi intent: "scan folder"
+       - Output: file .txt + path absolut
+
+[✅] 2. Coding dari chat
+       - Tool: coding_loop() di coding_assistant.py
+       - Deteksi intent: "coding "
+       - Model: Groq (gpt-oss-120b)
+
+[✅] 3. Terminal dari chat
+       - Tool: jalankan_terminal() di tool_eksekusi.py
+       - Whitelist: python, pip, dir, git, mkdir, copy, tree
+       - Blacklist: rm -rf, del /f, format, shutdown
+
+[✅] 4. Workflow System
+       - Engine: workflow_engine.py
+       - Folder: workflows/
+       - File: buat_web_app.json, coding_terminal.json, scan_saja.json
+       - Perintah: "jalankan workflow X", "daftar workflow"
+
+[✅] 5. Auto-Chain Tool
+       - Fungsi: deteksi_semua_eksekusi() + eksekusi_berantai()
+       - Pemicu: koma (,), titik koma (;), "lalu", "terus", "kemudian"
+       - Contoh: "bikin folder X, coding Flask, scan folder X"
+
+[✅] 6. Memory + Thinker
+       - Memory: 5 chat terakhir
+       - Thinker: deteksi intent + risiko
+
+[✅] 7. Format output rapi
+       - Scan: [OK] Scan selesai - path (X file, Y B)
+       - Coding: [OK] Coding selesai - file (iterasi N)
+       - Terminal: [OK] Perintah 'X' dijalankan (exit N): ...
+
+----------------------------------------------------------------
+  YANG PERLU DITAMBAH (FASE A - D)
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+  FASE A: GIT INTEGRATION
+  Effort: 30 menit
+  Manfaat: Backup otomatis, version control, rollback
+  Risiko: Rendah
+----------------------------------------------------------------
+
+[A-1] Init git di folder Orion
+       - Perintah: git init
+       - File: .git/
+
+[A-2] Perluas whitelist command
+       - Tambah: git add, git commit, git diff, git log, git status
+       - Sudah ada: git status, git log
+
+[A-3] Auto-commit di coding_loop
+       - Setelah coding loop sukses → git add + commit
+       - Format: "Coding loop: <goal> (iterasi N)"
+
+[A-4] Handler chat untuk git
+       - Deteksi intent: "git status", "git add", "git commit -m X"
+       - Format output: [Git] Status: ... / [Git] Commit: abc123
+
+[A-5] Gitignore
+       - File: .gitignore
+       - Exclude: .env, *.db, *.log, backups/, archive/, _archive/,
+                  _temp/, _trash/, __pycache__/, output_orion.py,
+                  projects/, workflows/test_*.json
+
+----------------------------------------------------------------
+  FASE B: AUTO-INSTALL DEPENDENSI
+  Effort: 45 menit
+  Manfaat: Coding loop tidak gagal karena ModuleNotFoundError
+  Risiko: Sedang (install package berbahaya)
+----------------------------------------------------------------
+
+[B-1] Parser import
+       - Regex: ^(?:import|from)\s+(\w+)
+       - Input: kode Python
+       - Output: list modul
+
+[B-2] Mapping nama package
+       - bs4 → beautifulsoup4
+       - PIL → Pillow
+       - cv2 → opencv-python
+       - sklearn → scikit-learn
+       - yaml → PyYAML
+       - dll
+
+[B-3] Auto-install dengan konfirmasi
+       - Deteksi import → tanya user → pip install
+       - Cache: jangan install ulang kalau sudah ada
+       - Limit: max 1 auto-install per coding loop
+
+[B-4] Whitelist package (opsional)
+       - Cuma install dari daftar aman
+       - Block package mencurigakan
+
+----------------------------------------------------------------
+  FASE C: MULTI-FILE PROJECT
+  Effort: 1-2 jam
+  Manfaat: Bikin proyek nyata (bukan cuma 1 file)
+  Risiko: Sedang (overwrite file penting)
+----------------------------------------------------------------
+
+[C-1] Folder terpisah untuk coding output
+       - Buat folder: projects/
+       - Coding output di projects/<nama_proyek>/
+       - File core Orion (core.py, otak_orion.py) = FROZEN
+
+[C-2] Parser goal multi-file
+       - Deteksi: "dengan file X, Y, Z"
+       - Contoh: "coding Flask app dengan file app.py, models.py, routes.py"
+       - Output: list file yang perlu dibuat
+
+[C-3] Loop generate per file
+       - Panggil LLM untuk tiap file
+       - File berikutnya tahu konteks file sebelumnya
+       - Format: file -> konteks -> LLM -> tulis
+
+[C-4] Test entry point
+       - Deteksi entry point (app.py, main.py, index.py)
+       - Jalankan untuk test
+       - Kalau error → fix otomatis
+
+[C-5] Generate requirements.txt
+       - Deteksi import di semua file
+       - Tulis ke requirements.txt
+
+[C-6] Generate README.md
+       - Deskripsi proyek
+       - Cara jalankan
+       - Dependensi
+
+----------------------------------------------------------------
+  FASE D: WORKFLOW EDITOR
+  Effort: 1-2 jam
+  Manfaat: Bikin workflow dari chat (tanpa edit JSON manual)
+  Risiko: Rendah (cuma tulis JSON)
+----------------------------------------------------------------
+
+[D-1] Parser perintah workflow
+       - Deteksi: "bikin workflow: X, Y, Z"
+       - Contoh: "bikin workflow: coding Flask, jalankan, scan"
+       - Output: list langkah
+
+[D-2] Generate JSON workflow
+       - Tulis ke workflows/<nama>.json
+       - Format: {nama, deskripsi, langkah: [...]}
+
+[D-3] Konfirmasi sebelum simpan
+       - Tampilkan workflow yang akan dibuat
+       - Tanya: yakin simpan? (y/n)
+
+[D-4] Test otomatis
+       - Tawarkan jalankan workflow setelah dibuat
+       - Tampilkan hasil
+
+[D-5] Validasi workflow
+       - Block workflow berisi hapus_file tanpa konfirmasi
+       - Block workflow infinite loop (workflow panggil workflow)
+       - Limit: max 10 langkah per workflow
+
+----------------------------------------------------------------
+  SAFETY — 7 LAPIS PENGAMAN
+----------------------------------------------------------------
+
+[🛡️] 1. Whitelist command (SUDAH ADA)
+       - Cuma command aman yang boleh
+       - File: tool_eksekusi.py (WHITELIST_CMD)
+
+[🛡️] 2. Blacklist command (SUDAH ADA)
+       - Block command berbahaya
+       - File: tool_eksekusi.py (BLACKLIST_CMD)
+
+[🛡️] 3. Thinker + Konfirmasi (SUDAH ADA)
+       - Deteksi risiko tinggi → minta konfirmasi
+       - File: thinker_orion.py
+
+[🛡️] 4. Backup + Restore (SUDAH ADA)
+       - Sebelum hapus → pindah ke _trash
+       - Bisa restore
+       - File: tool_eksekusi.py (hapus_file, restore_file)
+
+[⚠️] 5. Folder terpisah (BELUM)
+       - Coding output di projects/
+       - File core = FROZEN
+       - Perlu: Fase C
+
+[⚠️] 6. Gitignore (BELUM)
+       - Exclude file sensitif
+       - Perlu: Fase A
+
+[⚠️] 7. Limitasi (BELUM)
+       - Max 5 file per multi-file
+       - Max 10 langkah auto-chain
+       - Max 1 auto-install per loop
+       - Perlu: Fase B, C, D
+
+----------------------------------------------------------------
+  RINGKASAN EFFORT & MANFAAT
+----------------------------------------------------------------
+
+Fase | Fitur              | Effort   | Manfaat      | Risiko
+-----|--------------------|----------|--------------|--------
+A    | Git Integration    | 30 mnt   | ⭐⭐⭐⭐    | Rendah
+B    | Auto-Install       | 45 mnt   | ⭐⭐⭐⭐⭐  | Sedang
+C    | Multi-File Project | 1-2 jam  | ⭐⭐⭐⭐⭐  | Sedang
+D    | Workflow Editor    | 1-2 jam  | ⭐⭐⭐      | Rendah
+-----|--------------------|----------|--------------|--------
+TOTAL|                    | ~4 jam   | Otonom 99%  |
+
+----------------------------------------------------------------
+  URUTAN REKOMENDASI
+----------------------------------------------------------------
+
+Paket Cepat (1.5 jam):
+  1. Fase A - Git Integration (30 menit)
+  2. Fase B - Auto-Install (45 menit)
+  3. Test (15 menit)
+  Hasil: Otonom 98%
+
+Paket Proyek (3 jam):
+  1. Fase A
+  2. Fase B
+  3. Fase C
+  Hasil: Otonom 99%
+
+Paket Lengkap (4 jam):
+  1. Fase A
+  2. Fase B
+  3. Fase C
+  4. Fase D
+  Hasil: Otonom 99% + Workflow Editor
+
+----------------------------------------------------------------
+  SEBELUM MULAI — CHECKLIST SAFETY
+----------------------------------------------------------------
+
+[ ] Backup folder Orion
+[ ] Bikin .gitignore
+[ ] Cek git terinstall
+[ ] Cek pip terinstall
+[ ] Pastikan folder projects/ ada
+[ ] Review whitelist command
+[ ] Review blacklist command
+
+----------------------------------------------------------------
+  CATATAN
+----------------------------------------------------------------
+
+- Semua fitur diuji sebelum dianggap selesai
+- Setiap fase ada test + verifikasi
+- Kalau gagal, rollback ke backup
+- Review manual untuk aksi berisiko
+
+================================================================
+  SELESAI — Otonom 95% → 99%
+================================================================

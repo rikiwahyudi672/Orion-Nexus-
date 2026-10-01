@@ -1,0 +1,12 @@
+{
+  "aktif": true,
+  "interval_menit": 15,
+  "idle_menit": 20,
+  "peluang_proaktif": 0.3,
+  "jam_aktif": [
+    "07:00-22:00"
+  ],
+  "jam_tidur": [
+    "22:00-07:00"
+  ]
+}

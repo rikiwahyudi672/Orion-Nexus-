@@ -1,0 +1,11 @@
+{
+  "nama": "scan_saja",
+  "deskripsi": "Scan folder saja",
+  "langkah": [
+    {
+      "tool": "scan_folder",
+      "params": {"folder": "E:\\Project Software\\Orion", "output": "E:\\Project Software\\test orion 2\\scan_via_workflow.txt"},
+      "deskripsi": "Scan folder Orion"
+    }
+  ]
+}

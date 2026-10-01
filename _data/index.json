@@ -1,0 +1,837 @@
+{
+  "waktu": "2026-09-28T05:19:25.465715",
+  "folder": "E:\\Project Software\\Orion\\py",
+  "files": [
+    {
+      "path": "agent_manager.py",
+      "size": 9920,
+      "ext": ".py"
+    },
+    {
+      "path": "analisis_data.py",
+      "size": 5718,
+      "ext": ".py"
+    },
+    {
+      "path": "api_client.py",
+      "size": 5820,
+      "ext": ".py"
+    },
+    {
+      "path": "api_todo.py",
+      "size": 5480,
+      "ext": ".py"
+    },
+    {
+      "path": "apply_update.py",
+      "size": 295,
+      "ext": ".py"
+    },
+    {
+      "path": "audit_otomatis.py",
+      "size": 3301,
+      "ext": ".py"
+    },
+    {
+      "path": "auto_distill.py",
+      "size": 3869,
+      "ext": ".py"
+    },
+    {
+      "path": "auto_update_skill.py",
+      "size": 1489,
+      "ext": ".py"
+    },
+    {
+      "path": "bikin_icon.py",
+      "size": 1658,
+      "ext": ".py"
+    },
+    {
+      "path": "bikin_kalkulator.py",
+      "size": 594,
+      "ext": ".py"
+    },
+    {
+      "path": "bikin_memory_graph.py",
+      "size": 2198,
+      "ext": ".py"
+    },
+    {
+      "path": "cari_code_exe.py",
+      "size": 390,
+      "ext": ".py"
+    },
+    {
+      "path": "cek_channel.py",
+      "size": 804,
+      "ext": ".py"
+    },
+    {
+      "path": "cek_chat_memory.py",
+      "size": 414,
+      "ext": ".py"
+    },
+    {
+      "path": "cek_semua_emotion.py",
+      "size": 877,
+      "ext": ".py"
+    },
+    {
+      "path": "cek_sumber_sedih.py",
+      "size": 526,
+      "ext": ".py"
+    },
+    {
+      "path": "chatbot_simple.py",
+      "size": 2314,
+      "ext": ".py"
+    },
+    {
+      "path": "coding_assistant.py",
+      "size": 13818,
+      "ext": ".py"
+    },
+    {
+      "path": "config.json",
+      "size": 1301,
+      "ext": ".json"
+    },
+    {
+      "path": "core.py",
+      "size": 63842,
+      "ext": ".py"
+    },
+    {
+      "path": "cron_llm.py",
+      "size": 4559,
+      "ext": ".py"
+    },
+    {
+      "path": "cron_orion.py",
+      "size": 6980,
+      "ext": ".py"
+    },
+    {
+      "path": "cron_tasks.json",
+      "size": 1471,
+      "ext": ".json"
+    },
+    {
+      "path": "dashboard_orion.py",
+      "size": 31599,
+      "ext": ".py"
+    },
+    {
+      "path": "discord_orion.py",
+      "size": 8658,
+      "ext": ".py"
+    },
+    {
+      "path": "discord_voice_orion_v2.py",
+      "size": 51478,
+      "ext": ".py"
+    },
+    {
+      "path": "emosi_natural.py",
+      "size": 9120,
+      "ext": ".py"
+    },
+    {
+      "path": "emotion_decay.py",
+      "size": 4986,
+      "ext": ".py"
+    },
+    {
+      "path": "emotion_orion.py",
+      "size": 11189,
+      "ext": ".py"
+    },
+    {
+      "path": "evolusi_md.py",
+      "size": 3511,
+      "ext": ".py"
+    },
+    {
+      "path": "evolusi_prompt.py",
+      "size": 2711,
+      "ext": ".py"
+    },
+    {
+      "path": "experience_hub.py",
+      "size": 6867,
+      "ext": ".py"
+    },
+    {
+      "path": "extra_orion.py",
+      "size": 8518,
+      "ext": ".py"
+    },
+    {
+      "path": "face_detect.py",
+      "size": 2405,
+      "ext": ".py"
+    },
+    {
+      "path": "face_enroll.py",
+      "size": 3089,
+      "ext": ".py"
+    },
+    {
+      "path": "face_listener.py",
+      "size": 4012,
+      "ext": ".py"
+    },
+    {
+      "path": "file_organizer.py",
+      "size": 4210,
+      "ext": ".py"
+    },
+    {
+      "path": "fix_discord_nama_file.py",
+      "size": 1452,
+      "ext": ".py"
+    },
+    {
+      "path": "fix_discord_ocr_v2.py",
+      "size": 941,
+      "ext": ".py"
+    },
+    {
+      "path": "fix_indent.py",
+      "size": 1362,
+      "ext": ".py"
+    },
+    {
+      "path": "fix_indent_v3.py",
+      "size": 1091,
+      "ext": ".py"
+    },
+    {
+      "path": "fix_nama_file.py",
+      "size": 1530,
+      "ext": ".py"
+    },
+    {
+      "path": "fix_nama_file_v3.py",
+      "size": 664,
+      "ext": ".py"
+    },
+    {
+      "path": "fix_ocr_file.py",
+      "size": 2433,
+      "ext": ".py"
+    },
+    {
+      "path": "fix_pesan_asli_v2.py",
+      "size": 598,
+      "ext": ".py"
+    },
+    {
+      "path": "fix_prompt_coding_v2.py",
+      "size": 1813,
+      "ext": ".py"
+    },
+    {
+      "path": "fix_prompt_iterasi1.py",
+      "size": 1897,
+      "ext": ".py"
+    },
+    {
+      "path": "groq_stream_test.py",
+      "size": 1454,
+      "ext": ".py"
+    },
+    {
+      "path": "hapus_cuaca.py",
+      "size": 1199,
+      "ext": ".py"
+    },
+    {
+      "path": "hapus_dimaki_salah.py",
+      "size": 929,
+      "ext": ".py"
+    },
+    {
+      "path": "hapus_emotion_lengkap.py",
+      "size": 1018,
+      "ext": ".py"
+    },
+    {
+      "path": "hello.py",
+      "size": 129,
+      "ext": ".py"
+    },
+    {
+      "path": "inisiatif_orion.py",
+      "size": 4125,
+      "ext": ".py"
+    },
+    {
+      "path": "jalankan_skill_coding.py",
+      "size": 212,
+      "ext": ".py"
+    },
+    {
+      "path": "kalkulator_test.py",
+      "size": 662,
+      "ext": ".py"
+    },
+    {
+      "path": "konsolidasi_memory.py",
+      "size": 1870,
+      "ext": ".py"
+    },
+    {
+      "path": "kualitas_test.py",
+      "size": 3582,
+      "ext": ".py"
+    },
+    {
+      "path": "layout_dinamis.py",
+      "size": 15927,
+      "ext": ".py"
+    },
+    {
+      "path": "lihat_analisis.py",
+      "size": 561,
+      "ext": ".py"
+    },
+    {
+      "path": "lihat_memory.py",
+      "size": 628,
+      "ext": ".py"
+    },
+    {
+      "path": "loyalty_orion.py",
+      "size": 7623,
+      "ext": ".py"
+    },
+    {
+      "path": "luas_test.py",
+      "size": 968,
+      "ext": ".py"
+    },
+    {
+      "path": "maintenance_orion.py",
+      "size": 4152,
+      "ext": ".py"
+    },
+    {
+      "path": "memory_graph.py",
+      "size": 3122,
+      "ext": ".py"
+    },
+    {
+      "path": "memory_manager.py",
+      "size": 5581,
+      "ext": ".py"
+    },
+    {
+      "path": "memory_orion.py",
+      "size": 3199,
+      "ext": ".py"
+    },
+    {
+      "path": "migrasi_skill.py",
+      "size": 3545,
+      "ext": ".py"
+    },
+    {
+      "path": "model_router.py",
+      "size": 3913,
+      "ext": ".py"
+    },
+    {
+      "path": "monitor_orion.py",
+      "size": 2668,
+      "ext": ".py"
+    },
+    {
+      "path": "mood_orion.py",
+      "size": 5558,
+      "ext": ".py"
+    },
+    {
+      "path": "notif_orion.py",
+      "size": 3908,
+      "ext": ".py"
+    },
+    {
+      "path": "optimasi_prompt_coding.py",
+      "size": 1839,
+      "ext": ".py"
+    },
+    {
+      "path": "orion.py",
+      "size": 1421,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_asah_coding.py",
+      "size": 2172,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_auto.py",
+      "size": 2428,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_background.py",
+      "size": 1450,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_banner.py",
+      "size": 2732,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_bikin_api_client.py",
+      "size": 559,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_cari_memory_graph.py",
+      "size": 5357,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_cek_fix.py",
+      "size": 4551,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_fase2_hubungkan.py",
+      "size": 4581,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_fase3_jalur_otak.py",
+      "size": 3915,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_fase4_memory.py",
+      "size": 2231,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_fase5_training.py",
+      "size": 3809,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_fase6_auto_update.py",
+      "size": 2618,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_fix_fase6.py",
+      "size": 5926,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_fix_latihan.py",
+      "size": 3516,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_fix_path.py",
+      "size": 2503,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_fix_skill_semua.py",
+      "size": 2941,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_hub.py",
+      "size": 21171,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_kerjakan_semua.py",
+      "size": 3546,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_latihan.py",
+      "size": 2685,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_mandiri.py",
+      "size": 9416,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_master_latihan.py",
+      "size": 4937,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_neural.py",
+      "size": 6989,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_selesaikan_semua.py",
+      "size": 7235,
+      "ext": ".py"
+    },
+    {
+      "path": "orion_update.py",
+      "size": 11874,
+      "ext": ".py"
+    },
+    {
+      "path": "otak_orion.py",
+      "size": 152919,
+      "ext": ".py"
+    },
+    {
+      "path": "otak_orion.py.bak",
+      "size": 84697,
+      "ext": ".bak"
+    },
+    {
+      "path": "otak_orion.rusak",
+      "size": 98815,
+      "ext": ".rusak"
+    },
+    {
+      "path": "output_discord.py",
+      "size": 128,
+      "ext": ".py"
+    },
+    {
+      "path": "output_test.py",
+      "size": 14,
+      "ext": ".py"
+    },
+    {
+      "path": "output_workflow.py",
+      "size": 28,
+      "ext": ".py"
+    },
+    {
+      "path": "patch_self_awareness.py",
+      "size": 4582,
+      "ext": ".py"
+    },
+    {
+      "path": "patch_self_awareness_chat.py",
+      "size": 1221,
+      "ext": ".py"
+    },
+    {
+      "path": "penghubung_jarvis.py",
+      "size": 3658,
+      "ext": ".py"
+    },
+    {
+      "path": "personality_orion.py",
+      "size": 788,
+      "ext": ".py"
+    },
+    {
+      "path": "reflection_orion.py",
+      "size": 3327,
+      "ext": ".py"
+    },
+    {
+      "path": "run_discord.py",
+      "size": 7506,
+      "ext": ".py"
+    },
+    {
+      "path": "sapaan_dashboard.py",
+      "size": 4814,
+      "ext": ".py"
+    },
+    {
+      "path": "sapaan_db.py",
+      "size": 6670,
+      "ext": ".py"
+    },
+    {
+      "path": "sapaan_orion.py",
+      "size": 7120,
+      "ext": ".py"
+    },
+    {
+      "path": "scan_folder.py",
+      "size": 3349,
+      "ext": ".py"
+    },
+    {
+      "path": "scraper_berita.py",
+      "size": 4926,
+      "ext": ".py"
+    },
+    {
+      "path": "self_check.py",
+      "size": 2366,
+      "ext": ".py"
+    },
+    {
+      "path": "skill_curator.py",
+      "size": 3765,
+      "ext": ".py"
+    },
+    {
+      "path": "skill_evo.py",
+      "size": 6157,
+      "ext": ".py"
+    },
+    {
+      "path": "skill_hub.py",
+      "size": 2627,
+      "ext": ".py"
+    },
+    {
+      "path": "skill_installer.py",
+      "size": 5633,
+      "ext": ".py"
+    },
+    {
+      "path": "skill_installer_v2.py",
+      "size": 7783,
+      "ext": ".py"
+    },
+    {
+      "path": "skill_loader.py",
+      "size": 7086,
+      "ext": ".py"
+    },
+    {
+      "path": "skill_reviewer.py",
+      "size": 5498,
+      "ext": ".py"
+    },
+    {
+      "path": "skill_stats.py",
+      "size": 2867,
+      "ext": ".py"
+    },
+    {
+      "path": "skip_info.py",
+      "size": 1856,
+      "ext": ".py"
+    },
+    {
+      "path": "startup_orion.py",
+      "size": 2192,
+      "ext": ".py"
+    },
+    {
+      "path": "stream_server.py",
+      "size": 1392,
+      "ext": ".py"
+    },
+    {
+      "path": "terminal_orion.py",
+      "size": 3104,
+      "ext": ".py"
+    },
+    {
+      "path": "test_coding_final.py",
+      "size": 654,
+      "ext": ".py"
+    },
+    {
+      "path": "test_coding_final3.py",
+      "size": 509,
+      "ext": ".py"
+    },
+    {
+      "path": "test_coding_fix.py",
+      "size": 657,
+      "ext": ".py"
+    },
+    {
+      "path": "test_coding_kompleks.py",
+      "size": 534,
+      "ext": ".py"
+    },
+    {
+      "path": "test_coding_otak.py",
+      "size": 443,
+      "ext": ".py"
+    },
+    {
+      "path": "test_coding_terminal.py",
+      "size": 506,
+      "ext": ".py"
+    },
+    {
+      "path": "test_deteksi.py",
+      "size": 627,
+      "ext": ".py"
+    },
+    {
+      "path": "test_extract_discord.py",
+      "size": 355,
+      "ext": ".py"
+    },
+    {
+      "path": "test_file.py",
+      "size": 55,
+      "ext": ".py"
+    },
+    {
+      "path": "test_final3.py",
+      "size": 21,
+      "ext": ".py"
+    },
+    {
+      "path": "test_kalkulator.py",
+      "size": 30,
+      "ext": ".py"
+    },
+    {
+      "path": "test_kualitas.py",
+      "size": 443,
+      "ext": ".py"
+    },
+    {
+      "path": "test_llm.py",
+      "size": 184,
+      "ext": ".py"
+    },
+    {
+      "path": "thinker_orion.py",
+      "size": 3062,
+      "ext": ".py"
+    },
+    {
+      "path": "tool_eksekusi.py",
+      "size": 48235,
+      "ext": ".py"
+    },
+    {
+      "path": "training.py",
+      "size": 2627,
+      "ext": ".py"
+    },
+    {
+      "path": "tts_orion.py",
+      "size": 3036,
+      "ext": ".py"
+    },
+    {
+      "path": "update_helper.py",
+      "size": 1729,
+      "ext": ".py"
+    },
+    {
+      "path": "version_orion.py",
+      "size": 1276,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_bank.py",
+      "size": 5178,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_input_ptt.py",
+      "size": 3164,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_integrated.py",
+      "size": 4561,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_lines.py",
+      "size": 5271,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_lines_dinamis.py",
+      "size": 3986,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_orion.py",
+      "size": 16997,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_server.py",
+      "size": 6690,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_server_simple.py",
+      "size": 4290,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_stream.py",
+      "size": 3620,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_variasi.py",
+      "size": 8149,
+      "ext": ".py"
+    },
+    {
+      "path": "voice_wake.py",
+      "size": 4863,
+      "ext": ".py"
+    },
+    {
+      "path": "wake_word.py",
+      "size": 2718,
+      "ext": ".py"
+    },
+    {
+      "path": "web_dashboard.py",
+      "size": 19150,
+      "ext": ".py"
+    },
+    {
+      "path": "web_orion.py",
+      "size": 2192,
+      "ext": ".py"
+    },
+    {
+      "path": "workflow_engine.py",
+      "size": 5049,
+      "ext": ".py"
+    },
+    {
+      "path": "logs\\auto_distill.log",
+      "size": 234,
+      "ext": ".log"
+    },
+    {
+      "path": "logs\\notif_orion.log",
+      "size": 543,
+      "ext": ".log"
+    }
+  ],
+  "folders": [
+    "logs",
+    "output",
+    "scheduler",
+    "skills",
+    "__pycache__",
+    "output\\tts",
+    "scheduler\\logs"
+  ],
+  "extensions": {
+    ".py": 157,
+    ".json": 2,
+    ".bak": 1,
+    ".rusak": 1,
+    ".log": 2
+  }
+}

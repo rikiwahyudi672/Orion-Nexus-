@@ -1,0 +1,6 @@
+[2026-10-01 17:20:36] WEKER INISIATIF: siklus sekali-jalan dimulai (diatur Task Scheduler).
+[2026-10-01 17:20:38] SINYAL: [{'tipe': 'cpu_tinggi', 'nilai': 100.0}]
+[2026-10-01 17:20:38] WEKER INISIATIF: siklus selesai, keluar dengan sopan.
+[2026-10-01 17:36:57] WEKER INISIATIF: siklus sekali-jalan dimulai (diatur Task Scheduler).
+[2026-10-01 17:36:58] Kondisi normal, tidak ada sinyal.
+[2026-10-01 17:36:58] WEKER INISIATIF: siklus selesai, keluar dengan sopan.
